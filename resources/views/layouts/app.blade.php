@@ -32,7 +32,7 @@
                 </a>
                 <a href="#" class="flex items-center font-bold text-sm text-gray-500">
                     <img src="/images/avatar.png" class="w-8 mx-4"/>
-                    Molly Green
+                    {{ $user->name }}
                 </a>
             </div>
         </div>
@@ -64,7 +64,8 @@
     </div>
 
     <div class="container mx-auto px-8">
-        <div class="mb-8">
+        {{ $slot }}
+        {{-- <div class="mb-8">
             <div class="flex items-center mb-4">
                 <span class="flex-grow text-gray-500 font-bold text-sm uppercase tracking-tight">Today</span>
                 <span class="text-lg text-gray-500 font-bold">- $50.<span class="text-sm">00</span></span>
@@ -144,7 +145,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 </div>
 </body>

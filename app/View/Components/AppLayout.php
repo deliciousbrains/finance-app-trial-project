@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Component;
 
 class AppLayout extends Component
@@ -13,6 +14,6 @@ class AppLayout extends Component
      */
     public function render()
     {
-        return view('layouts.app');
+        return view('layouts.app', ['user' => Auth::user()]);
     }
 }
