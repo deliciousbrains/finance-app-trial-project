@@ -24,6 +24,9 @@
                         {{ $dateGroup->sum('amount') < 0 ? '-' : '' }} ${{ ltrim(number_format($dateGroup->sum('amount'), 2), '-') }}
                     </span>
                 </div>
+                @foreach ($dateGroup as $transaction)
+                    <transaction-dashboard-item></transaction-dashboard-item>
+                @endforeach
             </div>
 
             @endforeach
