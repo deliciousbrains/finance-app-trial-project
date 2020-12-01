@@ -1,3 +1,4 @@
+@inject('carbon', 'Carbon\Carbon')
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -7,13 +8,22 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-md sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    @foreach ($transactions as $transaction)
-                        {{ $transaction->label }}
-                    @endforeach
+            @foreach ($transactions as $date => $dateGroup)
+            <div class="flex flex-col">
+                <div class="flex">
+                    <span class="flex-grow">
+                        @if ($carbon::parse($date)->isToday())
+                            Today
+                        @elseif ($carbon::parse($date)->isYesterday())
+                            Yesterday
+                        @else
+                            {{ $carbon->parse($date)->format('D, d M Y') }}
+                        @endif
+                    </span>
                 </div>
             </div>
+
+            @endforeach
         </div>
     </div>
 </x-app-layout>
