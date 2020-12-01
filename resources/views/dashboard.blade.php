@@ -11,7 +11,7 @@
             @foreach ($transactions as $date => $dateGroup)
             <div class="flex flex-col">
                 <div class="flex">
-                    <span class="flex-grow">
+                    <span class="flex-grow text-xs text-gray-400 uppercase font-bold">
                         @if ($carbon::parse($date)->isToday())
                             Today
                         @elseif ($carbon::parse($date)->isYesterday())
@@ -19,6 +19,9 @@
                         @else
                             {{ $carbon->parse($date)->format('D, d M Y') }}
                         @endif
+                    </span>
+                    <span class="text-lg {{ $dateGroup->sum('amount') >= 0 ? ' text-green-500' : 'text-gray-400' }}">
+                        {{ $dateGroup->sum('amount') < 0 ? '-' : '' }} ${{ ltrim(number_format($dateGroup->sum('amount'), 2), '-') }}
                     </span>
                 </div>
             </div>
