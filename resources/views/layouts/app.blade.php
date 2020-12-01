@@ -46,9 +46,7 @@
                 </h1>
 
                 <div class="flex flex-row">
-                    <a href="#" class="flex items-center mr-4 px-3 py-2 bg-blue-700 rounded-md text-white text-xs font-bold uppercase tracking-tight">
-                        Add Entry
-                    </a>
+                    <transaction-add-entry></transaction-add-entry>
                     <a href="#" class="flex items-center mr-4 px-3 py-2 bg-blue-700 rounded-md text-white text-xs font-bold uppercase tracking-tight">
                         Import CSV
                     </a>

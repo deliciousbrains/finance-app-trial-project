@@ -31717,6 +31717,12 @@ module.exports = function(module) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+Vue.component('modal', function () {
+  return Promise.all(/*! import() */[__webpack_require__.e(3), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ./components/modal */ "./resources/js/components/modal.vue"));
+});
+Vue.component('transaction-add-entry', function () {
+  return Promise.all(/*! import() */[__webpack_require__.e(3), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! ./components/transaction/add-entry */ "./resources/js/components/transaction/add-entry.vue"));
+});
 Vue.component('transaction-dashboard-item', function () {
   return __webpack_require__.e(/*! import() */ 0).then(__webpack_require__.bind(null, /*! ./components/transaction/dashboard-item */ "./resources/js/components/transaction/dashboard-item.vue"));
 });
