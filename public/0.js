@@ -13,7 +13,47 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['transaction'],
+  computed: {
+    formatedPerformedAt: function formatedPerformedAt() {
+      // This is a bit of a quick hack to make this date work with JS
+      // built in format, buuuut you can't deny it works without going
+      // down the momentjs rabbit hole or something.
+      var d = new Date(this.transaction.performed_at.replace(' ', 'T'));
+      return d.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      }) + ' at ' + d.toLocaleTimeString();
+    },
+    formatedAmount: function formatedAmount() {
+      // Cheers: https://stackoverflow.com/a/16233919
+      var formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD'
+      });
+      return this.transaction.amount < 0 ? '- ' + formatter.format(this.transaction.amount.toString().replace('-', '')) : formatter.format(this.transaction.amount);
+    },
+    amountClass: function amountClass() {
+      return this.transaction.amount < 0 ? 'text-gray-400' : 'text-green-500';
+    }
+  }
+});
 
 /***/ }),
 
@@ -32,9 +72,52 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("Hello world")])
+  return _c(
+    "div",
+    { staticClass: "group flex bg-white rounded-lg shadow-md p-4 space-x-4" },
+    [
+      _c("div", { staticClass: "flex flex-col flex-grow" }, [
+        _c("span", { staticClass: "text-lg font-semibold" }, [
+          _vm._v(_vm._s(_vm.transaction.label))
+        ]),
+        _vm._v(" "),
+        _c("span", [_vm._v(_vm._s(_vm.formatedPerformedAt))])
+      ]),
+      _vm._v(" "),
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "flex flex-col justify-center font-bold",
+          class: _vm.amountClass
+        },
+        [_vm._v("\n        " + _vm._s(_vm.formatedAmount) + "\n    ")]
+      )
+    ]
+  )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "flex flex-col justify-center" }, [
+      _c(
+        "div",
+        {
+          staticClass:
+            "hidden group-hover:block space-x-4 text-blue-700 uppercase text-sm font-bold underline"
+        },
+        [
+          _c("span", [_vm._v("Edit")]),
+          _vm._v(" "),
+          _c("span", [_vm._v("Delete")])
+        ]
+      )
+    ])
+  }
+]
 render._withStripped = true
 
 

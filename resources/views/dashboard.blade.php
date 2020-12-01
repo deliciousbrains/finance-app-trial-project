@@ -7,7 +7,7 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-8">
             @foreach ($transactions as $date => $dateGroup)
             <div class="flex flex-col">
                 <div class="flex">
@@ -20,13 +20,15 @@
                             {{ $carbon->parse($date)->format('D, d M Y') }}
                         @endif
                     </span>
-                    <span class="text-lg {{ $dateGroup->sum('amount') >= 0 ? ' text-green-500' : 'text-gray-400' }}">
+                    <span class="text-lg font-semibold {{ $dateGroup->sum('amount') >= 0 ? ' text-green-500' : 'text-gray-400' }}">
                         {{ $dateGroup->sum('amount') < 0 ? '-' : '' }} ${{ ltrim(number_format($dateGroup->sum('amount'), 2), '-') }}
                     </span>
                 </div>
-                @foreach ($dateGroup as $transaction)
-                    <transaction-dashboard-item></transaction-dashboard-item>
-                @endforeach
+                <div class="flex flex-col mt-2 space-y-4">
+                    @foreach ($dateGroup as $transaction)
+                        <transaction-dashboard-item :transaction='@json($transaction)'></transaction-dashboard-item>
+                    @endforeach
+                </div>
             </div>
 
             @endforeach
