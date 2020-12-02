@@ -37,6 +37,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['open'],
   methods: {
@@ -60,7 +61,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".modal-mask[data-v-478d961c] {\n  position: fixed;\n  z-index: 9998;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.5);\n  display: table;\n  transition: opacity 0.3s ease;\n}\n.modal-wrapper[data-v-478d961c] {\n  display: table-cell;\n  vertical-align: middle;\n}\n.modal-container[data-v-478d961c] {\n  transition: all 0.3s ease;\n  font-family: Helvetica, Arial, sans-serif;\n}\n.modal-body[data-v-478d961c] {\n  margin: 20px 0;\n}\n.modal-default-button[data-v-478d961c] {\n  float: right;\n}\n\n/*\n* The following styles are auto-applied to elements with\n* transition=\"modal\" when their visibility is toggled\n* by Vue.js.\n*\n* You can easily play with the modal transition by editing\n* these styles.\n*/\n.modal-enter[data-v-478d961c] {\n  opacity: 0;\n}\n.modal-leave-active[data-v-478d961c] {\n  opacity: 0;\n}\n.modal-enter .modal-container[data-v-478d961c],\n.modal-leave-active .modal-container[data-v-478d961c] {\n  transform: scale(1.1);\n}\n\n", ""]);
+exports.push([module.i, ".modal-mask[data-v-478d961c] {\n  position: fixed;\n  z-index: 9998;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.5);\n  display: table;\n  transition: opacity 0.3s ease;\n}\n.modal-wrapper[data-v-478d961c] {\n  display: table-cell;\n  vertical-align: middle;\n}\n.modal-container[data-v-478d961c] {\n  transition: all 0.3s ease;\n  font-family: Helvetica, Arial, sans-serif;\n}\n.modal-default-button[data-v-478d961c] {\n  float: right;\n}\n\n/*\n* The following styles are auto-applied to elements with\n* transition=\"modal\" when their visibility is toggled\n* by Vue.js.\n*\n* You can easily play with the modal transition by editing\n* these styles.\n*/\n.modal-enter[data-v-478d961c] {\n  opacity: 0;\n}\n.modal-leave-active[data-v-478d961c] {\n  opacity: 0;\n}\n.modal-enter .modal-container[data-v-478d961c],\n.modal-leave-active .modal-container[data-v-478d961c] {\n  transform: scale(1.1);\n}\n\n", ""]);
 
 // exports
 
@@ -113,61 +114,55 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("transition", { attrs: { name: "modal" } }, [
-    _c(
-      "div",
-      {
-        staticClass: "modal-mask",
-        on: {
-          click: function($event) {
-            return _vm.$emit("input", false)
-          }
-        }
-      },
-      [
-        _c("div", { staticClass: "modal-wrapper" }, [
-          _c(
-            "div",
-            {
-              staticClass:
-                "modal-container max-w-screen-sm bg-white rounded-md mx-auto my-0 text-gray-900"
-            },
-            [
-              _c(
-                "div",
-                { staticClass: "font-bold text-xl p-4 border-b" },
-                [_vm._t("header")],
-                2
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "modal-body" }, [_vm._t("body")], 2),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "modal-footer" },
-                [
-                  _vm._t("footer", [
-                    _vm._v("\n              default footer\n              "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "modal-default-button",
-                        on: {
-                          click: function($event) {
-                            return _vm.$emit("input", false)
-                          }
+    _c("div", { staticClass: "modal-mask" }, [
+      _c("div", { staticClass: "modal-wrapper" }, [
+        _c(
+          "div",
+          {
+            staticClass:
+              "modal-container max-w-screen-sm bg-white rounded-md mx-auto my-0 text-gray-900"
+          },
+          [
+            _c(
+              "div",
+              { staticClass: "font-bold text-xl px-6 py-4 border-b" },
+              [_vm._t("header")],
+              2
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "px-6 py-8 border-b" },
+              [_vm._t("body")],
+              2
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "modal-footer" },
+              [
+                _vm._t("footer", [
+                  _vm._v("\n              default footer\n              "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "modal-default-button",
+                      on: {
+                        click: function($event) {
+                          return _vm.$emit("input", false)
                         }
-                      },
-                      [_vm._v("\n                Cancel\n              ")]
-                    )
-                  ])
-                ],
-                2
-              )
-            ]
-          )
-        ])
-      ]
-    )
+                      }
+                    },
+                    [_vm._v("\n                Cancel\n              ")]
+                  )
+                ])
+              ],
+              2
+            )
+          ]
+        )
+      ])
+    ])
   ])
 }
 var staticRenderFns = []

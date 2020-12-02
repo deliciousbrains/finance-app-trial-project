@@ -5,23 +5,32 @@
         </a>
         <modal v-if="open" v-model="open">
             <template v-slot:header>Add Balance Entry</template>
+            <template v-slot:body>
+                <add-entry-form :data.sync="data"></add-entry-form>
+                <button @click="hello">Show me the data</button>
+            </template>
         </modal>
     </span>
 </template>
 
 <script>
 import Modal from '../modal'
+import AddEntryForm from './form'
 export default {
     components: {
         Modal,
+        AddEntryForm,
     },
     data() {
         return {
-            open: false,
+            open: true,
+            data: { label: 'Test' },
         }
     },
-    mounted: function () {
-        console.log('mounted')
+    methods: {
+        hello: function () {
+            console.log(this.data)
+        }
     }
 }
 </script>

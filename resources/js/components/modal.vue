@@ -1,14 +1,15 @@
 <template>
     <transition name="modal">
-        <div class="modal-mask" @click="$emit('input', false)">
+        <!-- <div class="modal-mask" @click="$emit('input', false)"> -->
+        <div class="modal-mask">
           <div class="modal-wrapper">
             <div class="modal-container max-w-screen-sm bg-white rounded-md mx-auto my-0 text-gray-900">
 
-              <div class="font-bold text-xl p-4 border-b">
+              <div class="font-bold text-xl px-6 py-4 border-b">
                 <slot name="header"></slot>
               </div>
 
-              <div class="modal-body">
+              <div class="px-6 py-8 border-b">
                 <slot name="body"></slot>
               </div>
 
@@ -60,10 +61,6 @@ export default {
     font-family: Helvetica, Arial, sans-serif;
 }
 
-
-.modal-body {
-    margin: 20px 0;
-}
 
 .modal-default-button {
     float: right;
