@@ -31724,7 +31724,7 @@ Vue.component('transaction-add-entry', function () {
   return Promise.all(/*! import() */[__webpack_require__.e(3), __webpack_require__.e(0), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! ./components/transaction/add-entry */ "./resources/js/components/transaction/add-entry.vue"));
 });
 Vue.component('transaction-dashboard-item', function () {
-  return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! ./components/transaction/dashboard-item */ "./resources/js/components/transaction/dashboard-item.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(3), __webpack_require__.e(0), __webpack_require__.e(6)]).then(__webpack_require__.bind(null, /*! ./components/transaction/dashboard-item */ "./resources/js/components/transaction/dashboard-item.vue"));
 });
 Vue.component('transaction-form', function () {
   return Promise.all(/*! import() */[__webpack_require__.e(3), __webpack_require__.e(0), __webpack_require__.e(1)]).then(__webpack_require__.bind(null, /*! ./components/transaction/form */ "./resources/js/components/transaction/form.vue"));

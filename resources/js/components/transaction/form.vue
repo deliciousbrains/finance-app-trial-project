@@ -7,7 +7,7 @@
         <div class="w-1/3 flex flex-col">
             <label for="performed_at" class="text-xs uppercase font-bold text-gray-600">Date</label>
             <!-- <input @keyup="update" v-model="data.performed_at" type="text" id="performed_at" class="border rounded text-sm p-2" /> -->
-            <datetime type="datetime" v-model="data.performed_at" input-class="border rounded text-sm p-2"></datetime>
+            <datetime type="datetime" v-model="data.performed_at" input-class="border rounded text-sm p-2 w-full"></datetime>
         </div>
         <div class="w-1/3 flex flex-col">
             <label for="amount" class="text-xs uppercase font-bold text-gray-600">Amount</label>

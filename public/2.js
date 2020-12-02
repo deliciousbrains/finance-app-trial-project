@@ -5,55 +5,9 @@
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/transaction/dashboard-item.vue?vue&type=script&lang=js& ***!
   \*************************************************************************************************************************************************************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['transaction'],
-  computed: {
-    formatedPerformedAt: function formatedPerformedAt() {
-      // This is a bit of a quick hack to make this date work with JS
-      // built in format, buuuut you can't deny it works without going
-      // down the momentjs rabbit hole or something.
-      var d = new Date(this.transaction.performed_at.replace(' ', 'T'));
-      return d.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      }) + ' at ' + d.toLocaleTimeString();
-    },
-    formatedAmount: function formatedAmount() {
-      // Cheers: https://stackoverflow.com/a/16233919
-      var formatter = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD'
-      });
-      return this.transaction.amount < 0 ? '- ' + formatter.format(this.transaction.amount.toString().replace('-', '')) : formatter.format(this.transaction.amount);
-    },
-    amountClass: function amountClass() {
-      return this.transaction.amount < 0 ? 'text-gray-400' : 'text-green-500';
-    }
-  }
-});
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /Users/evan/Code/finance-app-trial-project/resources/js/components/transaction/dashboard-item.vue: Unexpected token (44:19)\n\n\u001b[0m \u001b[90m 42 | \u001b[39m            editing\u001b[33m:\u001b[39m \u001b[36mfalse\u001b[39m\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 43 | \u001b[39m            data\u001b[33m:\u001b[39m {}\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 44 | \u001b[39m            errors \u001b[33m=\u001b[39m []\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    | \u001b[39m                   \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 45 | \u001b[39m        }\u001b[0m\n\u001b[0m \u001b[90m 46 | \u001b[39m    }\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 47 | \u001b[39m    mounted() {\u001b[0m\n    at Parser._raise (/Users/evan/Code/finance-app-trial-project/node_modules/@babel/parser/lib/index.js:748:17)\n    at Parser.raiseWithData (/Users/evan/Code/finance-app-trial-project/node_modules/@babel/parser/lib/index.js:741:17)\n    at Parser.raise (/Users/evan/Code/finance-app-trial-project/node_modules/@babel/parser/lib/index.js:735:17)\n    at Parser.unexpected (/Users/evan/Code/finance-app-trial-project/node_modules/@babel/parser/lib/index.js:9097:16)\n    at Parser.checkExpressionErrors (/Users/evan/Code/finance-app-trial-project/node_modules/@babel/parser/lib/index.js:9185:12)\n    at Parser.parseMaybeAssign (/Users/evan/Code/finance-app-trial-project/node_modules/@babel/parser/lib/index.js:9925:12)\n    at Parser.parseExpressionBase (/Users/evan/Code/finance-app-trial-project/node_modules/@babel/parser/lib/index.js:9843:23)\n    at /Users/evan/Code/finance-app-trial-project/node_modules/@babel/parser/lib/index.js:9837:39\n    at Parser.allowInAnd (/Users/evan/Code/finance-app-trial-project/node_modules/@babel/parser/lib/index.js:11515:16)\n    at Parser.parseExpression (/Users/evan/Code/finance-app-trial-project/node_modules/@babel/parser/lib/index.js:9837:17)\n    at Parser.parseReturnStatement (/Users/evan/Code/finance-app-trial-project/node_modules/@babel/parser/lib/index.js:12019:28)\n    at Parser.parseStatementContent (/Users/evan/Code/finance-app-trial-project/node_modules/@babel/parser/lib/index.js:11698:21)\n    at Parser.parseStatement (/Users/evan/Code/finance-app-trial-project/node_modules/@babel/parser/lib/index.js:11650:17)\n    at Parser.parseBlockOrModuleBlockBody (/Users/evan/Code/finance-app-trial-project/node_modules/@babel/parser/lib/index.js:12232:25)\n    at Parser.parseBlockBody (/Users/evan/Code/finance-app-trial-project/node_modules/@babel/parser/lib/index.js:12218:10)\n    at Parser.parseBlock (/Users/evan/Code/finance-app-trial-project/node_modules/@babel/parser/lib/index.js:12202:10)\n    at Parser.parseFunctionBody (/Users/evan/Code/finance-app-trial-project/node_modules/@babel/parser/lib/index.js:11194:24)\n    at Parser.parseFunctionBodyAndFinish (/Users/evan/Code/finance-app-trial-project/node_modules/@babel/parser/lib/index.js:11178:10)\n    at Parser.parseMethod (/Users/evan/Code/finance-app-trial-project/node_modules/@babel/parser/lib/index.js:11128:10)\n    at Parser.parseObjectMethod (/Users/evan/Code/finance-app-trial-project/node_modules/@babel/parser/lib/index.js:11057:19)\n    at Parser.parseObjPropValue (/Users/evan/Code/finance-app-trial-project/node_modules/@babel/parser/lib/index.js:11090:23)\n    at Parser.parsePropertyDefinition (/Users/evan/Code/finance-app-trial-project/node_modules/@babel/parser/lib/index.js:11014:10)\n    at Parser.parseObjectLike (/Users/evan/Code/finance-app-trial-project/node_modules/@babel/parser/lib/index.js:10904:25)\n    at Parser.parseExprAtom (/Users/evan/Code/finance-app-trial-project/node_modules/@babel/parser/lib/index.js:10464:23)\n    at Parser.parseExprSubscripts (/Users/evan/Code/finance-app-trial-project/node_modules/@babel/parser/lib/index.js:10122:23)\n    at Parser.parseUpdate (/Users/evan/Code/finance-app-trial-project/node_modules/@babel/parser/lib/index.js:10102:21)\n    at Parser.parseMaybeUnary (/Users/evan/Code/finance-app-trial-project/node_modules/@babel/parser/lib/index.js:10091:17)\n    at Parser.parseExprOps (/Users/evan/Code/finance-app-trial-project/node_modules/@babel/parser/lib/index.js:9961:23)\n    at Parser.parseMaybeConditional (/Users/evan/Code/finance-app-trial-project/node_modules/@babel/parser/lib/index.js:9935:23)\n    at Parser.parseMaybeAssign (/Users/evan/Code/finance-app-trial-project/node_modules/@babel/parser/lib/index.js:9898:21)\n    at /Users/evan/Code/finance-app-trial-project/node_modules/@babel/parser/lib/index.js:9865:39\n    at Parser.allowInAnd (/Users/evan/Code/finance-app-trial-project/node_modules/@babel/parser/lib/index.js:11515:16)\n    at Parser.parseMaybeAssignAllowIn (/Users/evan/Code/finance-app-trial-project/node_modules/@babel/parser/lib/index.js:9865:17)\n    at Parser.parseExportDefaultExpression (/Users/evan/Code/finance-app-trial-project/node_modules/@babel/parser/lib/index.js:12862:24)\n    at Parser.parseExport (/Users/evan/Code/finance-app-trial-project/node_modules/@babel/parser/lib/index.js:12772:31)\n    at Parser.parseStatementContent (/Users/evan/Code/finance-app-trial-project/node_modules/@babel/parser/lib/index.js:11756:27)");
 
 /***/ }),
 
@@ -74,50 +28,122 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "group flex bg-white rounded-lg shadow-md p-4 space-x-4" },
+    { staticClass: "group flex flex-col bg-white rounded-lg shadow-md p-4" },
     [
-      _c("div", { staticClass: "flex flex-col flex-grow" }, [
-        _c("span", { staticClass: "text-lg font-semibold" }, [
-          _vm._v(_vm._s(_vm.transaction.label))
+      _c("div", { staticClass: "flex space-x-4" }, [
+        _c("div", { staticClass: "flex flex-col flex-grow" }, [
+          _c("span", { staticClass: "text-lg font-semibold" }, [
+            _vm._v(_vm._s(_vm.data.label))
+          ]),
+          _vm._v(" "),
+          _c("span", [_vm._v(_vm._s(_vm.formatedPerformedAt))])
         ]),
         _vm._v(" "),
-        _c("span", [_vm._v(_vm._s(_vm.formatedPerformedAt))])
+        !_vm.editing
+          ? _c("div", { staticClass: "flex flex-col justify-center" }, [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "hidden group-hover:block space-x-4 text-blue-700 uppercase text-sm font-bold underline"
+                },
+                [
+                  _c(
+                    "span",
+                    {
+                      on: {
+                        click: function($event) {
+                          _vm.editing = true
+                        }
+                      }
+                    },
+                    [_vm._v("Edit")]
+                  ),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("Delete")])
+                ]
+              )
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "flex flex-col justify-center font-bold",
+            class: _vm.amountClass
+          },
+          [_vm._v("\n            " + _vm._s(_vm.formatedAmount) + "\n        ")]
+        )
       ]),
       _vm._v(" "),
-      _vm._m(0),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "flex flex-col justify-center font-bold",
-          class: _vm.amountClass
-        },
-        [_vm._v("\n        " + _vm._s(_vm.formatedAmount) + "\n    ")]
-      )
+      _vm.editing
+        ? _c(
+            "div",
+            { staticClass: "-mx-4 px-4 mt-6 pt-6 border-t" },
+            [
+              _vm.errors.length
+                ? _c(
+                    "ul",
+                    {
+                      staticClass:
+                        "bg-red-100 border border-red-500 text-red-500 rounded p-2 mb-6 text-xs"
+                    },
+                    _vm._l(_vm.errors, function(error, index) {
+                      return _c("li", { key: index }, [_vm._v(_vm._s(error))])
+                    }),
+                    0
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _c("edit-entry-form", {
+                attrs: { data: _vm.data },
+                on: {
+                  "update:data": function($event) {
+                    _vm.data = $event
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "mt-6 -mx-4 p-6 pb-0 border-t flex flex-row-reverse"
+                },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass:
+                        "text-xs uppercase font-semibold px-4 py-2 rounded bg-blue-700 text-white",
+                      on: { click: _vm.save }
+                    },
+                    [_vm._v("Update Entry")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass:
+                        "mx-2 text-xs uppercase font-semibold px-4 py-2 rounded bg-blue-200 text-gray-500",
+                      on: {
+                        click: function($event) {
+                          _vm.editing = false
+                        }
+                      }
+                    },
+                    [_vm._v("\n                Cancel\n            ")]
+                  )
+                ]
+              )
+            ],
+            1
+          )
+        : _vm._e()
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex flex-col justify-center" }, [
-      _c(
-        "div",
-        {
-          staticClass:
-            "hidden group-hover:block space-x-4 text-blue-700 uppercase text-sm font-bold underline"
-        },
-        [
-          _c("span", [_vm._v("Edit")]),
-          _vm._v(" "),
-          _c("span", [_vm._v("Delete")])
-        ]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

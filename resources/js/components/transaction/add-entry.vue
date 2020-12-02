@@ -45,7 +45,6 @@ export default {
                     this.data = {}
                 })
                 .catch(err => {
-                    console.log(err.response)
                     if (err.response) {
                         for (const field in err.response.data) {
                             this.errors.push(err.response.data[field][0])

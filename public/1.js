@@ -119,7 +119,7 @@ var render = function() {
         _c("datetime", {
           attrs: {
             type: "datetime",
-            "input-class": "border rounded text-sm p-2"
+            "input-class": "border rounded text-sm p-2 w-full"
           },
           model: {
             value: _vm.data.performed_at,

@@ -104,8 +104,6 @@ __webpack_require__.r(__webpack_exports__);
         _this.success = true;
         _this.data = {};
       })["catch"](function (err) {
-        console.log(err.response);
-
         if (err.response) {
           for (var field in err.response.data) {
             _this.errors.push(err.response.data[field][0]);
@@ -489,7 +487,7 @@ var render = function() {
         _c("datetime", {
           attrs: {
             type: "datetime",
-            "input-class": "border rounded text-sm p-2"
+            "input-class": "border rounded text-sm p-2 w-full"
           },
           model: {
             value: _vm.data.performed_at,
