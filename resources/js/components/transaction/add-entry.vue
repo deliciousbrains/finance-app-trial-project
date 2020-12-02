@@ -6,8 +6,14 @@
         <modal v-if="open" v-model="open">
             <template v-slot:header>Add Balance Entry</template>
             <template v-slot:body>
+                <ul class="bg-red-100 border border-red-500 text-red-500 rounded p-2 mb-6 text-xs" v-if="errors.length">
+                    <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
+                </ul>
+                <div v-if="success" class="bg-green-100 border border-green-500 text-green-500 rounded p-2 mb-6 text-xs">Successfully created entry.</div>
                 <add-entry-form :data.sync="data"></add-entry-form>
-                <button @click="hello">Show me the data</button>
+            </template>
+            <template v-slot:footer>
+                <button class="text-xs uppercase font-semibold px-4 py-2 rounded bg-blue-700 text-white" @click="save">Save Entry</button>
             </template>
         </modal>
     </span>
@@ -23,13 +29,29 @@ export default {
     },
     data() {
         return {
-            open: true,
-            data: { label: 'Test' },
+            open: false,
+            data: {},
+            errors: [],
+            success: false,
         }
     },
     methods: {
-        hello: function () {
-            console.log(this.data)
+        save: function () {
+            this.errors = []
+            this.success = false
+            axios.post(route('transactions.store'), this.data)
+                .then(res => {
+                    this.success = true
+                    this.data = {}
+                })
+                .catch(err => {
+                    console.log(err.response)
+                    if (err.response) {
+                        for (const field in err.response.data) {
+                            this.errors.push(err.response.data[field][0])
+                        }
+                    }
+                })
         }
     }
 }

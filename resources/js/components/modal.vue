@@ -13,13 +13,11 @@
                 <slot name="body"></slot>
               </div>
 
-              <div class="modal-footer">
-                <slot name="footer">
-                  default footer
-                  <button class="modal-default-button" @click="$emit('input', false)">
+              <div class="flex flex-row-reverse px-6 py-4">
+                <slot name="footer"></slot>
+                <button class="mx-2 text-xs uppercase font-semibold px-4 py-2 rounded bg-blue-200 text-gray-500" @click="$emit('input', false)">
                     Cancel
-                  </button>
-                </slot>
+                </button>
               </div>
             </div>
           </div>
@@ -59,11 +57,6 @@ export default {
 .modal-container {
     transition: all 0.3s ease;
     font-family: Helvetica, Arial, sans-serif;
-}
-
-
-.modal-default-button {
-    float: right;
 }
 
 /*

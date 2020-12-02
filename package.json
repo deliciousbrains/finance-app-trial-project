@@ -21,6 +21,9 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
-        "vue": "^2.6.12"
+        "luxon": "^1.25.0",
+        "vue": "^2.6.12",
+        "vue-datetime": "^1.0.0-beta.14",
+        "weekstart": "^1.0.1"
     }
 }

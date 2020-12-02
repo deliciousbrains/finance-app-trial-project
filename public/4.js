@@ -36,8 +36,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['open'],
   methods: {
@@ -75,6 +73,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -84,15 +88,30 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      open: true,
-      data: {
-        label: 'Test'
-      }
+      open: false,
+      data: {},
+      errors: [],
+      success: false
     };
   },
   methods: {
-    hello: function hello() {
-      console.log(this.data);
+    save: function save() {
+      var _this = this;
+
+      this.errors = [];
+      this.success = false;
+      axios.post(route('transactions.store'), this.data).then(function (res) {
+        _this.success = true;
+        _this.data = {};
+      })["catch"](function (err) {
+        console.log(err.response);
+
+        if (err.response) {
+          for (var field in err.response.data) {
+            _this.errors.push(err.response.data[field][0]);
+          }
+        }
+      });
     }
   }
 });
@@ -108,6 +127,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue_datetime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-datetime */ "./node_modules/vue-datetime/dist/vue-datetime.js");
+/* harmony import */ var vue_datetime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_datetime__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue_datetime_dist_vue_datetime_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-datetime/dist/vue-datetime.css */ "./node_modules/vue-datetime/dist/vue-datetime.css");
+/* harmony import */ var vue_datetime_dist_vue_datetime_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_datetime_dist_vue_datetime_css__WEBPACK_IMPORTED_MODULE_1__);
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -131,8 +154,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['data'],
+  components: {
+    datetime: vue_datetime__WEBPACK_IMPORTED_MODULE_0__["Datetime"]
+  },
   methods: {
     update: function update() {
       this.$emit('update:data', _objectSpread({}, this.data));
@@ -154,7 +183,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".modal-mask[data-v-478d961c] {\n  position: fixed;\n  z-index: 9998;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.5);\n  display: table;\n  transition: opacity 0.3s ease;\n}\n.modal-wrapper[data-v-478d961c] {\n  display: table-cell;\n  vertical-align: middle;\n}\n.modal-container[data-v-478d961c] {\n  transition: all 0.3s ease;\n  font-family: Helvetica, Arial, sans-serif;\n}\n.modal-default-button[data-v-478d961c] {\n  float: right;\n}\n\n/*\n* The following styles are auto-applied to elements with\n* transition=\"modal\" when their visibility is toggled\n* by Vue.js.\n*\n* You can easily play with the modal transition by editing\n* these styles.\n*/\n.modal-enter[data-v-478d961c] {\n  opacity: 0;\n}\n.modal-leave-active[data-v-478d961c] {\n  opacity: 0;\n}\n.modal-enter .modal-container[data-v-478d961c],\n.modal-leave-active .modal-container[data-v-478d961c] {\n  transform: scale(1.1);\n}\n\n", ""]);
+exports.push([module.i, ".modal-mask[data-v-478d961c] {\n  position: fixed;\n  z-index: 9998;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.5);\n  display: table;\n  transition: opacity 0.3s ease;\n}\n.modal-wrapper[data-v-478d961c] {\n  display: table-cell;\n  vertical-align: middle;\n}\n.modal-container[data-v-478d961c] {\n  transition: all 0.3s ease;\n  font-family: Helvetica, Arial, sans-serif;\n}\n\n/*\n* The following styles are auto-applied to elements with\n* transition=\"modal\" when their visibility is toggled\n* by Vue.js.\n*\n* You can easily play with the modal transition by editing\n* these styles.\n*/\n.modal-enter[data-v-478d961c] {\n  opacity: 0;\n}\n.modal-leave-active[data-v-478d961c] {\n  opacity: 0;\n}\n.modal-enter .modal-container[data-v-478d961c],\n.modal-leave-active .modal-container[data-v-478d961c] {\n  transform: scale(1.1);\n}\n\n", ""]);
 
 // exports
 
@@ -232,23 +261,23 @@ var render = function() {
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "modal-footer" },
+              { staticClass: "flex flex-row-reverse px-6 py-4" },
               [
-                _vm._t("footer", [
-                  _vm._v("\n              default footer\n              "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "modal-default-button",
-                      on: {
-                        click: function($event) {
-                          return _vm.$emit("input", false)
-                        }
+                _vm._t("footer"),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "mx-2 text-xs uppercase font-semibold px-4 py-2 rounded bg-blue-200 text-gray-500",
+                    on: {
+                      click: function($event) {
+                        return _vm.$emit("input", false)
                       }
-                    },
-                    [_vm._v("\n                Cancel\n              ")]
-                  )
-                ])
+                    }
+                  },
+                  [_vm._v("\n                Cancel\n            ")]
+                )
               ],
               2
             )
@@ -313,6 +342,33 @@ var render = function() {
                   key: "body",
                   fn: function() {
                     return [
+                      _vm.errors.length
+                        ? _c(
+                            "ul",
+                            {
+                              staticClass:
+                                "bg-red-100 border border-red-500 text-red-500 rounded p-2 mb-6 text-xs"
+                            },
+                            _vm._l(_vm.errors, function(error, index) {
+                              return _c("li", { key: index }, [
+                                _vm._v(_vm._s(error))
+                              ])
+                            }),
+                            0
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.success
+                        ? _c(
+                            "div",
+                            {
+                              staticClass:
+                                "bg-green-100 border border-green-500 text-green-500 rounded p-2 mb-6 text-xs"
+                            },
+                            [_vm._v("Successfully created entry.")]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
                       _c("add-entry-form", {
                         attrs: { data: _vm.data },
                         on: {
@@ -320,11 +376,24 @@ var render = function() {
                             _vm.data = $event
                           }
                         }
-                      }),
-                      _vm._v(" "),
-                      _c("button", { on: { click: _vm.hello } }, [
-                        _vm._v("Show me the data")
-                      ])
+                      })
+                    ]
+                  },
+                  proxy: true
+                },
+                {
+                  key: "footer",
+                  fn: function() {
+                    return [
+                      _c(
+                        "button",
+                        {
+                          staticClass:
+                            "text-xs uppercase font-semibold px-4 py-2 rounded bg-blue-700 text-white",
+                          on: { click: _vm.save }
+                        },
+                        [_vm._v("Save Entry")]
+                      )
                     ]
                   },
                   proxy: true
@@ -332,7 +401,7 @@ var render = function() {
               ],
               null,
               false,
-              3323259189
+              2010273533
             ),
             model: {
               value: _vm.open,
@@ -404,39 +473,35 @@ var render = function() {
       })
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "w-1/3 flex flex-col" }, [
-      _c(
-        "label",
-        {
-          staticClass: "text-xs uppercase font-bold text-gray-600",
-          attrs: { for: "performed_at" }
-        },
-        [_vm._v("Date")]
-      ),
-      _vm._v(" "),
-      _c("input", {
-        directives: [
+    _c(
+      "div",
+      { staticClass: "w-1/3 flex flex-col" },
+      [
+        _c(
+          "label",
           {
-            name: "model",
-            rawName: "v-model",
+            staticClass: "text-xs uppercase font-bold text-gray-600",
+            attrs: { for: "performed_at" }
+          },
+          [_vm._v("Date")]
+        ),
+        _vm._v(" "),
+        _c("datetime", {
+          attrs: {
+            type: "datetime",
+            "input-class": "border rounded text-sm p-2"
+          },
+          model: {
             value: _vm.data.performed_at,
+            callback: function($$v) {
+              _vm.$set(_vm.data, "performed_at", $$v)
+            },
             expression: "data.performed_at"
           }
-        ],
-        staticClass: "border rounded text-sm p-2",
-        attrs: { type: "text", id: "performed_at" },
-        domProps: { value: _vm.data.performed_at },
-        on: {
-          keyup: _vm.update,
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.$set(_vm.data, "performed_at", $event.target.value)
-          }
-        }
-      })
-    ]),
+        })
+      ],
+      1
+    ),
     _vm._v(" "),
     _c("div", { staticClass: "w-1/3 flex flex-col" }, [
       _c(
