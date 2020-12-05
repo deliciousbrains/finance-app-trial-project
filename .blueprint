@@ -1,0 +1,11 @@
+created:
+    - app/Http/Controllers/TransactionController.php
+    - database/factories/TransactionFactory.php
+    - database/migrations/2020_12_05_104713_create_transactions_table.php
+    - app/Models/Transaction.php
+    - database/seeders/TransactionSeeder.php
+    - tests/Feature/Http/Controllers/TransactionControllerTest.php
+updated:
+    - routes/web.php
+models:
+    Transaction: { label: 'string:400', amount: 'decimal:10,2', occurred_at: 'nullable timestamp', relationships: { belongsTo: User } }
