@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,5 +21,5 @@ Route::get('/', function () {
 
 require __DIR__.'/auth.php';
 
-Route::get('/dashboard', [TransactionController::class, 'index'])->name('dashboard');
-Route::resource('transaction', 'TransactionController')->only('index', 'store');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::resource('transaction', TransactionController::class)->only('store');

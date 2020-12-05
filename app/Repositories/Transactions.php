@@ -1,0 +1,47 @@
+<?php
+
+namespace App\Repositories;
+
+use App\Models\Transaction;
+use App\Models\User;
+use Illuminate\Support\Carbon;
+
+class Transactions
+{
+    public function getRecentGrouped(User $user, $limit = 100, $offset = 0)
+    {
+        $transactions = Transaction::query()
+            ->where('user_id', $user->id)
+            ->orderBy('occurred_at', 'desc')
+            ->limit($limit)
+            ->offset($offset)
+            ->get();
+
+        $grouped = [];
+
+        foreach ($transactions as $transaction) {
+            $date = Carbon::createFromTimeString($transaction->occurred_at)
+                ->format('D, d M');
+
+            if ($date === Carbon::today()->format('D, d M')) {
+                $date = 'Today';
+            } elseif ($date === Carbon::yesterday()->format('D, d M')) {
+                $date = 'Yesterday';
+            }
+
+            if (!isset($grouped[$date])) {
+                $grouped[$date] = ['total' => 0, 'transactions' => []];
+            }
+
+            $grouped[$date]['total'] += $transaction['amount'];
+            $grouped[$date]['transactions'][] = $transaction;
+        }
+
+        return $grouped;
+    }
+
+    public function getCurrentBalance(User $user)
+    {
+        return $user->transactions->sum('amount');
+    }
+}

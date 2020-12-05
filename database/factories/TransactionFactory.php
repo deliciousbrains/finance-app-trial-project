@@ -25,7 +25,7 @@ class TransactionFactory extends Factory
         return [
             'user_id' => 1,
             'label' => implode(' ', $this->faker->words),
-            'amount' => $this->faker->randomFloat(2, 0, 500),
+            'amount' => $this->faker->randomFloat(2, -500, 500),
             'occurred_at' => $this->faker->dateTimeThisMonth
         ];
     }

@@ -1,17 +1,35 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-md sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    You're logged in!
-                </div>
+@section('body')
+    @foreach($groupedTransactions as $date => $details)
+        <div class="mb-8">
+            <div class="flex items-center mb-4">
+                <span class="flex-grow text-gray-500 font-bold text-sm uppercase tracking-tight">{{ $date }}</span>
+                <span class="text-lg text-gray-500 font-bold {{ $details['total'] > 0 ? 'text-green-500' : '' }}">
+                    {{ $details['total'] > 0 ? '+ ' : '- ' }}
+                    ${{ number_format(abs($details['total'])) }}.<span class="text-sm">{{ \Illuminate\Support\Str::after(number_format($details['total'], 2), '.') }}</span>
+                </span>
+            </div>
+
+            <div>
+                @foreach($details['transactions'] as $transaction)
+                {{--<div class="flex items-center mb-4 px-4 py-2 shadow-md bg-white rounded-md">
+                    <div class="flex-grow">
+                        <div class="font-bold">
+                            {{ $transaction['label'] }}
+                        </div>
+                        <div class="text-xs text-gray-500">
+                            {{ $transaction['occurred_at'] }}
+                        </div>
+                    </div>
+                    <div class="text-lg font-bold {{ $transaction['amount'] > 0 ? 'text-green-500' : '' }}">
+                        {{ $transaction['amount'] > 0 ? '+ ' : '- ' }}
+                        ${{ number_format(abs($transaction['amount'])) }}.<span class="text-sm">{{ \Illuminate\Support\Str::after(number_format($transaction['amount'], 2), '.') }}</span>
+                    </div>
+                </div>--}}
+                <transaction :data='@json($transaction)'></transaction>
+                @endforeach
             </div>
         </div>
-    </div>
-</x-app-layout>
+    @endforeach
+@endsection
