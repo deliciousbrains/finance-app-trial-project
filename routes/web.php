@@ -25,6 +25,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');
 
-    Route::resource('transaction', TransactionController::class)->only('store');
+    Route::resource('transaction', TransactionController::class)->only('store', 'update', 'destroy');
 });
 

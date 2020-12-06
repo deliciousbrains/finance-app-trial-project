@@ -55,12 +55,9 @@
                     </a>
                 </div>
             </div>
-            <div class="my-auto text-right font-bold text-xs uppercase tracking-tight leading-7 text-gray-400">
-                Total Balance
-                <span class="block text-3xl font-normal text-green-500">
-                    ${{ number_format($currentBalance) }}.<span class="text-xl">{{ \Illuminate\Support\Str::after(number_format($currentBalance, 2), '.') }}</span>
-                </span>
-            </div>
+
+            <balance amount="{{ $currentBalance }}"></balance>
+
         </div>
     </div>
 

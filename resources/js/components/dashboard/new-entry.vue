@@ -28,7 +28,6 @@
 </template>
 
 <script>
-import Modal from "../Modal";
 import { Datetime } from 'vue-datetime';
 import 'vue-datetime/dist/vue-datetime.css';
 
@@ -41,7 +40,6 @@ export default {
         }
     },
     components: {
-        Modal,
         Datetime,
     },
     data() {
@@ -53,7 +51,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-
-</style>

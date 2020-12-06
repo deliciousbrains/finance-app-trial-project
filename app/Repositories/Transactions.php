@@ -29,12 +29,7 @@ class Transactions
                 $date = 'Yesterday';
             }
 
-            if (!isset($grouped[$date])) {
-                $grouped[$date] = ['total' => 0, 'transactions' => []];
-            }
-
-            $grouped[$date]['total'] += $transaction['amount'];
-            $grouped[$date]['transactions'][] = $transaction;
+            $grouped[$date][] = $transaction;
         }
 
         return $grouped;
@@ -57,5 +52,21 @@ class Transactions
         $transaction->save();
 
         return $transaction;
+    }
+
+    public function update(Transaction $transaction, array $data): Transaction
+    {
+        $transaction->label = $data['label'];
+        $transaction->amount = $data['amount'];
+        $transaction->occurred_at = Carbon::createFromTimeString($data['occurred_at'])->format('Y-m-d H:i:s');
+
+        $transaction->save();
+
+        return $transaction;
+    }
+
+    public function delete(Transaction $transaction)
+    {
+        $transaction->delete();
     }
 }

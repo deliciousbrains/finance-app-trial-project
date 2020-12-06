@@ -32048,10 +32048,19 @@ module.exports = function(module) {
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 Vue.component('transaction', function () {
-  return __webpack_require__.e(/*! import() */ 0).then(__webpack_require__.bind(null, /*! ./components/dashboard/transaction */ "./resources/js/components/dashboard/transaction.vue"));
+  return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! ./components/dashboard/transaction */ "./resources/js/components/dashboard/transaction.vue"));
+});
+Vue.component('transaction-group', function () {
+  return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ./components/dashboard/transaction-group */ "./resources/js/components/dashboard/transaction-group.vue"));
 });
 Vue.component('new-entry', function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ./components/dashboard/new-entry */ "./resources/js/components/dashboard/new-entry.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, /*! ./components/dashboard/new-entry */ "./resources/js/components/dashboard/new-entry.vue"));
+});
+Vue.component('edit-entry', function () {
+  return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! ./components/dashboard/edit-entry */ "./resources/js/components/dashboard/edit-entry.vue"));
+});
+Vue.component('balance', function () {
+  return __webpack_require__.e(/*! import() */ 1).then(__webpack_require__.bind(null, /*! ./components/dashboard/balance */ "./resources/js/components/dashboard/balance.vue"));
 });
 Vue.component('modal', __webpack_require__(/*! ./components/Modal.vue */ "./resources/js/components/Modal.vue")["default"]);
 var app = new Vue({
