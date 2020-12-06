@@ -8,5 +8,15 @@ Vue.component('balance', () => import('./components/dashboard/balance'));
 Vue.component('modal', require('./components/Modal.vue').default);
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    data: {
+        currentBalance: CURRENT_BALANCE
+    },
+    methods: {
+        updateCurrentBalance() {
+            axios.get('/balance').then(response => {
+                this.currentBalance = response.data.balance
+            })
+        }
+    }
 })

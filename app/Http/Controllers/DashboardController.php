@@ -16,4 +16,13 @@ class DashboardController extends Controller
             'currentBalance' => $transactions->getCurrentBalance($user)
         ]);
     }
+
+    public function balance(Request $request, Transactions $transactions)
+    {
+        $user = $request->user();
+
+        return response()->json([
+            'balance' => $transactions->getCurrentBalance($user)
+        ]);
+    }
 }

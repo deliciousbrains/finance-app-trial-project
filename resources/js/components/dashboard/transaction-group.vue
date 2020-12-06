@@ -7,7 +7,7 @@
                 ${{ formattedAmount }}.<span class="text-sm">{{ fraction }}</span>
             </span>
         </div>
-        <transaction v-for="transaction in transactions" :transaction='transaction' :key="transaction.id" v-on:remove="removeTransaction"></transaction>
+        <transaction v-for="transaction in transactions" :transaction='transaction' :key="transaction.id" @remove="removeTransaction" @update="updateTransaction"></transaction>
     </div>
 </template>
 
@@ -38,9 +38,13 @@ export default {
         removeTransaction: function(id) {
             this.transactions.forEach(transaction => {
                 if (transaction.id === id) {
-                    this.transactions.splice(this.transactions.indexOf(transaction), 1);
+                    this.transactions.splice(this.transactions.indexOf(transaction), 1)
+                    this.$emit('remove')
                 }
             })
+        },
+        updateTransaction: function() {
+            this.$emit('update')
         }
     },
     computed: {

@@ -56,7 +56,7 @@
                 </div>
             </div>
 
-            <balance amount="{{ $currentBalance }}"></balance>
+            <balance v-model="currentBalance"></balance>
 
         </div>
     </div>
@@ -66,5 +66,9 @@
         @yield('body')
     </div>
 </div>
+
+<script>
+    const CURRENT_BALANCE = {{ $currentBalance }};
+</script>
 </body>
 </html>

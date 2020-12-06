@@ -54,7 +54,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    deleteItem: function deleteItem() {
+    deleteTransaction: function deleteTransaction() {
       var _this = this;
 
       if (confirm('Are you sure you want to delete this?') === false) {
@@ -64,6 +64,10 @@ __webpack_require__.r(__webpack_exports__);
       axios["delete"]('/transaction/' + this.transaction.id).then(function (response) {
         _this.$emit('remove', _this.transaction.id);
       });
+    },
+    onTransactionSaved: function onTransactionSaved() {
+      this.editing = false;
+      this.$emit('update');
     }
   },
   computed: {
@@ -155,7 +159,7 @@ var render = function() {
                 on: {
                   click: function($event) {
                     $event.preventDefault()
-                    return _vm.deleteItem($event)
+                    return _vm.deleteTransaction($event)
                   }
                 }
               },
@@ -190,9 +194,7 @@ var render = function() {
                 cancel: function($event) {
                   _vm.editing = false
                 },
-                edited: function($event) {
-                  _vm.editing = false
-                }
+                edited: _vm.onTransactionSaved
               }
             })
           : _vm._e()

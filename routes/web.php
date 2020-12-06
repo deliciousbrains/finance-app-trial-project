@@ -22,8 +22,8 @@ Route::get('/', function () {
 require __DIR__.'/auth.php';
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])
-        ->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/balance', [DashboardController::class, 'balance'])->name('balance');
 
     Route::resource('transaction', TransactionController::class)->only('store', 'update', 'destroy');
 });

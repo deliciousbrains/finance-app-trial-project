@@ -21,15 +21,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "balance",
   props: {
-    amount: {
+    value: {
       required: true,
-      type: String
+      type: Number
     }
   },
   data: function data() {
     return {
-      balance: parseFloat(this.amount)
+      balance: this.value
     };
+  },
+  watch: {
+    value: function value() {
+      this.balance = this.value;
+    }
   },
   computed: {
     formattedAmount: function formattedAmount() {

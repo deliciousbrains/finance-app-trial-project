@@ -32064,7 +32064,19 @@ Vue.component('balance', function () {
 });
 Vue.component('modal', __webpack_require__(/*! ./components/Modal.vue */ "./resources/js/components/Modal.vue")["default"]);
 var app = new Vue({
-  el: '#app'
+  el: '#app',
+  data: {
+    currentBalance: CURRENT_BALANCE
+  },
+  methods: {
+    updateCurrentBalance: function updateCurrentBalance() {
+      var _this = this;
+
+      axios.get('/balance').then(function (response) {
+        _this.currentBalance = response.data.balance;
+      });
+    }
+  }
 });
 
 /***/ }),

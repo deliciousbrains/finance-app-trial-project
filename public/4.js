@@ -51,8 +51,13 @@ __webpack_require__.r(__webpack_exports__);
       this.transactions.forEach(function (transaction) {
         if (transaction.id === id) {
           _this.transactions.splice(_this.transactions.indexOf(transaction), 1);
+
+          _this.$emit('remove');
         }
       });
+    },
+    updateTransaction: function updateTransaction() {
+      this.$emit('update');
     }
   },
   computed: {
@@ -133,7 +138,10 @@ var render = function() {
             return _c("transaction", {
               key: transaction.id,
               attrs: { transaction: transaction },
-              on: { remove: _vm.removeTransaction }
+              on: {
+                remove: _vm.removeTransaction,
+                update: _vm.updateTransaction
+              }
             })
           })
         ],

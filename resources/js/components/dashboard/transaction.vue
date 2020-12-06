@@ -13,7 +13,7 @@
 
                 <div class="xl:flex-col mr-10">
                     <a href="#" @click.prevent="editing = true" class="pr-3 underline text-white uppercase md:text-sm group-hover:text-blue-700 font-bold">Edit</a>
-                    <a href="#" @click.prevent="deleteItem" class="pr-2 underline text-white uppercase md:text-sm group-hover:text-red-700 font-bold">Delete</a>
+                    <a href="#" @click.prevent="deleteTransaction" class="pr-2 underline text-white uppercase md:text-sm group-hover:text-red-700 font-bold">Delete</a>
                 </div>
 
                 <div class="text-lg font-bold" :class="amountClass">
@@ -24,7 +24,7 @@
 
             <hr v-if="editing" />
 
-            <edit-entry v-if="editing" :transaction="transaction" @cancel="editing = false" @edited="editing = false"></edit-entry>
+            <edit-entry v-if="editing" :transaction="transaction" @cancel="editing = false" @edited="onTransactionSaved"></edit-entry>
         </div>
     </div>
 </template>
@@ -44,7 +44,7 @@ export default {
         }
     },
     methods: {
-        deleteItem() {
+        deleteTransaction() {
             if (confirm('Are you sure you want to delete this?') === false) {
                 return;
             }
@@ -54,6 +54,10 @@ export default {
                     this.$emit('remove', this.transaction.id)
                 })
         },
+        onTransactionSaved() {
+            this.editing = false
+            this.$emit('update')
+        }
     },
     computed: {
         formattedDate() {
