@@ -13,20 +13,6 @@
 
             <div>
                 @foreach($details['transactions'] as $transaction)
-                {{--<div class="flex items-center mb-4 px-4 py-2 shadow-md bg-white rounded-md">
-                    <div class="flex-grow">
-                        <div class="font-bold">
-                            {{ $transaction['label'] }}
-                        </div>
-                        <div class="text-xs text-gray-500">
-                            {{ $transaction['occurred_at'] }}
-                        </div>
-                    </div>
-                    <div class="text-lg font-bold {{ $transaction['amount'] > 0 ? 'text-green-500' : '' }}">
-                        {{ $transaction['amount'] > 0 ? '+ ' : '- ' }}
-                        ${{ number_format(abs($transaction['amount'])) }}.<span class="text-sm">{{ \Illuminate\Support\Str::after(number_format($transaction['amount'], 2), '.') }}</span>
-                    </div>
-                </div>--}}
                 <transaction :data='@json($transaction)'></transaction>
                 @endforeach
             </div>

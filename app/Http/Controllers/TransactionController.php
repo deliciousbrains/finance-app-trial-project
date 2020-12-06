@@ -10,12 +10,12 @@ use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
-    public function store(TransactionStoreRequest $request)
+    public function store(TransactionStoreRequest $request, Transactions $transactions)
     {
-        $transaction = Transaction::create($request->validated());
+        $transaction = $transactions->create($request->user(), $request->validated());
 
         event(new NewTransaction($transaction));
-        $request->session()->flash('transaction.label', $transaction->label);
+        $request->session()->flash('status', 'Balance entry saved successfully.');
 
         return redirect()->route('dashboard');
     }

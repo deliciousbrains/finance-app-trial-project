@@ -26,7 +26,7 @@ class TransactionStoreRequest extends FormRequest
         return [
             'label' => ['required', 'string', 'max:400'],
             'amount' => ['required', 'numeric', 'between:-99999999.99,99999999.99'],
-            'occurred_at' => [''],
+            'occurred_at' => ['required'],
         ];
     }
 }

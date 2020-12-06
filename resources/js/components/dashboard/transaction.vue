@@ -18,7 +18,12 @@
 <script>
 export default {
     name: "transaction",
-    props: ['data'],
+    props: {
+        data: {
+            required: true,
+            type: Object
+        }
+    },
     computed: {
         formattedDate() {
             const d = new Date(this.data.occurred_at.replace(' ', 'T'))
@@ -40,7 +45,7 @@ export default {
         },
 
         amountClass() {
-            return this.data.amount > 0 ? 'text-green-500' : ''
+            return this.data.amount > 0 ? 'text-green-500' : 'text-gray-500'
         }
     }
 }

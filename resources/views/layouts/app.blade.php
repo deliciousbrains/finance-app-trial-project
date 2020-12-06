@@ -46,9 +46,10 @@
                 </h1>
 
                 <div class="flex flex-row">
-                    <a href="#" class="flex items-center mr-4 px-3 py-2 bg-blue-700 rounded-md text-white text-xs font-bold uppercase tracking-tight">
-                        Add Entry
-                    </a>
+                    <new-entry action="{{ route('transaction.store') }}">
+                        @csrf
+                    </new-entry>
+
                     <a href="#" class="flex items-center mr-4 px-3 py-2 bg-blue-700 rounded-md text-white text-xs font-bold uppercase tracking-tight">
                         Import CSV
                     </a>
@@ -64,6 +65,7 @@
     </div>
 
     <div class="container mx-auto px-8">
+        @include('partials.flash')
         @yield('body')
     </div>
 </div>
