@@ -46,13 +46,13 @@
                 </h1>
 
                 <div class="flex flex-row">
-                    <new-entry action="{{ route('transaction.store') }}">
+                    <new-entry action="{{ route('transaction.store') }}" processing="{{ Auth::user()->processing ? 'true' : 'false' }}">
                         @csrf
                     </new-entry>
 
-                    <a href="#" class="flex items-center mr-4 px-3 py-2 bg-blue-700 rounded-md text-white text-xs font-bold uppercase tracking-tight">
-                        Import CSV
-                    </a>
+                    <bulk-import action="{{ route('bulk-upload') }}" processing="{{ Auth::user()->processing ? 'true' : 'false' }}">
+                        @csrf
+                    </bulk-import>
                 </div>
             </div>
 
@@ -63,12 +63,14 @@
 
     <div class="container mx-auto px-8">
         @include('partials.flash')
+        @include('partials.processing')
         @yield('body')
     </div>
 </div>
 
-<script>
+<script type="text/javascript">
     const CURRENT_BALANCE = {{ $currentBalance }};
 </script>
+
 </body>
 </html>

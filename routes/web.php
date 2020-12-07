@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BulkImportController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
@@ -24,7 +25,7 @@ require __DIR__.'/auth.php';
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/balance', [DashboardController::class, 'balance'])->name('balance');
-
+    Route::post('/bulk-upload', [BulkImportController::class, 'store'])->name('bulk-upload');
     Route::resource('transaction', TransactionController::class)->only('store', 'update', 'destroy');
 });
 

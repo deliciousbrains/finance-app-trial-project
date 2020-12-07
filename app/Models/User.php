@@ -45,4 +45,21 @@ class User extends Authenticatable
     {
         return $this->hasMany(Transaction::class);
     }
+
+    public function bulkProcesses(): HasMany
+    {
+        return $this->hasMany(BulkProcess::class);
+    }
+
+    public function getProcessingAttribute(): bool
+    {
+        return $this->bulkProcesses()->where('completed', '=', 0)->count() > 0;
+    }
+
+    public function getRecordCountAttribute(): ?int
+    {
+        $row = $this->bulkProcesses()->where('completed', '=', 0)->first();
+
+        return $row ? $row->record_count : null;
+    }
 }

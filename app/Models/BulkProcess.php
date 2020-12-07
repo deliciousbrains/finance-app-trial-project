@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Transaction extends Model
+class BulkProcess extends Model
 {
     use HasFactory;
 
-    protected $table = 'transactions';
+    protected $table = 'bulk_process';
 
     /**
      * The attributes that are mass assignable.
@@ -19,9 +19,9 @@ class Transaction extends Model
      */
     protected $fillable = [
         'user_id',
-        'label',
-        'amount',
-        'occurred_at',
+        'filename',
+        'record_count',
+        'completed',
     ];
 
     /**
@@ -31,16 +31,9 @@ class Transaction extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'amount' => 'decimal:2',
-    ];
-
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = [
-        'occurred_at',
+        'user_id' => 'integer',
+        'record_count' => 'integer',
+        'completed' => 'boolean',
     ];
 
     public function user(): BelongsTo

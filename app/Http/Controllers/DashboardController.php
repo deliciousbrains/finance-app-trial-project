@@ -9,11 +9,9 @@ class DashboardController extends Controller
 {
     public function index(Request $request, Transactions $transactions)
     {
-        $user = $request->user();
-
         return view('dashboard', [
-            'groupedTransactions' => $transactions->getRecentGrouped($user),
-            'currentBalance' => $transactions->getCurrentBalance($user)
+            'groupedTransactions' => $transactions->getRecentGrouped(),
+            'currentBalance' => $transactions->getCurrentBalance()
         ]);
     }
 
@@ -22,7 +20,7 @@ class DashboardController extends Controller
         $user = $request->user();
 
         return response()->json([
-            'balance' => $transactions->getCurrentBalance($user)
+            'balance' => $transactions->getCurrentBalance()
         ]);
     }
 }
