@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Auth;
 
 class Transactions
 {
+    /**
+     * @todo Implement pagination
+     *
+     * @return array
+     */
     public function getRecentGrouped(): array
     {
         $user = Auth::user();
@@ -16,7 +21,6 @@ class Transactions
         $transactions = Transaction::query()
             ->where('user_id', $user->id)
             ->orderBy('occurred_at', 'desc')
-            ->limit(10)
             ->get();
 
         $grouped = [];

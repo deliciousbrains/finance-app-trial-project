@@ -13,7 +13,7 @@ class CSV
         }
 
         $header = null;
-        $data   = [];
+        $data = [];
 
         if (($handle = fopen($filename, 'r')) !== false) {
             while (($row = fgetcsv($handle, 1000, $delimiter)) !== false) {
@@ -23,6 +23,7 @@ class CSV
                     $data[] = array_combine($header, $row);
                 }
             }
+
             fclose($handle);
         }
 

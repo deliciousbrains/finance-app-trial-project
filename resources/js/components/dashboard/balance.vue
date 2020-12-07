@@ -2,6 +2,7 @@
     <div class="my-auto text-right font-bold text-xs uppercase tracking-tight leading-7 text-gray-400">
         Total Balance
         <span class="block text-3xl font-normal text-green-500">
+            {{ balance > 0 ? '' : '- ' }}
             ${{ formattedAmount }}.<span class="text-xl">{{ fraction }}</span>
         </span>
     </div>
@@ -37,7 +38,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-
-</style>

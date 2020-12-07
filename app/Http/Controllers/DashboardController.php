@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\Transactions;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class DashboardController extends Controller
 {
-    public function index(Request $request, Transactions $transactions)
+    public function index(Transactions $transactions)
     {
         return view('dashboard', [
             'groupedTransactions' => $transactions->getRecentGrouped(),
@@ -15,10 +15,8 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function balance(Request $request, Transactions $transactions)
+    public function balance(Transactions $transactions): JsonResponse
     {
-        $user = $request->user();
-
         return response()->json([
             'balance' => $transactions->getCurrentBalance()
         ]);

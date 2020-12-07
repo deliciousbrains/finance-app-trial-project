@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\TransactionStoreRequest;
 use App\Models\Transaction;
 use App\Repositories\Transactions;
+use Illuminate\Http\RedirectResponse;
 
 class TransactionController extends Controller
 {
-    public function store(TransactionStoreRequest $request, Transactions $transactions)
+    public function store(TransactionStoreRequest $request, Transactions $transactions): RedirectResponse
     {
         $transactions->create($request->user(), $request->validated());
 

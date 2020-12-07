@@ -57,6 +57,7 @@ export default {
 
             return total
         },
+
         formattedAmount() {
             return Math.abs(this.total).toFixed(0)
         },

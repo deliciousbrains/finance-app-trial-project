@@ -4,8 +4,6 @@ namespace App\Jobs;
 
 use App\Models\BulkProcess;
 use App\Models\Transaction;
-use App\Models\User;
-use App\Repositories\BulkProcesses;
 use App\Support\CSV;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -36,11 +34,9 @@ class ImportBulkTransactions implements ShouldQueue
     /**
      * Execute the job.
      *
-     * @param BulkProcesses $users
-     *
      * @return void
      */
-    public function handle(BulkProcesses $users)
+    public function handle()
     {
         $entries = CSV::toArray($this->bulkProcess->filename);
 
