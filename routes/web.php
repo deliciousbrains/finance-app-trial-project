@@ -24,7 +24,7 @@ Route::put('/dashboard', [TransactionsController::class, 'update'])->middleware(
 Route::delete('/dashboard', [TransactionsController::class, 'destroy'])->middleware(['auth'])->name('dashboard');
 
 //Route::get('/dashboard', function () {    
-//    return view('transactions.edit');
+//   return view('transactions.edit');
 //})->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
