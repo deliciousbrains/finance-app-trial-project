@@ -208,4 +208,38 @@ class EntryTest extends TestCase
         $response = $this->actingAs($secondUser)->deleteJson('/api/entries/' . $entry->id);
         $response->assertStatus(404);
     }
+
+    public function testGetTotal()
+    {
+        /** @var User $firstUser */
+        $firstUser = User::factory()->create();
+        /** @var User $secondUser */
+        $secondUser = User::factory()->create();
+        /** @var Entry $firstEntry */
+        $firstEntry = Entry::factory()->create(['value' => 3000, 'is_debit' => 1]);
+        $firstEntry->user_id = $firstUser->id;
+        $firstEntry->save();
+        /** @var Entry $secondEntry */
+        $secondEntry = Entry::factory()->create(['value' => 500, 'is_debit' => 0]);
+        $secondEntry->user_id = $firstUser->id;
+        $secondEntry->save();
+        /** @var Entry $thirdEntry */
+        $thirdEntry = Entry::factory()->create(['value' => 10, 'is_debit' => 1]);
+        $thirdEntry->user_id = $firstUser->id;
+        $thirdEntry->save();
+        /** @var Entry $fourthEntry */
+        $fourthEntry = Entry::factory()->create(['value' => 60, 'is_debit' => 0]);
+        $fourthEntry->user_id = $firstUser->id;
+        $fourthEntry->save();
+        /** @var Entry $fifthEntry */
+        $fifthEntry = Entry::factory()->create(['value' => 50000, 'is_debit' => 1]);
+        $fifthEntry->user_id = $secondUser->id;
+        $fifthEntry->save();
+
+        $response = $this->actingAs($firstUser)->getJson('/api/entries/total');
+        $response->assertStatus(200);
+
+        $data = json_decode($response->getContent(), true);
+        $this->assertEquals(2450, $data['total']);
+    }
 }

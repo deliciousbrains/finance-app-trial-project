@@ -117,4 +117,28 @@ class EntryController extends Controller
 
         return new JsonResponse(null, Response::HTTP_NO_CONTENT);
     }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getTotal(Request $request): JsonResponse
+    {
+        /** @var User $user */
+        $user = $request->user();
+        /** @var Entry[] $entries */
+        $entries = Entry::where('user_id', $user->id)->get();
+        $total = 0;
+        foreach ($entries as $entry) {
+            // avoid floating point arithmetic
+            $value = (int)($entry->value * 100);
+            if (!$entry->is_debit) {
+                $value *= -1;
+            }
+            $total += $value;
+        }
+        $total = $total / 100;
+
+        return new JsonResponse(['total' => $total], Response::HTTP_OK);
+    }
 }

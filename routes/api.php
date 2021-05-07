@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware(['auth:api'])->group(function () {
+    Route::get('/entries/total', [EntryController::class, 'getTotal']);
     Route::put('/entries/{id}', [EntryController::class, 'update']);
     Route::delete('/entries/{id}', [EntryController::class, 'destroy']);
     Route::get('/entries', [EntryController::class, 'index']);
