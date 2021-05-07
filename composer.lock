@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f69caca9aafe72ca55d1c04bc2da609c",
+    "content-hash": "d1be59434a1610e808443738dec8a916",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2314,6 +2314,75 @@
                 }
             ],
             "time": "2020-08-18T17:17:46+00:00"
+        },
+        {
+            "name": "spresnac/laravel-create-user-cli",
+            "version": "1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spresnac/laravel-create-user-cli.git",
+                "reference": "bee0a3bd94588ab280a31b3fc2b31f2b5d2e38a6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spresnac/laravel-create-user-cli/zipball/bee0a3bd94588ab280a31b3fc2b31f2b5d2e38a6",
+                "reference": "bee0a3bd94588ab280a31b3fc2b31f2b5d2e38a6",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3|^7.4|^8.0"
+            },
+            "require-dev": {
+                "laravel/framework": "^7|^8",
+                "orchestra/testbench": "^4|^5|^6"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "spresnac\\createcliuser\\CreateCliUserCommandServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "spresnac\\": "src/spresnac/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sascha Presnac",
+                    "email": "sascha.presnac@protonmail.com"
+                }
+            ],
+            "description": "Create a user-entry from cli with artisan",
+            "keywords": [
+                "cd",
+                "ci",
+                "cli",
+                "laravel",
+                "php",
+                "usermanagement"
+            ],
+            "support": {
+                "issues": "https://github.com/spresnac/laravel-create-user-cli/issues",
+                "source": "https://github.com/spresnac/laravel-create-user-cli/tree/1.0.5"
+            },
+            "funding": [
+                {
+                    "url": "https://www.buymeacoffee.com/spresnac",
+                    "type": "other"
+                },
+                {
+                    "url": "https://www.paypal.me/paladin",
+                    "type": "paypal"
+                }
+            ],
+            "time": "2021-01-08T10:09:08+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
