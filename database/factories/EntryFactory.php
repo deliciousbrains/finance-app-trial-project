@@ -24,7 +24,7 @@ class EntryFactory extends Factory
     {
         return [
             'label' => $this->faker->word,
-            'value' => $this->faker->regexify('/\d+\.\d{2}/'),
+            'value' => $this->faker->regexify('/\d{1,6}\.\d{2}/'),
             'date' => $this->faker->dateTime,
             'user_id' => function () {
                 /** @var User $user */

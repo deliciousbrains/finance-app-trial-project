@@ -79,7 +79,7 @@ class EntryController extends Controller
         }
         $entry->label = $validated['label'];
         $entry->value = $validated['value'];
-        if ($validated['date']) {
+        if (array_key_exists('date', $validated)) {
             $entry->date = $validated['date'];
         }
         $entry->save();
@@ -97,7 +97,7 @@ class EntryController extends Controller
     {
         try {
             /** @var Entry $entry */
-            $entry = Entry::find($id);
+            $entry = Entry::findOrFail($id);
         } catch (ModelNotFoundException $e) {
             return new JsonResponse($e, Response::HTTP_NOT_FOUND);
         }
