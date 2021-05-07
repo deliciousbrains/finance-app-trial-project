@@ -13,6 +13,8 @@ services:
             - "8085:80"
         links:
             - deliciousbrains-db
+        volumes:
+            - "..:/var/www/html"
 
     deliciousbrains-db:
         image: "mysql:5.7"

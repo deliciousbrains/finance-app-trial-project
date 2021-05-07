@@ -15,11 +15,14 @@ class AddBalanceTable extends Migration
     {
         Schema::create('entries', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('user_id', false, true);
             $table->string('label');
             $table->decimal('value');
             $table->timestamp('date')->useCurrent();
             $table->timestamps();
-            $table->foreignIdFor(\App\Models\User::class, 'user_id');
+            $table->foreign('user_id')->references('id')->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 
