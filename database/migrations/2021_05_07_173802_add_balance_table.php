@@ -19,6 +19,7 @@ class AddBalanceTable extends Migration
             $table->decimal('value');
             $table->timestamp('date')->useCurrent();
             $table->timestamps();
+            $table->foreignIdFor(\App\Models\User::class, 'user_id');
         });
     }
 
