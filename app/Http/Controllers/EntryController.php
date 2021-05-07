@@ -42,13 +42,14 @@ class EntryController extends Controller
         /** @var User $user */
         $user = $request->user();
         $entry = new Entry();
-        $entry->userId = $user->id;
+        $entry->user_id = $user->id;
         $entry->label = $validated['label'];
         $entry->value = $validated['value'];
-        if ($validated['date']) {
+        if (array_key_exists('date', $validated)) {
             $entry->date = $validated['date'];
         }
         $entry->save();
+        $entry->refresh();
 
         return new JsonResponse($entry, Response::HTTP_OK);
     }
@@ -73,7 +74,7 @@ class EntryController extends Controller
         }
         /** @var User $user */
         $user = $request->user();
-        if ($user->id != $entry->userId) {
+        if ($user->id != $entry->user_id) {
             return new JsonResponse(null, Response::HTTP_NOT_FOUND);
         }
         $entry->label = $validated['label'];
@@ -82,6 +83,7 @@ class EntryController extends Controller
             $entry->date = $validated['date'];
         }
         $entry->save();
+        $entry->refresh();
 
         return new JsonResponse($entry, Response::HTTP_OK);
     }
@@ -101,7 +103,7 @@ class EntryController extends Controller
         }
         /** @var User $user */
         $user = $request->user();
-        if ($user->id != $entry->userId) {
+        if ($user->id != $entry->user_id) {
             return new JsonResponse(null, Response::HTTP_NOT_FOUND);
         }
         try {

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * Class Entry
  * @package App\Models
  * @property int $id
- * @property int $userId
+ * @property int $user_id
  * @property string $label
  * @property float $value
  * @property Carbon $date
@@ -20,6 +21,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Entry extends Model
 {
+    use HasFactory;
+
     // explicit > implicit
     protected $table = 'entries';
 
