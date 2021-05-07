@@ -1,0 +1,39 @@
+version: "2.1"
+
+volumes:
+    "deliciousbrains-db-data":
+
+services:
+    deliciousbrains-app:
+        build:
+            context: ..
+            args:
+                SYSTEM_TZ: "${SYSTEM_TZ:-America/New_York}"
+        ports:
+            - "8085:80"
+        links:
+            - deliciousbrains-db
+
+    deliciousbrains-db:
+        image: "mysql:5.7"
+        environment:
+            MYSQL_ROOT_PASSWORD: rootsecret
+            MYSQL_DATABASE: forge
+            MYSQL_USER: forge
+            MYSQL_PASSWORD: secret
+            TZ: "America/New_York"
+        volumes:
+            - "deliciousbrains-db-data:/var/lib/mysql"
+        ports:
+            - "33066:3306"
+
+    deliciousbrains-phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        environment:
+            PMA_HOST: "deliciousbrains-db"
+            MYSQL_USER: forge
+            MYSQL_PASSWORD: secret
+        ports:
+            - "8086:80"
+        links:
+            - deliciousbrains-db
