@@ -31,7 +31,7 @@ class EntryController extends Controller
     {
         try {
             $validated = $request->validated();
-        } catch (ValidationException $e) {
+        } /** @noinspection PhpRedundantCatchClauseInspection */ catch (ValidationException $e) {
             return new JsonResponse($e, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
         $entry = new Entry();
@@ -54,7 +54,7 @@ class EntryController extends Controller
     {
         try {
             $validated = $request->validated();
-        } catch (ValidationException $e) {
+        } /** @noinspection PhpRedundantCatchClauseInspection */ catch (ValidationException $e) {
             return new JsonResponse($e, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
         try {

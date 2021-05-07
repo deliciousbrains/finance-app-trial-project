@@ -46,8 +46,8 @@ return [
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
-            'host' => '127.0.0.1',
-            'port' => '33066',
+            'host' => 'deliciousbrains-db',
+            'port' => '3306',
             'database' => 'forge',
             'username' => 'forge',
             'password' => 'secret',
