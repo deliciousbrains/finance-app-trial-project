@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EntryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -13,6 +14,13 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::middleware(['auth:api'])->group(function () {
+    Route::put('/entries/{id}', [EntryController::class, 'update']);
+    Route::delete('/entries/{id}', [EntryController::class, 'destroy']);
+    Route::get('/entries', [EntryController::class, 'index']);
+    Route::post('/entries', [EntryController::class, 'store']);
+});
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();

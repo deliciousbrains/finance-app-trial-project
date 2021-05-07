@@ -18,6 +18,7 @@ class AddBalanceTable extends Migration
             $table->string('label');
             $table->decimal('value');
             $table->timestamp('date')->useCurrent();
+            $table->timestamps();
         });
     }
 
