@@ -50,6 +50,7 @@ class EntryTest extends TestCase
         $postData = [
             'label' => 'My Label',
             'value' => '204.50',
+            'is_debit' => 1,
         ];
 
         $response = $this->actingAs($user)->postJson('/api/entries', $postData);
@@ -58,6 +59,7 @@ class EntryTest extends TestCase
         $data = json_decode($response->getContent(), true);
         $this->assertEquals('My Label', $data['label']);
         $this->assertEquals('204.50', $data['value']);
+        $this->assertEquals(1, $data['is_debit']);
         $carbonDate = new Carbon($data['date']);
         $this->assertEquals(Carbon::now()->format('Y-m-d'), $carbonDate->format('Y-m-d'));
         $this->assertEquals($user->id, $data['user_id']);
@@ -91,7 +93,8 @@ class EntryTest extends TestCase
         $postData = [
             'label' => 'My Label',
             'value' => '204.50',
-            'date' => '2020-09-04'
+            'date' => '2020-09-04',
+            'is_debit' => 1,
         ];
 
         $response = $this->actingAs($user)->putJson('/api/entries/' . $entry->id, $postData);
@@ -99,6 +102,7 @@ class EntryTest extends TestCase
         $data = json_decode($response->getContent(), true);
         $this->assertEquals('My Label', $data['label']);
         $this->assertEquals('204.50', $data['value']);
+        $this->assertEquals(1, $data['is_debit']);
         $carbonDate = new Carbon($data['date']);
         $this->assertEquals('2020-09-04', $carbonDate->format('Y-m-d'));
 
@@ -132,7 +136,8 @@ class EntryTest extends TestCase
         $postData = [
             'label' => 'My Label',
             'value' => '204.50',
-            'date' => '2020-09-04'
+            'date' => '2020-09-04',
+            'is_debit' => 1,
         ];
 
         $response = $this->actingAs($user)->putJson('/api/entries/' . $nonExistentEntryId, $postData);
@@ -154,7 +159,8 @@ class EntryTest extends TestCase
         $postData = [
             'label' => 'My Label',
             'value' => '204.50',
-            'date' => '2020-09-04'
+            'date' => '2020-09-04',
+            'is_debit' => 1,
         ];
 
         $response = $this->actingAs($secondUser)->putJson('/api/entries/' . $entry->id, $postData);

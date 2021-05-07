@@ -45,6 +45,7 @@ class EntryController extends Controller
         $entry->user_id = $user->id;
         $entry->label = $validated['label'];
         $entry->value = $validated['value'];
+        $entry->is_debit = $validated['is_debit'];
         if (array_key_exists('date', $validated)) {
             $entry->date = $validated['date'];
         }
@@ -79,6 +80,7 @@ class EntryController extends Controller
         }
         $entry->label = $validated['label'];
         $entry->value = $validated['value'];
+        $entry->is_debit = $validated['is_debit'];
         if (array_key_exists('date', $validated)) {
             $entry->date = $validated['date'];
         }

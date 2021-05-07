@@ -24,6 +24,7 @@ class EntryFactory extends Factory
     {
         return [
             'label' => $this->faker->word,
+            'is_debit' => $this->faker->boolean,
             'value' => $this->faker->regexify('/\d{1,6}\.\d{2}/'),
             'date' => $this->faker->dateTime,
             'user_id' => function () {

@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $user_id
  * @property string $label
  * @property float $value
+ * @property bool $is_debit
  * @property Carbon $date
  * @property Carbon $createdAt
  * @property Carbon $updatedAt

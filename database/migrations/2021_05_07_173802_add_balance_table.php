@@ -18,6 +18,7 @@ class AddBalanceTable extends Migration
             $table->bigInteger('user_id', false, true);
             $table->string('label');
             $table->decimal('value');
+            $table->boolean('is_debit')->default(false);
             $table->timestamp('date')->useCurrent();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')
