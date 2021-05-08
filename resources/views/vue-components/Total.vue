@@ -28,11 +28,22 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   data () {
     return {
-      total: 1725
+      total: 0
     }
+  },
+  mounted () {
+    axios.get('/api/entries/total')
+        .then((response) => {
+          this.total = response.data.total
+        })
+        .catch((error) => {
+          console.log(error)
+        })
   }
 }
 </script>

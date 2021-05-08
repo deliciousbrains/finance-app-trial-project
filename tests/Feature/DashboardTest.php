@@ -19,6 +19,6 @@ class DashboardTest extends TestCase
         $response = $this->get('/');
 
         $response->assertStatus(200);
-        $this->assertStringContainsString('Your Balance', $response->getContent());
+        $this->assertStringContainsString('YourBalance', $response->getContent());
     }
 }
