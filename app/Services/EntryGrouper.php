@@ -29,7 +29,7 @@ class EntryGrouper
             $modifiedEntry['is_yesterday'] = $isYesterday;
             $groupedEntries[$day][] = $modifiedEntry;
         }
-        arsort($groupedEntries);
+        krsort($groupedEntries);
         return $groupedEntries;
     }
 }
