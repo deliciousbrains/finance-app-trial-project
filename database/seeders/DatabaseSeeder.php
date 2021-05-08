@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,8 +18,8 @@ class DatabaseSeeder extends Seeder
     {
         DB::table('users')->insert([
             'name' => 'wladislavk',
-            'email' => 'wladislavk@gmail.com',
-            'password' => bcrypt('123456'),
+            'email' => 'wladislav.k@gmail.com',
+            'password' => Hash::make('123456'),
             'api_token' => 'token',
         ]);
         DB::table('entries')->insert([
