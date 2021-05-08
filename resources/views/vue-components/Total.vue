@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import Http from '../vue-services/HttpService'
 
 export default {
   data () {
@@ -37,7 +37,7 @@ export default {
     }
   },
   mounted () {
-    axios.get('/api/entries/total')
+    Http.makeRequest('get', '/api/entries/total')
         .then((response) => {
           this.total = response.data.total
         })

@@ -2180,8 +2180,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _vue_services_HttpService__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../vue-services/HttpService */ "./resources/views/vue-services/HttpService.js");
 //
 //
 //
@@ -2221,7 +2220,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/entries/total').then(function (response) {
+    _vue_services_HttpService__WEBPACK_IMPORTED_MODULE_0__["default"].makeRequest('get', '/api/entries/total').then(function (response) {
       _this.total = response.data.total;
     })["catch"](function (error) {
       console.log(error);
@@ -41353,6 +41352,52 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Total_vue_vue_type_template_id_18a744ea___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Total_vue_vue_type_template_id_18a744ea___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/views/vue-services/HttpService.js":
+/*!*****************************************************!*\
+  !*** ./resources/views/vue-services/HttpService.js ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return HttpService; });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+var token = 'token';
+
+var HttpService = /*#__PURE__*/function () {
+  function HttpService() {
+    _classCallCheck(this, HttpService);
+  }
+
+  _createClass(HttpService, null, [{
+    key: "makeRequest",
+    value: function makeRequest(method, url) {
+      return axios__WEBPACK_IMPORTED_MODULE_0___default.a.request({
+        method: method,
+        url: url,
+        headers: {
+          'Authorization': 'Bearer ' + token
+        }
+      });
+    }
+  }]);
+
+  return HttpService;
+}();
 
 
 

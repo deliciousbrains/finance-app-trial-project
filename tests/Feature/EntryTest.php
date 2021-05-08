@@ -5,13 +5,13 @@ namespace Tests\Feature;
 use App\Models\Entry;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 
 class EntryTest extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseTransactions;
     use WithoutMiddleware;
 
     public function testIndex()
