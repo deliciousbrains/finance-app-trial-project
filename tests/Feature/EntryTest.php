@@ -66,7 +66,6 @@ class EntryTest extends TestCase
         $postData = [
             'label' => 'My Label',
             'value' => '204.50',
-            'is_debit' => 1,
         ];
 
         $response = $this->actingAs($user)->postJson('/api/entries', $postData);
@@ -75,7 +74,6 @@ class EntryTest extends TestCase
         $data = json_decode($response->getContent(), true);
         $this->assertEquals('My Label', $data['label']);
         $this->assertEquals('204.50', $data['value']);
-        $this->assertEquals(1, $data['is_debit']);
         $carbonDate = new Carbon($data['date']);
         $this->assertEquals(Carbon::now()->format('Y-m'), $carbonDate->format('Y-m'));
         $this->assertEquals($user->id, $data['user_id']);
@@ -110,7 +108,6 @@ class EntryTest extends TestCase
             'label' => 'My Label',
             'value' => '204.50',
             'date' => '2020-09-04',
-            'is_debit' => 1,
         ];
 
         $response = $this->actingAs($user)->putJson('/api/entries/' . $entry->id, $postData);
@@ -118,7 +115,6 @@ class EntryTest extends TestCase
         $data = json_decode($response->getContent(), true);
         $this->assertEquals('My Label', $data['label']);
         $this->assertEquals('204.50', $data['value']);
-        $this->assertEquals(1, $data['is_debit']);
         $carbonDate = new Carbon($data['date']);
         $this->assertEquals('2020-09-04', $carbonDate->format('Y-m-d'));
 
@@ -153,7 +149,6 @@ class EntryTest extends TestCase
             'label' => 'My Label',
             'value' => '204.50',
             'date' => '2020-09-04',
-            'is_debit' => 1,
         ];
 
         $response = $this->actingAs($user)->putJson('/api/entries/' . $nonExistentEntryId, $postData);
@@ -176,7 +171,6 @@ class EntryTest extends TestCase
             'label' => 'My Label',
             'value' => '204.50',
             'date' => '2020-09-04',
-            'is_debit' => 1,
         ];
 
         $response = $this->actingAs($secondUser)->putJson('/api/entries/' . $entry->id, $postData);
@@ -232,23 +226,23 @@ class EntryTest extends TestCase
         /** @var User $secondUser */
         $secondUser = User::factory()->create();
         /** @var Entry $firstEntry */
-        $firstEntry = Entry::factory()->create(['value' => 3000, 'is_debit' => 1]);
+        $firstEntry = Entry::factory()->create(['value' => 3000]);
         $firstEntry->user_id = $firstUser->id;
         $firstEntry->save();
         /** @var Entry $secondEntry */
-        $secondEntry = Entry::factory()->create(['value' => 500, 'is_debit' => 0]);
+        $secondEntry = Entry::factory()->create(['value' => -500]);
         $secondEntry->user_id = $firstUser->id;
         $secondEntry->save();
         /** @var Entry $thirdEntry */
-        $thirdEntry = Entry::factory()->create(['value' => 10, 'is_debit' => 1]);
+        $thirdEntry = Entry::factory()->create(['value' => 10]);
         $thirdEntry->user_id = $firstUser->id;
         $thirdEntry->save();
         /** @var Entry $fourthEntry */
-        $fourthEntry = Entry::factory()->create(['value' => 60, 'is_debit' => 0]);
+        $fourthEntry = Entry::factory()->create(['value' => -60]);
         $fourthEntry->user_id = $firstUser->id;
         $fourthEntry->save();
         /** @var Entry $fifthEntry */
-        $fifthEntry = Entry::factory()->create(['value' => 50000, 'is_debit' => 1]);
+        $fifthEntry = Entry::factory()->create(['value' => 50000]);
         $fifthEntry->user_id = $secondUser->id;
         $fifthEntry->save();
 
