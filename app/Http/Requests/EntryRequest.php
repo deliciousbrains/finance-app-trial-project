@@ -23,9 +23,8 @@ class EntryRequest extends FormRequest
     {
         return [
             'label' => 'required|string',
-            'value' => 'required|regex:/\d+?\.\d{2}/',
+            'value' => 'required|regex:/\-?\d+?\.\d{2}/',
             'date' => 'date',
-            'is_debit' => 'required|boolean',
         ];
     }
 }
