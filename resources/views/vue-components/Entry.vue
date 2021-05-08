@@ -28,7 +28,7 @@ export default {
   },
   methods: {
     dayWithTime (day) {
-      const dayObject = DateTime.fromSQL(day).setLocale('en')
+      const dayObject = DateTime.fromISO(day).setLocale('en')
       const date = dayObject.toFormat('dd LLLL, y')
       const time = dayObject.toFormat('hh:mm a')
       return `${date} at ${time}`

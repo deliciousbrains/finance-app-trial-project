@@ -4,11 +4,11 @@
       <div class="mb-8" v-for="day in days" :key="day.day">
         <div class="flex items-center mb-4">
           <span
-              v-if="day.isToday"
+              v-if="day.is_today"
               class="flex-grow text-gray-500 font-bold text-sm uppercase tracking-tight"
           >Today</span>
           <span
-              v-else-if="day.isYesterday"
+              v-else-if="day.is_yesterday"
               class="flex-grow text-gray-500 font-bold text-sm uppercase tracking-tight"
           >Yesterday</span>
           <span
@@ -37,6 +37,7 @@
 <script>
 import { DateTime } from "luxon"
 import EntryComponent from './Entry'
+import Http from "../vue-services/HttpService";
 
 export default {
   components: {
@@ -44,59 +45,23 @@ export default {
   },
   data () {
     return {
-      days: [
-        {
-          day: '2020-05-20',
-          isToday: true,
-          isYesterday: false,
-          sum: -50,
-          entries: [
-            {
-              label: 'Groceries',
-              value: -60,
-              date: '2020-05-20 22:55:00'
-            },
-            {
-              label: 'Lottery Win',
-              value: 10,
-              date: '2020-05-20 09:05:00'
-            }
-          ]
-        },
-        {
-          day: '2020-05-19',
-          isToday: false,
-          isYesterday: true,
-          sum: -500,
-          entries: [
-            {
-              label: 'Car Insurance',
-              value: -500,
-              date: '2020-05-19 08:00:00'
-            }
-          ]
-        },
-        {
-          day: '2020-05-11',
-          isToday: false,
-          isYesterday: false,
-          sum: 3000,
-          entries: [
-            {
-              label: 'Opening Balance',
-              value: 3000,
-              date: '2020-05-11 10:00:00'
-            }
-          ]
-        }
-      ]
+      days: []
     }
   },
   methods: {
     dayWithWeekday (day) {
-      const dayObject = DateTime.fromSQL(day).setLocale('en')
+      const dayObject = DateTime.fromISO(day).setLocale('en')
       return dayObject.toFormat('ccc, d LLLL')
     }
+  },
+  mounted () {
+    Http.makeRequest('get', '/api/entries')
+        .then((response) => {
+          this.days = response.data
+        })
+        .catch((error) => {
+          console.log(error)
+        })
   }
 }
 </script>

@@ -1971,7 +1971,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     dayWithTime: function dayWithTime(day) {
-      var dayObject = luxon__WEBPACK_IMPORTED_MODULE_0__["DateTime"].fromSQL(day).setLocale('en');
+      var dayObject = luxon__WEBPACK_IMPORTED_MODULE_0__["DateTime"].fromISO(day).setLocale('en');
       var date = dayObject.toFormat('dd LLLL, y');
       var time = dayObject.toFormat('hh:mm a');
       return "".concat(date, " at ").concat(time);
@@ -2030,6 +2030,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var luxon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! luxon */ "./node_modules/luxon/build/cjs-browser/luxon.js");
 /* harmony import */ var luxon__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(luxon__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Entry__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Entry */ "./resources/views/vue-components/Entry.vue");
+/* harmony import */ var _vue_services_HttpService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../vue-services/HttpService */ "./resources/views/vue-services/HttpService.js");
 //
 //
 //
@@ -2066,6 +2067,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2074,48 +2076,23 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      days: [{
-        day: '2020-05-20',
-        isToday: true,
-        isYesterday: false,
-        sum: -50,
-        entries: [{
-          label: 'Groceries',
-          value: -60,
-          date: '2020-05-20 22:55:00'
-        }, {
-          label: 'Lottery Win',
-          value: 10,
-          date: '2020-05-20 09:05:00'
-        }]
-      }, {
-        day: '2020-05-19',
-        isToday: false,
-        isYesterday: true,
-        sum: -500,
-        entries: [{
-          label: 'Car Insurance',
-          value: -500,
-          date: '2020-05-19 08:00:00'
-        }]
-      }, {
-        day: '2020-05-11',
-        isToday: false,
-        isYesterday: false,
-        sum: 3000,
-        entries: [{
-          label: 'Opening Balance',
-          value: 3000,
-          date: '2020-05-11 10:00:00'
-        }]
-      }]
+      days: []
     };
   },
   methods: {
     dayWithWeekday: function dayWithWeekday(day) {
-      var dayObject = luxon__WEBPACK_IMPORTED_MODULE_0__["DateTime"].fromSQL(day).setLocale('en');
+      var dayObject = luxon__WEBPACK_IMPORTED_MODULE_0__["DateTime"].fromISO(day).setLocale('en');
       return dayObject.toFormat('ccc, d LLLL');
     }
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    _vue_services_HttpService__WEBPACK_IMPORTED_MODULE_2__["default"].makeRequest('get', '/api/entries').then(function (response) {
+      _this.days = response.data;
+    })["catch"](function (error) {
+      console.log(error);
+    });
   }
 });
 
@@ -28531,7 +28508,7 @@ var render = function() {
       _vm._l(_vm.days, function(day) {
         return _c("div", { key: day.day, staticClass: "mb-8" }, [
           _c("div", { staticClass: "flex items-center mb-4" }, [
-            day.isToday
+            day.is_today
               ? _c(
                   "span",
                   {
@@ -28540,7 +28517,7 @@ var render = function() {
                   },
                   [_vm._v("Today")]
                 )
-              : day.isYesterday
+              : day.is_yesterday
               ? _c(
                   "span",
                   {
