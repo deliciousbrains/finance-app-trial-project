@@ -17,9 +17,6 @@ class TotalBalanceCalculator
         foreach ($entries as $entry) {
             // avoid floating point arithmetic
             $value = (int)($entry->value * 100);
-            if (!$entry->is_debit) {
-                $value *= -1;
-            }
             $total += $value;
         }
         $total = $total / 100;

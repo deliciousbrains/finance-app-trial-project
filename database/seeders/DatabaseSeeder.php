@@ -45,7 +45,7 @@ class DatabaseSeeder extends Seeder
         DB::table('entries')->insert([
             'user_id' => 1,
             'label' => 'Groceries',
-            'value' => 60,
+            'value' => -60,
             'date' => '2020-05-11 22:55:00',
         ]);
     }
