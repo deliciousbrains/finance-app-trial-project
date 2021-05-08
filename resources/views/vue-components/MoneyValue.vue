@@ -1,6 +1,6 @@
 <template>
   <span>
-    ${{ dollars }}.<span class="text-xl">{{ cents }}</span>
+    ${{ dollars }}.<span :class="className">{{ cents }}</span>
   </span>
 </template>
 
@@ -10,6 +10,10 @@ export default {
     sum: {
       required: true,
       type: Number
+    },
+    className: {
+      required: true,
+      type: String
     }
   },
   computed: {
@@ -24,7 +28,8 @@ export default {
   },
   methods: {
     splitSum () {
-      const sumString = this.sum.toLocaleString('en', {maximumFractionDigits: 2, minimumFractionDigits: 2})
+      const absoluteSum = Math.abs(this.sum)
+      const sumString = absoluteSum.toLocaleString('en', {maximumFractionDigits: 2, minimumFractionDigits: 2})
       return sumString.split('.')
     }
   }
