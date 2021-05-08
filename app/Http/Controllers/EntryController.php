@@ -26,7 +26,7 @@ class EntryController extends Controller
     {
         /** @var User $user */
         $user = $request->user();
-        $entries = Entry::where('user_id', $user->id)->get();
+        $entries = Entry::where('user_id', $user->id)->orderBy('date', 'desc')->get();
         $groupedEntries = $entryGrouper->groupByDate($entries);
 
         return new JsonResponse($groupedEntries, Response::HTTP_OK);

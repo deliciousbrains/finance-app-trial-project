@@ -46,7 +46,7 @@ class DatabaseSeeder extends Seeder
             'user_id' => 1,
             'label' => 'Groceries',
             'value' => -60,
-            'date' => '2020-05-11 22:55:00',
+            'date' => $date . ' 22:55:00',
         ]);
     }
 }

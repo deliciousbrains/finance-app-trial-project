@@ -14,55 +14,89 @@ class EntryGrouperTest extends TestCase
         $today = Carbon::now()->format('Y-m-d');
         $yesterday = Carbon::now()->subDay()->format('Y-m-d');
 
-
         $firstEntry = new Entry();
-        $firstEntry->id = 1;
-        $firstEntry->date = new Carbon('2020-05-09');
+        $firstEntry->id = 2;
+        $firstEntry->date = Carbon::now();
+        $firstEntry->value = 60;
         $secondEntry = new Entry();
-        $secondEntry->id = 2;
-        $secondEntry->date = Carbon::now();
+        $secondEntry->id = 3;
+        $secondEntry->date = Carbon::now()->subDay();
+        $secondEntry->value = -30;
         $thirdEntry = new Entry();
-        $thirdEntry->id = 3;
+        $thirdEntry->id = 5;
         $thirdEntry->date = Carbon::now()->subDay();
+        $thirdEntry->value = 80;
         $fourthEntry = new Entry();
         $fourthEntry->id = 4;
         $fourthEntry->date = new Carbon('2020-11-12 09:30:00');
+        $fourthEntry->value = -100;
         $fifthEntry = new Entry();
-        $fifthEntry->id = 5;
-        $fifthEntry->date = Carbon::now()->subDay();
+        $fifthEntry->id = 1;
+        $fifthEntry->date = new Carbon('2020-05-09');
+        $fifthEntry->value = 300;
         $entries = [$firstEntry, $secondEntry, $thirdEntry, $fourthEntry, $fifthEntry];
 
         $entryGrouper = new EntryGrouper();
         $result = $entryGrouper->groupByDate($entries);
-        $expectedKeys = [
-            $today,
-            $yesterday,
-            '2020-11-12',
-            '2020-05-09',
+        $expected = [
+            [
+                'day' => $today,
+                'is_today' => true,
+                'is_yesterday' => false,
+                'sum' => 60.0,
+                'entries' => [
+                    [
+                        'id' => 2,
+                        'value' => 60.0,
+                    ],
+                ],
+            ],
+            [
+                'day' => $yesterday,
+                'is_today' => false,
+                'is_yesterday' => true,
+                'sum' => 50.0,
+                'entries' => [
+                    [
+                        'id' => 3,
+                        'value' => -30.0,
+                    ],
+                    [
+                        'id' => 5,
+                        'value' => 80.0,
+                    ],
+                ],
+            ],
+            [
+                'day' => '2020-11-12',
+                'is_today' => false,
+                'is_yesterday' => false,
+                'sum' => -100.0,
+                'entries' => [
+                    [
+                        'id' => 4,
+                        'date' => '2020-11-12T09:30:00.000000Z',
+                        'value' => -100.0,
+                    ],
+                ],
+            ],
+            [
+                'day' => '2020-05-09',
+                'is_today' => false,
+                'is_yesterday' => false,
+                'sum' => 300.0,
+                'entries' => [
+                    [
+                        'id' => 1,
+                        'date' => '2020-05-09T00:00:00.000000Z',
+                        'value' => 300.0,
+                    ],
+                ],
+            ],
         ];
-        $this->assertEquals($expectedKeys, array_keys($result));
-
-        $this->assertEquals(1, sizeof($result[$today]));
-        $this->assertEquals(2, $result[$today][0]['id']);
-        $this->assertTrue($result[$today][0]['is_today']);
-        $this->assertFalse($result[$today][0]['is_yesterday']);
-
-        $this->assertEquals(2, sizeof($result[$yesterday]));
-        $this->assertEquals(3, $result[$yesterday][0]['id']);
-        $this->assertFalse($result[$yesterday][0]['is_today']);
-        $this->assertTrue($result[$yesterday][0]['is_yesterday']);
-        $this->assertEquals(5, $result[$yesterday][1]['id']);
-        $this->assertFalse($result[$yesterday][1]['is_today']);
-        $this->assertTrue($result[$yesterday][1]['is_yesterday']);
-
-        $this->assertEquals(1, sizeof($result['2020-11-12']));
-        $this->assertEquals(4, $result['2020-11-12'][0]['id']);
-        $this->assertFalse($result['2020-11-12'][0]['is_today']);
-        $this->assertFalse($result['2020-11-12'][0]['is_yesterday']);
-
-        $this->assertEquals(1, sizeof($result['2020-05-09']));
-        $this->assertEquals(1, $result['2020-05-09'][0]['id']);
-        $this->assertFalse($result['2020-05-09'][0]['is_today']);
-        $this->assertFalse($result['2020-05-09'][0]['is_yesterday']);
+        unset($result[0]['entries'][0]['date']);
+        unset($result[1]['entries'][0]['date']);
+        unset($result[1]['entries'][1]['date']);
+        $this->assertEquals($expected, $result);
     }
 }

@@ -16,8 +16,6 @@ class EntryTest extends TestCase
 
     public function testIndex()
     {
-        $today = Carbon::now()->format('Y-m-d');
-        $yesterday = Carbon::now()->subDay()->format('Y-m-d');
         /** @var User $firstUser */
         $firstUser = User::factory()->create();
         /** @var User $secondUser */
@@ -31,15 +29,15 @@ class EntryTest extends TestCase
         $secondEntry->user_id = $secondUser->id;
         $secondEntry->save();
         /** @var Entry $thirdEntry */
-        $thirdEntry = Entry::factory()->create(['date' => $today]);
+        $thirdEntry = Entry::factory()->create(['date' => '2021-02-05']);
         $thirdEntry->user_id = $firstUser->id;
         $thirdEntry->save();
         /** @var Entry $fourthEntry */
-        $fourthEntry = Entry::factory()->create(['date' => $yesterday]);
+        $fourthEntry = Entry::factory()->create(['date' => '2020-12-25']);
         $fourthEntry->user_id = $firstUser->id;
         $fourthEntry->save();
         /** @var Entry $fifthEntry */
-        $fifthEntry = Entry::factory()->create(['date' => $today]);
+        $fifthEntry = Entry::factory()->create(['date' => '2021-02-05']);
         $fifthEntry->user_id = $firstUser->id;
         $fifthEntry->save();
 
@@ -48,14 +46,16 @@ class EntryTest extends TestCase
         $response->assertStatus(200);
         $data = json_decode($response->getContent(), true);
         $this->assertEquals(3, sizeof($data));
-        $this->assertEquals([$today, $yesterday, '2020-09-04'], array_keys($data));
-        $this->assertEquals(2, sizeof($data[$today]));
-        $this->assertEquals(1, sizeof($data[$yesterday]));
-        $this->assertEquals(1, sizeof($data['2020-09-04']));
-        $this->assertEquals($thirdEntry->id, $data[$today][0]['id']);
-        $this->assertEquals($fifthEntry->id, $data[$today][1]['id']);
-        $this->assertEquals($fourthEntry->id, $data[$yesterday][0]['id']);
-        $this->assertEquals($firstEntry->id, $data['2020-09-04'][0]['id']);
+        $this->assertEquals('2021-02-05', $data[0]['day']);
+        $this->assertEquals('2020-12-25', $data[1]['day']);
+        $this->assertEquals('2020-09-04', $data[2]['day']);
+        $this->assertEquals(2, sizeof($data[0]['entries']));
+        $this->assertEquals(1, sizeof($data[1]['entries']));
+        $this->assertEquals(1, sizeof($data[2]['entries']));
+        $this->assertEquals($thirdEntry->id, $data[0]['entries'][0]['id']);
+        $this->assertEquals($fifthEntry->id, $data[0]['entries'][1]['id']);
+        $this->assertEquals($fourthEntry->id, $data[1]['entries'][0]['id']);
+        $this->assertEquals($firstEntry->id, $data[2]['entries'][0]['id']);
     }
 
     public function testStore()
