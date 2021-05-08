@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\EntryRequest;
 use App\Models\Entry;
 use App\Models\User;
+use App\Services\EntryGrouper;
+use App\Services\TotalBalanceCalculator;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
@@ -17,15 +19,17 @@ class EntryController extends Controller
 {
     /**
      * @param Request $request
+     * @param EntryGrouper $entryGrouper
      * @return JsonResponse
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request, EntryGrouper $entryGrouper): JsonResponse
     {
         /** @var User $user */
         $user = $request->user();
         $entries = Entry::where('user_id', $user->id)->get();
+        $groupedEntries = $entryGrouper->groupByDate($entries);
 
-        return new JsonResponse($entries, Response::HTTP_OK);
+        return new JsonResponse($groupedEntries, Response::HTTP_OK);
     }
 
     /**
@@ -120,24 +124,17 @@ class EntryController extends Controller
 
     /**
      * @param Request $request
+     * @param TotalBalanceCalculator $totalBalanceCalculator
      * @return JsonResponse
      */
-    public function getTotal(Request $request): JsonResponse
+    public function getTotal(Request $request, TotalBalanceCalculator $totalBalanceCalculator): JsonResponse
     {
         /** @var User $user */
         $user = $request->user();
         /** @var Entry[] $entries */
         $entries = Entry::where('user_id', $user->id)->get();
-        $total = 0;
-        foreach ($entries as $entry) {
-            // avoid floating point arithmetic
-            $value = (int)($entry->value * 100);
-            if (!$entry->is_debit) {
-                $value *= -1;
-            }
-            $total += $value;
-        }
-        $total = $total / 100;
+
+        $total = $totalBalanceCalculator->calculateBalance($entries);
 
         return new JsonResponse(['total' => $total], Response::HTTP_OK);
     }

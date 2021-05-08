@@ -16,12 +16,14 @@ class EntryTest extends TestCase
 
     public function testIndex()
     {
+        $today = Carbon::now()->format('Y-m-d');
+        $yesterday = Carbon::now()->subDay()->format('Y-m-d');
         /** @var User $firstUser */
         $firstUser = User::factory()->create();
         /** @var User $secondUser */
         $secondUser = User::factory()->create();
         /** @var Entry $firstEntry */
-        $firstEntry = Entry::factory()->create();
+        $firstEntry = Entry::factory()->create(['date' => '2020-09-04']);
         $firstEntry->user_id = $firstUser->id;
         $firstEntry->save();
         /** @var Entry $secondEntry */
@@ -29,17 +31,31 @@ class EntryTest extends TestCase
         $secondEntry->user_id = $secondUser->id;
         $secondEntry->save();
         /** @var Entry $thirdEntry */
-        $thirdEntry = Entry::factory()->create();
+        $thirdEntry = Entry::factory()->create(['date' => $today]);
         $thirdEntry->user_id = $firstUser->id;
         $thirdEntry->save();
+        /** @var Entry $fourthEntry */
+        $fourthEntry = Entry::factory()->create(['date' => $yesterday]);
+        $fourthEntry->user_id = $firstUser->id;
+        $fourthEntry->save();
+        /** @var Entry $fifthEntry */
+        $fifthEntry = Entry::factory()->create(['date' => $today]);
+        $fifthEntry->user_id = $firstUser->id;
+        $fifthEntry->save();
 
         $response = $this->actingAs($firstUser)->getJson('/api/entries');
 
         $response->assertStatus(200);
         $data = json_decode($response->getContent(), true);
-        $this->assertEquals(2, sizeof($data));
-        $this->assertEquals($firstEntry->id, $data[0]['id']);
-        $this->assertEquals($thirdEntry->id, $data[1]['id']);
+        $this->assertEquals(3, sizeof($data));
+        $this->assertEquals([$today, $yesterday, '2020-09-04'], array_keys($data));
+        $this->assertEquals(2, sizeof($data[$today]));
+        $this->assertEquals(1, sizeof($data[$yesterday]));
+        $this->assertEquals(1, sizeof($data['2020-09-04']));
+        $this->assertEquals($thirdEntry->id, $data[$today][0]['id']);
+        $this->assertEquals($fifthEntry->id, $data[$today][1]['id']);
+        $this->assertEquals($fourthEntry->id, $data[$yesterday][0]['id']);
+        $this->assertEquals($firstEntry->id, $data['2020-09-04'][0]['id']);
     }
 
     public function testStore()
@@ -61,7 +77,7 @@ class EntryTest extends TestCase
         $this->assertEquals('204.50', $data['value']);
         $this->assertEquals(1, $data['is_debit']);
         $carbonDate = new Carbon($data['date']);
-        $this->assertEquals(Carbon::now()->format('Y-m-d'), $carbonDate->format('Y-m-d'));
+        $this->assertEquals(Carbon::now()->format('Y-m'), $carbonDate->format('Y-m'));
         $this->assertEquals($user->id, $data['user_id']);
 
         $this->assertDatabaseHas('entries', ['id' => $data['id']]);
