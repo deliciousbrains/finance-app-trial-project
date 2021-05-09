@@ -11,7 +11,7 @@
             <a
                 href="#"
                 class="flex items-center mr-4 px-3 py-2 bg-blue-700 rounded-md text-white text-xs font-bold uppercase tracking-tight"
-                @click="addEntry()"
+                @click.prevent="addEntry()"
             >Add Entry</a>
             <a href="#" class="flex items-center mr-4 px-3 py-2 bg-blue-700 rounded-md text-white text-xs font-bold uppercase tracking-tight">
               Import CSV

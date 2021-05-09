@@ -32,12 +32,11 @@ export default class FormValidatorService {
         }
         const amountRegex = /^-?\d+(\.\d{2})?$/
         if (formData.amount.length === 0 || formData.amount === 0) {
-            console.log(formData.amount)
             errors.push({
                 field: 'amount',
                 reason: 'empty'
             })
-        } else if (formData.amount.match(amountRegex) === null) {
+        } else if (formData.amount.toString().match(amountRegex) === null) {
             errors.push({
                 field: 'amount',
                 reason: 'money_format'

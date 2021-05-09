@@ -13,6 +13,7 @@
           :date="dayWithTime()"
           label=""
           :amount="0"
+          :errors="errors"
           @input-label="label = $event"
           @input-amount="amount = $event"
           @input-date="date = $event"
@@ -22,13 +23,13 @@
         <div class="flex flex-row">
           <a
               href="#"
-              @click="stopAdd()"
+              @click.prevent="stopAdd()"
               class="flex bg-blue-100 text-gray-500 rounded-md font-bold items-center uppercase mr-4 px-6 py-4"
           >Cancel</a>
           <a
               href="#"
               class="flex bg-blue-700 text-white rounded-md font-bold items-center uppercase mr-4 px-6 py-4"
-              @click="saveEntry()"
+              @click.prevent="saveEntry()"
           >Save Entry</a>
         </div>
       </div>
@@ -52,12 +53,14 @@ export default {
       isAdded: false,
       label: '',
       date: this.dayWithTime(),
-      amount: 0
+      amount: 0,
+      errors: []
     }
   },
   methods: {
     stopAdd () {
       this.isAdded = false
+      this.errors = []
     },
     dayWithTime (day) {
       return DayTimeService.dayWithTime(day)
@@ -68,10 +71,8 @@ export default {
         date: this.date,
         amount: this.amount
       }
-      const errors = FormValidatorService.validateForm(formData)
-      if (errors.length > 0) {
-        console.log(errors)
-      } else {
+      this.errors = FormValidatorService.validateForm(formData)
+      if (this.errors.length === 0) {
         formData.date = DayTimeService.getSQLDate(this.date)
         HttpService.makeRequest('post', '/api/entries', formData)
             .then(() => {
@@ -81,6 +82,10 @@ export default {
             .catch((error) => {
               console.log(error)
             })
+      } else {
+        this.label = ''
+        this.date = this.dayWithTime()
+        this.amount = 0
       }
     }
   },

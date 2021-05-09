@@ -17,12 +17,12 @@
         <a
             class="flex underline hover:no-underline text-blue-700 mr-4 font-bold"
             href="#"
-            @click="startEdit()"
+            @click.prevent="startEdit()"
         >Edit</a>
         <a
             class="flex underline hover:no-underline text-blue-700 mr-4 font-bold"
             href="#"
-            @click="deleteEntry()"
+            @click.prevent="deleteEntry()"
         >Delete</a>
       </div>
       <div class="text-lg font-bold">
@@ -37,6 +37,7 @@
           :label="entry.label"
           :amount="entry.value"
           :date="dayWithTime(entry.date)"
+          :errors="errors"
           @input-label="label = $event"
           @input-amount="amount = $event"
           @input-date="date = $event"
@@ -46,13 +47,13 @@
         <div class="flex flex-row">
           <a
               href="#"
-              @click="stopEdit()"
+              @click.prevent="stopEdit()"
               class="flex bg-blue-100 text-gray-500 rounded-md font-bold items-center uppercase mr-4 px-6 py-4"
           >Cancel</a>
           <a
               href="#"
               class="flex bg-blue-700 text-white rounded-md font-bold items-center uppercase mr-4 px-6 py-4"
-              @click="updateEntry()"
+              @click.prevent="updateEntry()"
           >Update Entry</a>
         </div>
       </div>
@@ -82,7 +83,8 @@ export default {
       isEdited: false,
       label: this.entry.label,
       amount: this.entry.value,
-      date: this.dayWithTime(this.entry.date)
+      date: this.dayWithTime(this.entry.date),
+      errors: []
     }
   },
   methods: {
@@ -99,6 +101,7 @@ export default {
     },
     stopEdit () {
       this.isEdited = false
+      this.errors = []
     },
     dayWithTime (day) {
       return DayTimeService.dayWithTime(day)
@@ -109,10 +112,8 @@ export default {
         date: this.date,
         amount: this.amount
       }
-      const errors = FormValidatorService.validateForm(formData)
-      if (errors.length > 0) {
-        console.log(errors)
-      } else {
+      this.errors = FormValidatorService.validateForm(formData)
+      if (this.errors.length === 0) {
         formData.date = DayTimeService.getSQLDate(this.date)
         HttpService.makeRequest('put', '/api/entries/' + this.entry.id, formData)
             .then(() => {
@@ -122,6 +123,10 @@ export default {
             .catch((error) => {
               console.log(error)
             })
+      } else {
+        this.label = this.entry.label
+        this.date = this.dayWithTime(this.entry.date)
+        this.amount = this.entry.value
       }
     },
     deleteEntry () {

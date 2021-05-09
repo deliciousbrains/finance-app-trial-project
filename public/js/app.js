@@ -2011,6 +2011,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -2031,7 +2032,8 @@ __webpack_require__.r(__webpack_exports__);
       isEdited: false,
       label: this.entry.label,
       amount: this.entry.value,
-      date: this.dayWithTime(this.entry.date)
+      date: this.dayWithTime(this.entry.date),
+      errors: []
     };
   },
   methods: {
@@ -2048,6 +2050,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     stopEdit: function stopEdit() {
       this.isEdited = false;
+      this.errors = [];
     },
     dayWithTime: function dayWithTime(day) {
       return _vue_services_DayTimeService__WEBPACK_IMPORTED_MODULE_0__["default"].dayWithTime(day);
@@ -2060,11 +2063,9 @@ __webpack_require__.r(__webpack_exports__);
         date: this.date,
         amount: this.amount
       };
-      var errors = _vue_services_FormValidatorService__WEBPACK_IMPORTED_MODULE_3__["default"].validateForm(formData);
+      this.errors = _vue_services_FormValidatorService__WEBPACK_IMPORTED_MODULE_3__["default"].validateForm(formData);
 
-      if (errors.length > 0) {
-        console.log(errors);
-      } else {
+      if (this.errors.length === 0) {
         formData.date = _vue_services_DayTimeService__WEBPACK_IMPORTED_MODULE_0__["default"].getSQLDate(this.date);
         _vue_services_HttpService__WEBPACK_IMPORTED_MODULE_2__["default"].makeRequest('put', '/api/entries/' + this.entry.id, formData).then(function () {
           _this.$root.$emit('refreshEntries');
@@ -2073,6 +2074,10 @@ __webpack_require__.r(__webpack_exports__);
         })["catch"](function (error) {
           console.log(error);
         });
+      } else {
+        this.label = this.entry.label;
+        this.date = this.dayWithTime(this.entry.date);
+        this.amount = this.entry.value;
       }
     },
     deleteEntry: function deleteEntry() {
@@ -2144,8 +2149,42 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
+    errors: {
+      type: Array,
+      "default": function _default() {
+        return [];
+      }
+    },
     id: {
       type: Number,
       "default": 0
@@ -2354,6 +2393,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -2368,12 +2408,14 @@ __webpack_require__.r(__webpack_exports__);
       isAdded: false,
       label: '',
       date: this.dayWithTime(),
-      amount: 0
+      amount: 0,
+      errors: []
     };
   },
   methods: {
     stopAdd: function stopAdd() {
       this.isAdded = false;
+      this.errors = [];
     },
     dayWithTime: function dayWithTime(day) {
       return _vue_services_DayTimeService__WEBPACK_IMPORTED_MODULE_1__["default"].dayWithTime(day);
@@ -2386,11 +2428,9 @@ __webpack_require__.r(__webpack_exports__);
         date: this.date,
         amount: this.amount
       };
-      var errors = _vue_services_FormValidatorService__WEBPACK_IMPORTED_MODULE_2__["default"].validateForm(formData);
+      this.errors = _vue_services_FormValidatorService__WEBPACK_IMPORTED_MODULE_2__["default"].validateForm(formData);
 
-      if (errors.length > 0) {
-        console.log(errors);
-      } else {
+      if (this.errors.length === 0) {
         formData.date = _vue_services_DayTimeService__WEBPACK_IMPORTED_MODULE_1__["default"].getSQLDate(this.date);
         _vue_services_HttpService__WEBPACK_IMPORTED_MODULE_3__["default"].makeRequest('post', '/api/entries', formData).then(function () {
           _this.$root.$emit('refreshEntries');
@@ -2399,6 +2439,10 @@ __webpack_require__.r(__webpack_exports__);
         })["catch"](function (error) {
           console.log(error);
         });
+      } else {
+        this.label = '';
+        this.date = this.dayWithTime();
+        this.amount = 0;
       }
     }
   },
@@ -29367,6 +29411,7 @@ var render = function() {
                 attrs: { href: "#" },
                 on: {
                   click: function($event) {
+                    $event.preventDefault()
                     return _vm.startEdit()
                   }
                 }
@@ -29382,6 +29427,7 @@ var render = function() {
                 attrs: { href: "#" },
                 on: {
                   click: function($event) {
+                    $event.preventDefault()
                     return _vm.deleteEntry()
                   }
                 }
@@ -29426,7 +29472,8 @@ var render = function() {
             id: _vm.entry.id,
             label: _vm.entry.label,
             amount: _vm.entry.value,
-            date: _vm.dayWithTime(_vm.entry.date)
+            date: _vm.dayWithTime(_vm.entry.date),
+            errors: _vm.errors
           },
           on: {
             "input-label": function($event) {
@@ -29453,6 +29500,7 @@ var render = function() {
                 attrs: { href: "#" },
                 on: {
                   click: function($event) {
+                    $event.preventDefault()
                     return _vm.stopEdit()
                   }
                 }
@@ -29468,6 +29516,7 @@ var render = function() {
                 attrs: { href: "#" },
                 on: {
                   click: function($event) {
+                    $event.preventDefault()
                     return _vm.updateEntry()
                   }
                 }
@@ -29505,80 +29554,135 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "flex flex-row py-10 border-t border-b px-4" },
+    { staticClass: "flex flex-col py-10 border-t border-b px-4" },
     [
-      _c("div", { staticClass: "flex flex-auto flex-col px-3 w-2/5" }, [
-        _c(
-          "label",
-          {
-            staticClass: "text-gray-700 font-bold uppercase pb-2",
-            attrs: { for: "label-" + _vm.id }
-          },
-          [_vm._v("Label")]
-        ),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "shadow appearance-none border rounded px-3 py-3 mb-3",
-          attrs: { id: "label-" + _vm.id, type: "text" },
-          domProps: { value: _vm.label },
-          on: {
-            change: function($event) {
-              return _vm.$emit("input-label", $event.target.value)
-            }
-          }
-        })
-      ]),
+      _c(
+        "div",
+        { staticClass: "flex flex-col" },
+        _vm._l(_vm.errors, function(error) {
+          return _c(
+            "div",
+            {
+              staticClass:
+                "flex bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4 my-4",
+              attrs: { role: "alert" }
+            },
+            [
+              error.field === "label" && error.reason === "empty"
+                ? _c("p", [
+                    _vm._v("\n        Label field must not be empty.\n      ")
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              error.field === "date" && error.reason === "empty"
+                ? _c("p", [
+                    _vm._v("\n        Date field must not be empty.\n      ")
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              error.field === "date" && error.reason === "date_format"
+                ? _c("p", [
+                    _vm._v("\n        Date field has wrong format.\n      ")
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              error.field === "date" && error.reason === "invalid"
+                ? _c("p", [_vm._v("\n        Date is invalid.\n      ")])
+                : _vm._e(),
+              _vm._v(" "),
+              error.field === "amount" && error.reason === "empty"
+                ? _c("p", [
+                    _vm._v("\n        Amount field must not be empty.\n      ")
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              error.field === "amount" && error.reason === "money_format"
+                ? _c("p", [
+                    _vm._v(
+                      "\n        Amount field must be an integer or a float with two fraction digits.\n      "
+                    )
+                  ])
+                : _vm._e()
+            ]
+          )
+        }),
+        0
+      ),
       _vm._v(" "),
-      _c("div", { staticClass: "flex flex-auto flex-col px-3 w-2/5" }, [
-        _c(
-          "label",
-          {
-            staticClass: "text-gray-700 font-bold uppercase pb-2",
-            attrs: { for: "date-" + _vm.id }
-          },
-          [_vm._v("Date")]
-        ),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "shadow appearance-none border rounded px-3 py-3 mb-3",
-          attrs: { id: "date-" + _vm.id, type: "text" },
-          domProps: { value: _vm.date },
-          on: {
-            change: function($event) {
-              return _vm.$emit("input-date", $event.target.value)
-            }
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "flex flex-auto flex-col px-3 w-1/5" }, [
-        _c(
-          "label",
-          {
-            staticClass: "text-gray-700 font-bold uppercase pb-2",
-            attrs: { for: "value-" + _vm.id }
-          },
-          [_vm._v("Amount")]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "relative rounded border shadow px-3 py-3 mb-3" },
-          [
-            _vm._m(0),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "appearance-none px-4 w-4/5",
-              attrs: { id: "value-" + _vm.id, type: "text" },
-              domProps: { value: _vm.entryValue },
-              on: {
-                change: function($event) {
-                  return _vm.$emit("input-amount", $event.target.value)
-                }
+      _c("div", { staticClass: "flex flex-row" }, [
+        _c("div", { staticClass: "flex flex-auto flex-col px-3 w-2/5" }, [
+          _c(
+            "label",
+            {
+              staticClass: "text-gray-700 font-bold uppercase pb-2",
+              attrs: { for: "label-" + _vm.id }
+            },
+            [_vm._v("Label")]
+          ),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "shadow appearance-none border rounded px-3 py-3 mb-3",
+            attrs: { id: "label-" + _vm.id, type: "text" },
+            domProps: { value: _vm.label },
+            on: {
+              change: function($event) {
+                return _vm.$emit("input-label", $event.target.value)
               }
-            })
-          ]
-        )
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "flex flex-auto flex-col px-3 w-2/5" }, [
+          _c(
+            "label",
+            {
+              staticClass: "text-gray-700 font-bold uppercase pb-2",
+              attrs: { for: "date-" + _vm.id }
+            },
+            [_vm._v("Date")]
+          ),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "shadow appearance-none border rounded px-3 py-3 mb-3",
+            attrs: { id: "date-" + _vm.id, type: "text" },
+            domProps: { value: _vm.date },
+            on: {
+              change: function($event) {
+                return _vm.$emit("input-date", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "flex flex-auto flex-col px-3 w-1/5" }, [
+          _c(
+            "label",
+            {
+              staticClass: "text-gray-700 font-bold uppercase pb-2",
+              attrs: { for: "value-" + _vm.id }
+            },
+            [_vm._v("Amount")]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "relative rounded border shadow px-3 py-3 mb-3" },
+            [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "appearance-none px-4 w-4/5",
+                attrs: { id: "value-" + _vm.id, type: "text" },
+                domProps: { value: _vm.entryValue },
+                on: {
+                  change: function($event) {
+                    return _vm.$emit("input-amount", $event.target.value)
+                  }
+                }
+              })
+            ]
+          )
+        ])
       ])
     ]
   )
@@ -29848,7 +29952,12 @@ var render = function() {
           ),
           _vm._v(" "),
           _c("entry-form", {
-            attrs: { date: _vm.dayWithTime(), label: "", amount: 0 },
+            attrs: {
+              date: _vm.dayWithTime(),
+              label: "",
+              amount: 0,
+              errors: _vm.errors
+            },
             on: {
               "input-label": function($event) {
                 _vm.label = $event
@@ -29874,6 +29983,7 @@ var render = function() {
                   attrs: { href: "#" },
                   on: {
                     click: function($event) {
+                      $event.preventDefault()
                       return _vm.stopAdd()
                     }
                   }
@@ -29889,6 +29999,7 @@ var render = function() {
                   attrs: { href: "#" },
                   on: {
                     click: function($event) {
+                      $event.preventDefault()
                       return _vm.saveEntry()
                     }
                   }
@@ -29974,6 +30085,7 @@ var render = function() {
                   attrs: { href: "#" },
                   on: {
                     click: function($event) {
+                      $event.preventDefault()
                       return _vm.addEntry()
                     }
                   }
@@ -42949,12 +43061,11 @@ var FormValidatorService = /*#__PURE__*/function () {
       var amountRegex = /^-?\d+(\.\d{2})?$/;
 
       if (formData.amount.length === 0 || formData.amount === 0) {
-        console.log(formData.amount);
         errors.push({
           field: 'amount',
           reason: 'empty'
         });
-      } else if (formData.amount.match(amountRegex) === null) {
+      } else if (formData.amount.toString().match(amountRegex) === null) {
         errors.push({
           field: 'amount',
           reason: 'money_format'
