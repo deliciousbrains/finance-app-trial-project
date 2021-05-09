@@ -28,6 +28,7 @@
           <a
               href="#"
               class="flex bg-blue-700 text-white rounded-md font-bold items-center uppercase mr-4 px-6 py-4"
+              @click="saveEntry()"
           >Save Entry</a>
         </div>
       </div>
