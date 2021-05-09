@@ -2031,7 +2031,7 @@ __webpack_require__.r(__webpack_exports__);
       isEdited: false,
       label: this.entry.label,
       amount: this.entry.value,
-      date: this.entry.date
+      date: this.dayWithTime(this.entry.date)
     };
   },
   methods: {
@@ -2065,8 +2065,11 @@ __webpack_require__.r(__webpack_exports__);
       if (errors.length > 0) {
         console.log(errors);
       } else {
+        formData.date = _vue_services_DayTimeService__WEBPACK_IMPORTED_MODULE_0__["default"].getSQLDate(this.date);
         _vue_services_HttpService__WEBPACK_IMPORTED_MODULE_2__["default"].makeRequest('put', '/api/entries/' + this.entry.id, formData).then(function () {
           _this.$root.$emit('refreshEntries');
+
+          _this.isEdited = false;
         })["catch"](function (error) {
           console.log(error);
         });
@@ -2388,9 +2391,7 @@ __webpack_require__.r(__webpack_exports__);
       if (errors.length > 0) {
         console.log(errors);
       } else {
-        var modifiedDate = this.date.replace('at ', '');
-        var dateObject = luxon__WEBPACK_IMPORTED_MODULE_4__["DateTime"].fromFormat(modifiedDate, 'dd LLL, y hh:mm a');
-        formData.date = dateObject.toSQL();
+        formData.date = _vue_services_DayTimeService__WEBPACK_IMPORTED_MODULE_1__["default"].getSQLDate(this.date);
         _vue_services_HttpService__WEBPACK_IMPORTED_MODULE_3__["default"].makeRequest('post', '/api/entries', formData).then(function () {
           _this.$root.$emit('refreshEntries');
 
@@ -42867,6 +42868,13 @@ var DayTimeService = /*#__PURE__*/function () {
       var date = dayObject.toFormat('dd LLL, y');
       var time = dayObject.toFormat('hh:mm a');
       return "".concat(date, " at ").concat(time);
+    }
+  }, {
+    key: "getSQLDate",
+    value: function getSQLDate(date) {
+      var modifiedDate = date.replace('at ', '');
+      var dateObject = luxon__WEBPACK_IMPORTED_MODULE_0__["DateTime"].fromFormat(modifiedDate, 'dd LLL, y hh:mm a');
+      return dateObject.toSQL();
     }
   }]);
 

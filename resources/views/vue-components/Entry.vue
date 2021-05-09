@@ -82,7 +82,7 @@ export default {
       isEdited: false,
       label: this.entry.label,
       amount: this.entry.value,
-      date: this.entry.date
+      date: this.dayWithTime(this.entry.date)
     }
   },
   methods: {
@@ -113,9 +113,11 @@ export default {
       if (errors.length > 0) {
         console.log(errors)
       } else {
+        formData.date = DayTimeService.getSQLDate(this.date)
         HttpService.makeRequest('put', '/api/entries/' + this.entry.id, formData)
             .then(() => {
               this.$root.$emit('refreshEntries')
+              this.isEdited = false
             })
             .catch((error) => {
               console.log(error)

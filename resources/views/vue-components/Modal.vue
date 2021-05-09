@@ -72,9 +72,7 @@ export default {
       if (errors.length > 0) {
         console.log(errors)
       } else {
-        const modifiedDate = this.date.replace('at ', '')
-        const dateObject = DateTime.fromFormat(modifiedDate, 'dd LLL, y hh:mm a')
-        formData.date = dateObject.toSQL()
+        formData.date = DayTimeService.getSQLDate(this.date)
         HttpService.makeRequest('post', '/api/entries', formData)
             .then(() => {
               this.$root.$emit('refreshEntries')

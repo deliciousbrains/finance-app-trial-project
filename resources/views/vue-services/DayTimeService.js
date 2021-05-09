@@ -1,7 +1,7 @@
 import {DateTime} from "luxon";
 
 export default class DayTimeService {
-    static dayWithTime (day) {
+    static dayWithTime(day) {
         let dayObject
         if (day) {
             dayObject = DateTime.fromISO(day).setLocale('en')
@@ -11,5 +11,11 @@ export default class DayTimeService {
         const date = dayObject.toFormat('dd LLL, y')
         const time = dayObject.toFormat('hh:mm a')
         return `${date} at ${time}`
+    }
+
+    static getSQLDate(date) {
+        const modifiedDate = date.replace('at ', '')
+        const dateObject = DateTime.fromFormat(modifiedDate, 'dd LLL, y hh:mm a')
+        return dateObject.toSQL()
     }
 }
