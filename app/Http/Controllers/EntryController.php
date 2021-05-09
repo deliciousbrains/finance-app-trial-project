@@ -48,7 +48,7 @@ class EntryController extends Controller
         $entry = new Entry();
         $entry->user_id = $user->id;
         $entry->label = $validated['label'];
-        $entry->value = $validated['value'];
+        $entry->value = $validated['amount'];
         if (array_key_exists('date', $validated)) {
             $entry->date = $validated['date'];
         }
@@ -82,7 +82,7 @@ class EntryController extends Controller
             return new JsonResponse(null, Response::HTTP_NOT_FOUND);
         }
         $entry->label = $validated['label'];
-        $entry->value = $validated['value'];
+        $entry->value = $validated['amount'];
         if (array_key_exists('date', $validated)) {
             $entry->date = $validated['date'];
         }

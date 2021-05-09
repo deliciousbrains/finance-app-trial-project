@@ -41,16 +41,22 @@ export default {
   methods: {
     addEntry () {
       this.$root.$emit('openModal')
+    },
+    getTotal () {
+      Http.makeRequest('get', '/api/entries/total')
+          .then((response) => {
+            this.total = response.data.total
+          })
+          .catch((error) => {
+            console.log(error)
+          })
     }
   },
   mounted () {
-    Http.makeRequest('get', '/api/entries/total')
-        .then((response) => {
-          this.total = response.data.total
-        })
-        .catch((error) => {
-          console.log(error)
-        })
+    this.getTotal()
+    this.$root.$on('refreshEntries', () => {
+      this.getTotal()
+    })
   }
 }
 </script>

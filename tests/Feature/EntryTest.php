@@ -65,7 +65,7 @@ class EntryTest extends TestCase
 
         $postData = [
             'label' => 'My Label',
-            'value' => '204.50',
+            'amount' => '204.50',
         ];
 
         $response = $this->actingAs($user)->postJson('/api/entries', $postData);
@@ -106,7 +106,7 @@ class EntryTest extends TestCase
 
         $postData = [
             'label' => 'My Label',
-            'value' => '204.50',
+            'amount' => '204.50',
             'date' => '2020-09-04',
         ];
 
@@ -147,7 +147,7 @@ class EntryTest extends TestCase
 
         $postData = [
             'label' => 'My Label',
-            'value' => '204.50',
+            'amount' => '204.50',
             'date' => '2020-09-04',
         ];
 
@@ -169,7 +169,7 @@ class EntryTest extends TestCase
 
         $postData = [
             'label' => 'My Label',
-            'value' => '204.50',
+            'amount' => '204.50',
             'date' => '2020-09-04',
         ];
 

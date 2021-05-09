@@ -22,6 +22,7 @@
         <a
             class="flex underline hover:no-underline text-blue-700 mr-4 font-bold"
             href="#"
+            @click="deleteEntry()"
         >Delete</a>
       </div>
       <div class="text-lg font-bold">
@@ -31,7 +32,11 @@
       </div>
     </div>
     <div v-show="isEdited">
-      <entry-form :entry="entry"></entry-form>
+      <entry-form
+          :label="label"
+          :amount="amount"
+          :date="date"
+      ></entry-form>
       <div class="flex flex-row py-6 px-4">
         <div class="flex-grow"></div>
         <div class="flex flex-row">
@@ -51,8 +56,9 @@
 </template>
 
 <script>
-import DayTimeService from "../vue-services/DayTimeService";
+import DayTimeService from "../vue-services/DayTimeService"
 import EntryFormComponent from './EntryForm'
+import HttpService from "../vue-services/HttpService"
 
 export default {
   components: {
@@ -67,7 +73,10 @@ export default {
   data () {
     return {
       isActive: false,
-      isEdited: false
+      isEdited: false,
+      label: this.entry.label,
+      amount: this.entry.amount,
+      date: this.dayWithTime(this.entry.date)
     }
   },
   methods: {
@@ -87,6 +96,15 @@ export default {
     },
     dayWithTime (day) {
       return DayTimeService.dayWithTime(day)
+    },
+    deleteEntry () {
+      HttpService.makeRequest('delete', '/api/entries/' + this.entry.id)
+          .then(() => {
+            this.$root.$emit('refreshEntries')
+          })
+          .catch((error) => {
+            console.log(error)
+          })
     }
   }
 }

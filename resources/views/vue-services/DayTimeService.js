@@ -8,7 +8,7 @@ export default class DayTimeService {
         } else {
             dayObject = DateTime.now().setLocale('en')
         }
-        const date = dayObject.toFormat('dd LLLL, y')
+        const date = dayObject.toFormat('dd LLL, y')
         const time = dayObject.toFormat('hh:mm a')
         return `${date} at ${time}`
     }

@@ -52,16 +52,22 @@ export default {
     dayWithWeekday (day) {
       const dayObject = DateTime.fromISO(day).setLocale('en')
       return dayObject.toFormat('ccc, d LLLL')
+    },
+    getEntries () {
+      Http.makeRequest('get', '/api/entries')
+          .then((response) => {
+            this.days = response.data
+          })
+          .catch((error) => {
+            console.log(error)
+          })
     }
   },
   mounted () {
-    Http.makeRequest('get', '/api/entries')
-        .then((response) => {
-          this.days = response.data
-        })
-        .catch((error) => {
-          console.log(error)
-        })
+    this.getEntries()
+    this.$root.$on('refreshEntries', () => {
+      this.getEntries()
+    })
   }
 }
 </script>
