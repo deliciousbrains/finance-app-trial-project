@@ -29077,218 +29077,208 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "mb-4 px-4 py-2 shadow-md bg-white rounded-md" },
-    [
-      _c(
-        "div",
-        {
-          staticClass: "flex flex-row items-center",
-          on: {
-            mouseover: function($event) {
-              return _vm.activate()
-            },
-            mouseout: function($event) {
-              return _vm.deactivate()
-            }
+  return _c("div", { staticClass: "mb-4 py-2 shadow-md bg-white rounded-md" }, [
+    _c(
+      "div",
+      {
+        staticClass: "flex flex-row items-center mb-4 px-4",
+        on: {
+          mouseover: function($event) {
+            return _vm.activate()
+          },
+          mouseout: function($event) {
+            return _vm.deactivate()
           }
-        },
-        [
-          _c("div", { staticClass: "flex-grow" }, [
-            _c("div", { staticClass: "font-bold" }, [
-              _vm._v("\n        " + _vm._s(_vm.entry.label) + "\n      ")
+        }
+      },
+      [
+        _c("div", { staticClass: "flex-grow" }, [
+          _c("div", { staticClass: "font-bold" }, [
+            _vm._v("\n        " + _vm._s(_vm.entry.label) + "\n      ")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "text-xs text-gray-500" }, [
+            _vm._v(
+              "\n        " +
+                _vm._s(_vm.dayWithTime(_vm.entry.date)) +
+                "\n      "
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.isActive,
+                expression: "isActive"
+              }
+            ],
+            staticClass: "uppercase flex flex-row"
+          },
+          [
+            _c(
+              "a",
+              {
+                staticClass:
+                  "flex underline hover:no-underline text-blue-700 mr-4 font-bold",
+                attrs: { href: "#" },
+                on: {
+                  click: function($event) {
+                    return _vm.startEdit()
+                  }
+                }
+              },
+              [_vm._v("Edit")]
+            ),
+            _vm._v(" "),
+            _c(
+              "a",
+              {
+                staticClass:
+                  "flex underline hover:no-underline text-blue-700 mr-4 font-bold",
+                attrs: { href: "#" }
+              },
+              [_vm._v("Delete")]
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "text-lg font-bold" },
+          [
+            _vm.entry.value < 0
+              ? _c("span", [_vm._v("-")])
+              : _c("span", [_vm._v("+")]),
+            _vm._v(" "),
+            _c("money-value", {
+              attrs: { sum: _vm.entry.value, "class-name": "text-sm" }
+            })
+          ],
+          1
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.isEdited,
+            expression: "isEdited"
+          }
+        ]
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "flex flex-row py-10 border-t border-b px-4" },
+          [
+            _c("div", { staticClass: "flex flex-auto flex-col px-3 w-2/5" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "text-gray-700 font-bold uppercase pb-2",
+                  attrs: { for: "label" + _vm.entry.id }
+                },
+                [_vm._v("Label")]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                staticClass:
+                  "shadow appearance-none border rounded px-3 py-3 mb-3",
+                attrs: { id: "label" + _vm.entry.id, type: "text" },
+                domProps: { value: _vm.entry.label }
+              })
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "text-xs text-gray-500" }, [
-              _vm._v(
-                "\n        " +
-                  _vm._s(_vm.dayWithTime(_vm.entry.date)) +
-                  "\n      "
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.isActive,
-                  expression: "isActive"
-                }
-              ],
-              staticClass: "uppercase flex flex-row"
-            },
-            [
+            _c("div", { staticClass: "flex flex-auto flex-col px-3 w-2/5" }, [
               _c(
-                "a",
+                "label",
                 {
-                  staticClass:
-                    "flex underline hover:no-underline text-blue-700 mr-4 font-bold",
-                  attrs: { href: "#" },
-                  on: {
-                    click: function($event) {
-                      return _vm.startEdit()
-                    }
-                  }
+                  staticClass: "text-gray-700 font-bold uppercase pb-2",
+                  attrs: { for: "date" + _vm.entry.id }
                 },
-                [_vm._v("Edit")]
+                [_vm._v("Date")]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                staticClass:
+                  "shadow appearance-none border rounded px-3 py-3 mb-3",
+                attrs: { id: "date" + _vm.entry.id, type: "text" },
+                domProps: { value: _vm.dayWithTime(_vm.entry.date) }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "flex flex-auto flex-col px-3 w-1/5" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "text-gray-700 font-bold uppercase pb-2",
+                  attrs: { for: "value-" + _vm.entry.id }
+                },
+                [_vm._v("Amount")]
               ),
               _vm._v(" "),
               _c(
-                "a",
+                "div",
                 {
-                  staticClass:
-                    "flex underline hover:no-underline text-blue-700 mr-4 font-bold",
-                  attrs: { href: "#" }
+                  staticClass: "relative rounded border shadow px-3 py-3 mb-3"
                 },
-                [_vm._v("Delete")]
+                [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c("input", {
+                    staticClass: "appearance-none px-4 w-4/5",
+                    attrs: { id: "value-" + _vm.entry.id, type: "text" },
+                    domProps: { value: _vm.entry.value.toFixed(2) }
+                  })
+                ]
               )
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "text-lg font-bold" },
-            [
-              _vm.entry.value < 0
-                ? _c("span", [_vm._v("-")])
-                : _c("span", [_vm._v("+")]),
-              _vm._v(" "),
-              _c("money-value", {
-                attrs: { sum: _vm.entry.value, "class-name": "text-sm" }
-              })
-            ],
-            1
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.isEdited,
-              expression: "isEdited"
-            }
+            ])
           ]
-        },
-        [
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "flex flex-row py-6 px-4" }, [
+          _c("div", { staticClass: "flex-grow" }),
+          _vm._v(" "),
           _c("div", { staticClass: "flex flex-row" }, [
             _c(
-              "div",
-              { staticClass: "flex flex-auto flex-col px-3 py-2 w-2/5" },
-              [
-                _c(
-                  "label",
-                  {
-                    staticClass: "text-gray-700 font-bold uppercase py-2",
-                    attrs: { for: "label" + _vm.entry.id }
-                  },
-                  [_vm._v("Label")]
-                ),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass:
-                    "shadow appearance-none border rounded px-3 py-3",
-                  attrs: { id: "label" + _vm.entry.id, type: "text" },
-                  domProps: { value: _vm.entry.label }
-                })
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "flex flex-auto flex-col px-3 py-2 w-2/5" },
-              [
-                _c(
-                  "label",
-                  {
-                    staticClass: "text-gray-700 font-bold uppercase py-2",
-                    attrs: { for: "date" + _vm.entry.id }
-                  },
-                  [_vm._v("Date")]
-                ),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass:
-                    "shadow appearance-none border rounded px-3 py-3",
-                  attrs: { id: "date" + _vm.entry.id, type: "text" },
-                  domProps: { value: _vm.dayWithTime(_vm.entry.date) }
-                })
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "flex flex-auto flex-col px-3 py-2 w-1/5" },
-              [
-                _c(
-                  "label",
-                  {
-                    staticClass: "text-gray-700 font-bold uppercase py-2",
-                    attrs: { for: "value-" + _vm.entry.id }
-                  },
-                  [_vm._v("Amount")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "relative rounded border shadow px-3 py-3" },
-                  [
-                    _vm._m(0),
-                    _vm._v(" "),
-                    _c("input", {
-                      staticClass: "appearance-none px-4 w-4/5",
-                      attrs: { id: "value-" + _vm.entry.id, type: "text" },
-                      domProps: { value: _vm.entry.value.toFixed(2) }
-                    })
-                  ]
-                )
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "flex flex-row py-6" }, [
-            _c("div", { staticClass: "flex-grow" }),
-            _vm._v(" "),
-            _c("div", { staticClass: "flex flex-row" }, [
-              _c(
-                "a",
-                {
-                  staticClass:
-                    "flex bg-blue-100 text-gray-500 rounded-md font-bold items-center uppercase mr-4 px-6 py-4",
-                  attrs: { href: "#" },
-                  on: {
-                    click: function($event) {
-                      return _vm.stopEdit()
-                    }
+              "a",
+              {
+                staticClass:
+                  "flex bg-blue-100 text-gray-500 rounded-md font-bold items-center uppercase mr-4 px-6 py-4",
+                attrs: { href: "#" },
+                on: {
+                  click: function($event) {
+                    return _vm.stopEdit()
                   }
-                },
-                [_vm._v("Cancel")]
-              ),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass:
-                    "flex bg-blue-700 text-white rounded-md font-bold items-center uppercase mr-4 px-6 py-4",
-                  attrs: { href: "#" }
-                },
-                [_vm._v("Update Entry")]
-              )
-            ])
+                }
+              },
+              [_vm._v("Cancel")]
+            ),
+            _vm._v(" "),
+            _c(
+              "a",
+              {
+                staticClass:
+                  "flex bg-blue-700 text-white rounded-md font-bold items-center uppercase mr-4 px-6 py-4",
+                attrs: { href: "#" }
+              },
+              [_vm._v("Update Entry")]
+            )
           ])
-        ]
-      )
-    ]
-  )
+        ])
+      ]
+    )
+  ])
 }
 var staticRenderFns = [
   function() {

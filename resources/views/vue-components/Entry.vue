@@ -1,7 +1,7 @@
 <template>
-  <div class="mb-4 px-4 py-2 shadow-md bg-white rounded-md">
+  <div class="mb-4 py-2 shadow-md bg-white rounded-md">
     <div
-        class="flex flex-row items-center"
+        class="flex flex-row items-center mb-4 px-4"
         @mouseover="activate()"
         @mouseout="deactivate()"
     >
@@ -31,28 +31,28 @@
       </div>
     </div>
     <div v-show="isEdited">
-      <div class="flex flex-row">
-        <div class="flex flex-auto flex-col px-3 py-2 w-2/5">
-          <label :for="'label' + entry.id" class="text-gray-700 font-bold uppercase py-2">Label</label>
+      <div class="flex flex-row py-10 border-t border-b px-4">
+        <div class="flex flex-auto flex-col px-3 w-2/5">
+          <label :for="'label' + entry.id" class="text-gray-700 font-bold uppercase pb-2">Label</label>
           <input
               :id="'label' + entry.id"
               type="text"
               :value="entry.label"
-              class="shadow appearance-none border rounded px-3 py-3"
+              class="shadow appearance-none border rounded px-3 py-3 mb-3"
           />
         </div>
-        <div class="flex flex-auto flex-col px-3 py-2 w-2/5">
-          <label :for="'date' + entry.id" class="text-gray-700 font-bold uppercase py-2">Date</label>
+        <div class="flex flex-auto flex-col px-3 w-2/5">
+          <label :for="'date' + entry.id" class="text-gray-700 font-bold uppercase pb-2">Date</label>
           <input
               :id="'date' + entry.id"
               type="text"
               :value="dayWithTime(entry.date)"
-              class="shadow appearance-none border rounded px-3 py-3"
+              class="shadow appearance-none border rounded px-3 py-3 mb-3"
           />
         </div>
-        <div class="flex flex-auto flex-col px-3 py-2 w-1/5">
-          <label :for="'value-' + entry.id" class="text-gray-700 font-bold uppercase py-2">Amount</label>
-          <div class="relative rounded border shadow px-3 py-3">
+        <div class="flex flex-auto flex-col px-3 w-1/5">
+          <label :for="'value-' + entry.id" class="text-gray-700 font-bold uppercase pb-2">Amount</label>
+          <div class="relative rounded border shadow px-3 py-3 mb-3">
             <div class="absolute inset-y-0 left-0 px-3 flex items-center pointer-events-none">
               <span class="text-gray-500 sm:text-sm">$</span>
             </div>
@@ -65,7 +65,7 @@
           </div>
         </div>
       </div>
-      <div class="flex flex-row py-6">
+      <div class="flex flex-row py-6 px-4">
         <div class="flex-grow"></div>
         <div class="flex flex-row">
           <a
