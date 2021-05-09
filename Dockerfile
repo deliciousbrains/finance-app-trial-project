@@ -81,6 +81,11 @@ RUN set -xe \
 
 RUN ln -snf /usr/share/zoneinfo/$SYSTEM_TZ /etc/localtime && echo $SYSTEM_TZ > /etc/timezone
 
+# Customize php setup
+RUN set -xe \
+    && /bin/echo 'date.timezone='"${SYSTEM_TZ}" > "/etc/php/7.4/mods-available/custom.ini" \
+    && ln -s "/etc/php/7.4/mods-available/custom.ini" "/etc/php/7.4/apache2/conf.d/40-custom.ini"
+
 WORKDIR $DOCUMENT_ROOT
 
 COPY composer.json ./
