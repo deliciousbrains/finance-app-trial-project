@@ -1,5 +1,5 @@
 <template>
-  <div style="z-index: 1">
+  <div>
     <dashboard-header></dashboard-header>
     <dashboard-total></dashboard-total>
     <dashboard-main></dashboard-main>

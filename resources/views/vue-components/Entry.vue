@@ -31,40 +31,7 @@
       </div>
     </div>
     <div v-show="isEdited">
-      <div class="flex flex-row py-10 border-t border-b px-4">
-        <div class="flex flex-auto flex-col px-3 w-2/5">
-          <label :for="'label' + entry.id" class="text-gray-700 font-bold uppercase pb-2">Label</label>
-          <input
-              :id="'label' + entry.id"
-              type="text"
-              :value="entry.label"
-              class="shadow appearance-none border rounded px-3 py-3 mb-3"
-          />
-        </div>
-        <div class="flex flex-auto flex-col px-3 w-2/5">
-          <label :for="'date' + entry.id" class="text-gray-700 font-bold uppercase pb-2">Date</label>
-          <input
-              :id="'date' + entry.id"
-              type="text"
-              :value="dayWithTime(entry.date)"
-              class="shadow appearance-none border rounded px-3 py-3 mb-3"
-          />
-        </div>
-        <div class="flex flex-auto flex-col px-3 w-1/5">
-          <label :for="'value-' + entry.id" class="text-gray-700 font-bold uppercase pb-2">Amount</label>
-          <div class="relative rounded border shadow px-3 py-3 mb-3">
-            <div class="absolute inset-y-0 left-0 px-3 flex items-center pointer-events-none">
-              <span class="text-gray-500 sm:text-sm">$</span>
-            </div>
-            <input
-              :id="'value-' + entry.id"
-              type="text"
-              :value="entry.value.toFixed(2)"
-              class="appearance-none px-4 w-4/5"
-            />
-          </div>
-        </div>
-      </div>
+      <entry-form :entry="entry"></entry-form>
       <div class="flex flex-row py-6 px-4">
         <div class="flex-grow"></div>
         <div class="flex flex-row">
@@ -83,16 +50,14 @@
   </div>
 </template>
 
-<style>
-input:focus-visible {
-  outline-width: 0;
-}
-</style>
-
 <script>
-import {DateTime} from "luxon";
+import DayTimeService from "../vue-services/DayTimeService";
+import EntryFormComponent from './EntryForm'
 
 export default {
+  components: {
+    entryForm: EntryFormComponent
+  },
   props: {
     entry: {
       type: Object,
@@ -121,10 +86,7 @@ export default {
       this.isEdited = false
     },
     dayWithTime (day) {
-      const dayObject = DateTime.fromISO(day).setLocale('en')
-      const date = dayObject.toFormat('dd LLLL, y')
-      const time = dayObject.toFormat('hh:mm a')
-      return `${date} at ${time}`
+      return DayTimeService.dayWithTime(day)
     }
   }
 }
