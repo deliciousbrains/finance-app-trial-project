@@ -33,9 +33,13 @@
     </div>
     <div v-show="isEdited">
       <entry-form
+          :id="entry.id"
           :label="label"
           :amount="amount"
           :date="date"
+          @input-label="label = $event"
+          @input-amount="amount = $event"
+          @input-date="date = $event"
       ></entry-form>
       <div class="flex flex-row py-6 px-4">
         <div class="flex-grow"></div>
@@ -75,7 +79,7 @@ export default {
       isActive: false,
       isEdited: false,
       label: this.entry.label,
-      amount: this.entry.amount,
+      amount: this.entry.value,
       date: this.dayWithTime(this.entry.date)
     }
   },

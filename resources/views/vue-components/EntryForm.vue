@@ -1,9 +1,9 @@
 <template>
   <div class="flex flex-row py-10 border-t border-b px-4">
     <div class="flex flex-auto flex-col px-3 w-2/5">
-      <label :for="'label' + id" class="text-gray-700 font-bold uppercase pb-2">Label</label>
+      <label :for="'label-' + id" class="text-gray-700 font-bold uppercase pb-2">Label</label>
       <input
-          :id="'label' + id"
+          :id="'label-' + id"
           type="text"
           :value="label"
           class="shadow appearance-none border rounded px-3 py-3 mb-3"
@@ -11,9 +11,9 @@
       />
     </div>
     <div class="flex flex-auto flex-col px-3 w-2/5">
-      <label :for="'date' + id" class="text-gray-700 font-bold uppercase pb-2">Date</label>
+      <label :for="'date-' + id" class="text-gray-700 font-bold uppercase pb-2">Date</label>
       <input
-          :id="'date' + id"
+          :id="'date-' + id"
           type="text"
           :value="date"
           class="shadow appearance-none border rounded px-3 py-3 mb-3"
@@ -66,8 +66,8 @@ export default {
   },
   computed: {
     entryValue () {
-      if (this.value !== 0) {
-        return this.value.toFixed(2)
+      if (this.amount !== 0) {
+        return this.amount.toFixed(2)
       }
       return ''
     }

@@ -1947,6 +1947,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _vue_services_DayTimeService__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../vue-services/DayTimeService */ "./resources/views/vue-services/DayTimeService.js");
 /* harmony import */ var _EntryForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EntryForm */ "./resources/views/vue-components/EntryForm.vue");
+/* harmony import */ var _vue_services_HttpService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../vue-services/HttpService */ "./resources/views/vue-services/HttpService.js");
 //
 //
 //
@@ -1999,6 +2000,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2014,7 +2025,10 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       isActive: false,
-      isEdited: false
+      isEdited: false,
+      label: this.entry.label,
+      amount: this.entry.value,
+      date: this.dayWithTime(this.entry.date)
     };
   },
   methods: {
@@ -2034,6 +2048,15 @@ __webpack_require__.r(__webpack_exports__);
     },
     dayWithTime: function dayWithTime(day) {
       return _vue_services_DayTimeService__WEBPACK_IMPORTED_MODULE_0__["default"].dayWithTime(day);
+    },
+    deleteEntry: function deleteEntry() {
+      var _this = this;
+
+      _vue_services_HttpService__WEBPACK_IMPORTED_MODULE_2__["default"].makeRequest('delete', '/api/entries/' + this.entry.id).then(function () {
+        _this.$root.$emit('refreshEntries');
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   }
 });
@@ -2049,9 +2072,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _vue_services_DayTimeService__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../vue-services/DayTimeService */ "./resources/views/vue-services/DayTimeService.js");
-/* harmony import */ var luxon__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! luxon */ "./node_modules/luxon/build/cjs-browser/luxon.js");
-/* harmony import */ var luxon__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(luxon__WEBPACK_IMPORTED_MODULE_1__);
 //
 //
 //
@@ -2095,34 +2115,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
-
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    entry: {
-      type: Object,
-      "default": function _default() {
-        return {
-          id: 0,
-          label: '',
-          value: 0,
-          date: ''
-        };
-      }
+    id: {
+      type: Number,
+      "default": 0
+    },
+    label: {
+      type: String,
+      required: true
+    },
+    amount: {
+      type: Number,
+      required: true
+    },
+    date: {
+      type: String,
+      required: true
     }
   },
   computed: {
     entryValue: function entryValue() {
-      if (this.entry.value !== 0) {
-        return this.entry.value.toFixed(2);
+      if (this.amount !== 0) {
+        return this.amount.toFixed(2);
       }
 
       return '';
-    }
-  },
-  methods: {
-    dayWithTime: function dayWithTime(day) {
-      return _vue_services_DayTimeService__WEBPACK_IMPORTED_MODULE_0__["default"].dayWithTime(day);
     }
   }
 });
@@ -2231,15 +2252,23 @@ __webpack_require__.r(__webpack_exports__);
     dayWithWeekday: function dayWithWeekday(day) {
       var dayObject = luxon__WEBPACK_IMPORTED_MODULE_0__["DateTime"].fromISO(day).setLocale('en');
       return dayObject.toFormat('ccc, d LLLL');
+    },
+    getEntries: function getEntries() {
+      var _this = this;
+
+      _vue_services_HttpService__WEBPACK_IMPORTED_MODULE_2__["default"].makeRequest('get', '/api/entries').then(function (response) {
+        _this.days = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   },
   mounted: function mounted() {
-    var _this = this;
+    var _this2 = this;
 
-    _vue_services_HttpService__WEBPACK_IMPORTED_MODULE_2__["default"].makeRequest('get', '/api/entries').then(function (response) {
-      _this.days = response.data;
-    })["catch"](function (error) {
-      console.log(error);
+    this.getEntries();
+    this.$root.$on('refreshEntries', function () {
+      _this2.getEntries();
     });
   }
 });
@@ -2256,6 +2285,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _EntryForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EntryForm */ "./resources/views/vue-components/EntryForm.vue");
+/* harmony import */ var _vue_services_DayTimeService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../vue-services/DayTimeService */ "./resources/views/vue-services/DayTimeService.js");
+/* harmony import */ var _vue_services_FormValidatorService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../vue-services/FormValidatorService */ "./resources/views/vue-services/FormValidatorService.js");
+/* harmony import */ var _vue_services_HttpService__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../vue-services/HttpService */ "./resources/views/vue-services/HttpService.js");
 //
 //
 //
@@ -2286,6 +2318,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2293,19 +2335,45 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      isAdded: false
+      isAdded: false,
+      label: '',
+      date: '',
+      amount: 0
     };
   },
   methods: {
     stopAdd: function stopAdd() {
       this.isAdded = false;
+    },
+    dayWithTime: function dayWithTime(day) {
+      return _vue_services_DayTimeService__WEBPACK_IMPORTED_MODULE_1__["default"].dayWithTime(day);
+    },
+    saveEntry: function saveEntry() {
+      var _this = this;
+
+      var formData = {
+        label: label,
+        date: date,
+        amount: amount
+      };
+      var errors = _vue_services_FormValidatorService__WEBPACK_IMPORTED_MODULE_2__["default"].validateForm(formData);
+
+      if (errors.length > 0) {
+        console.log(errors);
+      } else {
+        _vue_services_HttpService__WEBPACK_IMPORTED_MODULE_3__["default"].makeRequest('post', '/api/entries', formData).then(function () {
+          _this.$root.$emit('refreshEntries');
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      }
     }
   },
   mounted: function mounted() {
-    var _this = this;
+    var _this2 = this;
 
     this.$root.$on('openModal', function () {
-      _this.isAdded = true;
+      _this2.isAdded = true;
     });
   }
 });
@@ -2413,15 +2481,23 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     addEntry: function addEntry() {
       this.$root.$emit('openModal');
+    },
+    getTotal: function getTotal() {
+      var _this = this;
+
+      _vue_services_HttpService__WEBPACK_IMPORTED_MODULE_0__["default"].makeRequest('get', '/api/entries/total').then(function (response) {
+        _this.total = response.data.total;
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   },
   mounted: function mounted() {
-    var _this = this;
+    var _this2 = this;
 
-    _vue_services_HttpService__WEBPACK_IMPORTED_MODULE_0__["default"].makeRequest('get', '/api/entries/total').then(function (response) {
-      _this.total = response.data.total;
-    })["catch"](function (error) {
-      console.log(error);
+    this.getTotal();
+    this.$root.$on('refreshEntries', function () {
+      _this2.getTotal();
     });
   }
 });
@@ -29270,7 +29346,12 @@ var render = function() {
               {
                 staticClass:
                   "flex underline hover:no-underline text-blue-700 mr-4 font-bold",
-                attrs: { href: "#" }
+                attrs: { href: "#" },
+                on: {
+                  click: function($event) {
+                    return _vm.deleteEntry()
+                  }
+                }
               },
               [_vm._v("Delete")]
             )
@@ -29307,7 +29388,25 @@ var render = function() {
         ]
       },
       [
-        _c("entry-form", { attrs: { entry: _vm.entry } }),
+        _c("entry-form", {
+          attrs: {
+            id: _vm.entry.id,
+            label: _vm.label,
+            amount: _vm.amount,
+            date: _vm.date
+          },
+          on: {
+            "input-label": function($event) {
+              _vm.label = $event
+            },
+            "input-amount": function($event) {
+              _vm.amount = $event
+            },
+            "input-date": function($event) {
+              _vm.date = $event
+            }
+          }
+        }),
         _vm._v(" "),
         _c("div", { staticClass: "flex flex-row py-6 px-4" }, [
           _c("div", { staticClass: "flex-grow" }),
@@ -29375,15 +29474,20 @@ var render = function() {
           "label",
           {
             staticClass: "text-gray-700 font-bold uppercase pb-2",
-            attrs: { for: "label" + _vm.entry.id }
+            attrs: { for: "label-" + _vm.id }
           },
           [_vm._v("Label")]
         ),
         _vm._v(" "),
         _c("input", {
           staticClass: "shadow appearance-none border rounded px-3 py-3 mb-3",
-          attrs: { id: "label" + _vm.entry.id, type: "text" },
-          domProps: { value: _vm.entry.label }
+          attrs: { id: "label-" + _vm.id, type: "text" },
+          domProps: { value: _vm.label },
+          on: {
+            input: function($event) {
+              return _vm.$emit("input-label", $event.target.value)
+            }
+          }
         })
       ]),
       _vm._v(" "),
@@ -29392,15 +29496,20 @@ var render = function() {
           "label",
           {
             staticClass: "text-gray-700 font-bold uppercase pb-2",
-            attrs: { for: "date" + _vm.entry.id }
+            attrs: { for: "date-" + _vm.id }
           },
           [_vm._v("Date")]
         ),
         _vm._v(" "),
         _c("input", {
           staticClass: "shadow appearance-none border rounded px-3 py-3 mb-3",
-          attrs: { id: "date" + _vm.entry.id, type: "text" },
-          domProps: { value: _vm.dayWithTime(_vm.entry.date) }
+          attrs: { id: "date-" + _vm.id, type: "text" },
+          domProps: { value: _vm.date },
+          on: {
+            input: function($event) {
+              return _vm.$emit("input-date", $event.target.value)
+            }
+          }
         })
       ]),
       _vm._v(" "),
@@ -29409,7 +29518,7 @@ var render = function() {
           "label",
           {
             staticClass: "text-gray-700 font-bold uppercase pb-2",
-            attrs: { for: "value-" + _vm.entry.id }
+            attrs: { for: "value-" + _vm.id }
           },
           [_vm._v("Amount")]
         ),
@@ -29422,8 +29531,13 @@ var render = function() {
             _vm._v(" "),
             _c("input", {
               staticClass: "appearance-none px-4 w-4/5",
-              attrs: { id: "value-" + _vm.entry.id, type: "text" },
-              domProps: { value: _vm.entryValue }
+              attrs: { id: "value-" + _vm.id, type: "text" },
+              domProps: { value: _vm.entryValue },
+              on: {
+                input: function($event) {
+                  return _vm.$emit("input-value", $event.target.value)
+                }
+              }
             })
           ]
         )
@@ -29695,7 +29809,24 @@ var render = function() {
             [_vm._v("\n      Add Balance Entry\n    ")]
           ),
           _vm._v(" "),
-          _c("entry-form"),
+          _c("entry-form", {
+            attrs: {
+              date: _vm.dayWithTime(_vm.date),
+              label: _vm.label,
+              amount: _vm.amount
+            },
+            on: {
+              "input-label": function($event) {
+                _vm.label = $event
+              },
+              "input-amount": function($event) {
+                _vm.amount = $event
+              },
+              "input-date": function($event) {
+                _vm.date = $event
+              }
+            }
+          }),
           _vm._v(" "),
           _c("div", { staticClass: "flex flex-row py-6 px-6" }, [
             _c("div", { staticClass: "flex-grow" }),
@@ -42688,7 +42819,6 @@ var DayTimeService = /*#__PURE__*/function () {
     key: "dayWithTime",
     value: function dayWithTime(day) {
       var dayObject;
-      console.log(day);
 
       if (day) {
         dayObject = luxon__WEBPACK_IMPORTED_MODULE_0__["DateTime"].fromISO(day).setLocale('en');
@@ -42696,14 +42826,99 @@ var DayTimeService = /*#__PURE__*/function () {
         dayObject = luxon__WEBPACK_IMPORTED_MODULE_0__["DateTime"].now().setLocale('en');
       }
 
-      console.log(dayObject);
-      var date = dayObject.toFormat('dd LLLL, y');
+      var date = dayObject.toFormat('dd LLL, y');
       var time = dayObject.toFormat('hh:mm a');
       return "".concat(date, " at ").concat(time);
     }
   }]);
 
   return DayTimeService;
+}();
+
+
+
+/***/ }),
+
+/***/ "./resources/views/vue-services/FormValidatorService.js":
+/*!**************************************************************!*\
+  !*** ./resources/views/vue-services/FormValidatorService.js ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return FormValidatorService; });
+/* harmony import */ var luxon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! luxon */ "./node_modules/luxon/build/cjs-browser/luxon.js");
+/* harmony import */ var luxon__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(luxon__WEBPACK_IMPORTED_MODULE_0__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var FormValidatorService = /*#__PURE__*/function () {
+  function FormValidatorService() {
+    _classCallCheck(this, FormValidatorService);
+  }
+
+  _createClass(FormValidatorService, null, [{
+    key: "validateForm",
+    value: function validateForm(formData) {
+      var errors = [];
+
+      if (formData.label.length === 0) {
+        errors.push({
+          field: 'label',
+          reason: 'empty'
+        });
+      }
+
+      var dateRegex = /^\d{2}\s{3},\s\d{4}\sat\s\d{2}:\d{2}\s[AP]M$/;
+
+      if (formData.date.length === 0) {
+        errors.push({
+          field: 'date',
+          reason: 'empty'
+        });
+      } else if (formData.date.match(dateRegex) === null) {
+        errors.push({
+          field: 'date',
+          reason: 'date_format'
+        });
+      } else {
+        var modifiedDate = formData.date.replace('at ', '').replace(',', '');
+        var dateObject = luxon__WEBPACK_IMPORTED_MODULE_0__["DateTime"].fromRFC2822(modifiedDate);
+
+        if (!dateObject.isValid) {
+          errors.push({
+            field: 'date',
+            reason: 'invalid'
+          });
+        }
+      }
+
+      var amountRegex = /^-?\d+(\.\d{2})?$/;
+
+      if (formData.amount.length === 0) {
+        errors.push({
+          field: 'value',
+          reason: 'empty'
+        });
+      } else if (formData.date.match(amountRegex) === null) {
+        errors.push({
+          field: 'value',
+          reason: 'money_format'
+        });
+      }
+
+      return errors;
+    }
+  }]);
+
+  return FormValidatorService;
 }();
 
 
@@ -42738,13 +42953,14 @@ var HttpService = /*#__PURE__*/function () {
 
   _createClass(HttpService, null, [{
     key: "makeRequest",
-    value: function makeRequest(method, url) {
+    value: function makeRequest(method, url, data) {
       return axios__WEBPACK_IMPORTED_MODULE_0___default.a.request({
         method: method,
         url: url,
         headers: {
           'Authorization': 'Bearer ' + token
-        }
+        },
+        data: data
       });
     }
   }]);
