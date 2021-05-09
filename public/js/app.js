@@ -1948,6 +1948,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _vue_services_DayTimeService__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../vue-services/DayTimeService */ "./resources/views/vue-services/DayTimeService.js");
 /* harmony import */ var _EntryForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EntryForm */ "./resources/views/vue-components/EntryForm.vue");
 /* harmony import */ var _vue_services_HttpService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../vue-services/HttpService */ "./resources/views/vue-services/HttpService.js");
+/* harmony import */ var _vue_services_FormValidatorService__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../vue-services/FormValidatorService */ "./resources/views/vue-services/FormValidatorService.js");
 //
 //
 //
@@ -2009,6 +2010,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+
 
 
 
@@ -2049,11 +2052,31 @@ __webpack_require__.r(__webpack_exports__);
     dayWithTime: function dayWithTime(day) {
       return _vue_services_DayTimeService__WEBPACK_IMPORTED_MODULE_0__["default"].dayWithTime(day);
     },
-    deleteEntry: function deleteEntry() {
+    updateEntry: function updateEntry() {
       var _this = this;
 
+      var formData = {
+        label: label,
+        date: date,
+        amount: amount
+      };
+      var errors = _vue_services_FormValidatorService__WEBPACK_IMPORTED_MODULE_3__["default"].validateForm(formData);
+
+      if (errors.length > 0) {
+        console.log(errors);
+      } else {
+        _vue_services_HttpService__WEBPACK_IMPORTED_MODULE_2__["default"].makeRequest('put', '/api/entries/' + this.entry.id, formData).then(function () {
+          _this.$root.$emit('refreshEntries');
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      }
+    },
+    deleteEntry: function deleteEntry() {
+      var _this2 = this;
+
       _vue_services_HttpService__WEBPACK_IMPORTED_MODULE_2__["default"].makeRequest('delete', '/api/entries/' + this.entry.id).then(function () {
-        _this.$root.$emit('refreshEntries');
+        _this2.$root.$emit('refreshEntries');
       })["catch"](function (error) {
         console.log(error);
       });
@@ -29432,7 +29455,12 @@ var render = function() {
               {
                 staticClass:
                   "flex bg-blue-700 text-white rounded-md font-bold items-center uppercase mr-4 px-6 py-4",
-                attrs: { href: "#" }
+                attrs: { href: "#" },
+                on: {
+                  click: function($event) {
+                    return _vm.updateEntry()
+                  }
+                }
               },
               [_vm._v("Update Entry")]
             )

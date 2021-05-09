@@ -52,6 +52,7 @@
           <a
               href="#"
               class="flex bg-blue-700 text-white rounded-md font-bold items-center uppercase mr-4 px-6 py-4"
+              @click="updateEntry()"
           >Update Entry</a>
         </div>
       </div>
@@ -63,6 +64,7 @@
 import DayTimeService from "../vue-services/DayTimeService"
 import EntryFormComponent from './EntryForm'
 import HttpService from "../vue-services/HttpService"
+import FormValidatorService from "../vue-services/FormValidatorService";
 
 export default {
   components: {
@@ -100,6 +102,25 @@ export default {
     },
     dayWithTime (day) {
       return DayTimeService.dayWithTime(day)
+    },
+    updateEntry () {
+      const formData = {
+        label: label,
+        date: date,
+        amount: amount
+      }
+      const errors = FormValidatorService.validateForm(formData)
+      if (errors.length > 0) {
+        console.log(errors)
+      } else {
+        HttpService.makeRequest('put', '/api/entries/' + this.entry.id, formData)
+            .then(() => {
+              this.$root.$emit('refreshEntries')
+            })
+            .catch((error) => {
+              console.log(error)
+            })
+      }
     },
     deleteEntry () {
       HttpService.makeRequest('delete', '/api/entries/' + this.entry.id)
