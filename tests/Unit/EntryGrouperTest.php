@@ -75,7 +75,6 @@ class EntryGrouperTest extends TestCase
                 'entries' => [
                     [
                         'id' => 4,
-                        'date' => '2020-11-12T09:30:00.000000Z',
                         'value' => -100.0,
                     ],
                 ],
@@ -88,7 +87,6 @@ class EntryGrouperTest extends TestCase
                 'entries' => [
                     [
                         'id' => 1,
-                        'date' => '2020-05-09T00:00:00.000000Z',
                         'value' => 300.0,
                     ],
                 ],
@@ -97,6 +95,8 @@ class EntryGrouperTest extends TestCase
         unset($result[0]['entries'][0]['date']);
         unset($result[1]['entries'][0]['date']);
         unset($result[1]['entries'][1]['date']);
+        unset($result[2]['entries'][0]['date']);
+        unset($result[3]['entries'][0]['date']);
         $this->assertEquals($expected, $result);
     }
 }
