@@ -2361,7 +2361,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       isAdded: false,
       label: '',
-      date: '',
+      date: this.dayWithTime(),
       amount: 0
     };
   },
@@ -42906,7 +42906,7 @@ var FormValidatorService = /*#__PURE__*/function () {
         });
       }
 
-      var dateRegex = /^\d{2}\s{3},\s\d{4}\sat\s\d{2}:\d{2}\s[AP]M$/;
+      var dateRegex = /^\d{2}\s.{3},\s\d{4}\sat\s\d{2}:\d{2}\s[AP]M$/;
 
       if (formData.date.length === 0) {
         errors.push({
@@ -42914,14 +42914,13 @@ var FormValidatorService = /*#__PURE__*/function () {
           reason: 'empty'
         });
       } else if (formData.date.match(dateRegex) === null) {
-        console.log(formData.date);
         errors.push({
           field: 'date',
           reason: 'date_format'
         });
       } else {
-        var modifiedDate = formData.date.replace('at ', '').replace(',', '');
-        var dateObject = luxon__WEBPACK_IMPORTED_MODULE_0__["DateTime"].fromRFC2822(modifiedDate);
+        var modifiedDate = formData.date.replace('at ', '');
+        var dateObject = luxon__WEBPACK_IMPORTED_MODULE_0__["DateTime"].fromFormat(modifiedDate, 'dd LLL, y hh:mm a');
 
         if (!dateObject.isValid) {
           errors.push({

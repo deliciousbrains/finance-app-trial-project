@@ -9,21 +9,20 @@ export default class FormValidatorService {
                 reason: 'empty'
             })
         }
-        const dateRegex = /^\d{2}\s{3},\s\d{4}\sat\s\d{2}:\d{2}\s[AP]M$/
+        const dateRegex = /^\d{2}\s.{3},\s\d{4}\sat\s\d{2}:\d{2}\s[AP]M$/
         if (formData.date.length === 0) {
             errors.push({
                 field: 'date',
                 reason: 'empty'
             })
         } else if (formData.date.match(dateRegex) === null) {
-            console.log(formData.date)
             errors.push({
                 field: 'date',
                 reason: 'date_format'
             })
         } else {
-            const modifiedDate = formData.date.replace('at ', '').replace(',', '')
-            const dateObject = DateTime.fromRFC2822(modifiedDate)
+            const modifiedDate = formData.date.replace('at ', '')
+            const dateObject = DateTime.fromFormat(modifiedDate, 'dd LLL, y hh:mm a')
             if (!dateObject.isValid) {
                 errors.push({
                     field: 'date',

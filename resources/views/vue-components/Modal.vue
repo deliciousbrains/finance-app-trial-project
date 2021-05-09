@@ -50,7 +50,7 @@ export default {
     return {
       isAdded: false,
       label: '',
-      date: '',
+      date: this.dayWithTime(),
       amount: 0
     }
   },
