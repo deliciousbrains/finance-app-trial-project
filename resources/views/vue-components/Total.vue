@@ -8,9 +8,11 @@
           </h1>
 
           <div class="flex flex-row">
-            <a href="#" class="flex items-center mr-4 px-3 py-2 bg-blue-700 rounded-md text-white text-xs font-bold uppercase tracking-tight">
-              Add Entry
-            </a>
+            <a
+                href="#"
+                class="flex items-center mr-4 px-3 py-2 bg-blue-700 rounded-md text-white text-xs font-bold uppercase tracking-tight"
+                @click="addEntry()"
+            >Add Entry</a>
             <a href="#" class="flex items-center mr-4 px-3 py-2 bg-blue-700 rounded-md text-white text-xs font-bold uppercase tracking-tight">
               Import CSV
             </a>
@@ -34,6 +36,11 @@ export default {
   data () {
     return {
       total: 0
+    }
+  },
+  methods: {
+    addEntry () {
+      this.$root.$emit('openModal')
     }
   },
   mounted () {
