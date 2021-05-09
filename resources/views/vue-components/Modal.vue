@@ -41,6 +41,7 @@ import EntryFormComponent from "./EntryForm"
 import DayTimeService from "../vue-services/DayTimeService"
 import FormValidatorService from "../vue-services/FormValidatorService"
 import HttpService from "../vue-services/HttpService"
+import {DateTime} from "luxon";
 
 export default {
   components: {
@@ -71,9 +72,13 @@ export default {
       if (errors.length > 0) {
         console.log(errors)
       } else {
+        const modifiedDate = this.date.replace('at ', '')
+        const dateObject = DateTime.fromFormat(modifiedDate, 'dd LLL, y hh:mm a')
+        formData.date = dateObject.toSQL()
         HttpService.makeRequest('post', '/api/entries', formData)
             .then(() => {
               this.$root.$emit('refreshEntries')
+              this.isAdded = false
             })
             .catch((error) => {
               console.log(error)

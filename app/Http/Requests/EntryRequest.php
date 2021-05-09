@@ -23,7 +23,7 @@ class EntryRequest extends FormRequest
     {
         return [
             'label' => 'required|string',
-            'amount' => 'required|regex:/\-?\d+?\.\d{2}/',
+            'amount' => 'required|regex:/-?\d+(\.\d{2})?/',
             'date' => 'date',
         ];
     }

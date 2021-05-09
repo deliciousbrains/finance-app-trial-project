@@ -66,6 +66,7 @@ class EntryTest extends TestCase
         $postData = [
             'label' => 'My Label',
             'amount' => '204.50',
+            'date' => '2021-05-09 14:12:00.000 -04:00',
         ];
 
         $response = $this->actingAs($user)->postJson('/api/entries', $postData);
@@ -88,6 +89,7 @@ class EntryTest extends TestCase
 
         $postData = [
             'foo' => 'bar',
+            'date' => '2021-05-09 14:12:00.000',
         ];
 
         $response = $this->actingAs($user)->postJson('/api/entries', $postData);

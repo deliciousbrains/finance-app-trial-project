@@ -2311,6 +2311,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _vue_services_DayTimeService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../vue-services/DayTimeService */ "./resources/views/vue-services/DayTimeService.js");
 /* harmony import */ var _vue_services_FormValidatorService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../vue-services/FormValidatorService */ "./resources/views/vue-services/FormValidatorService.js");
 /* harmony import */ var _vue_services_HttpService__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../vue-services/HttpService */ "./resources/views/vue-services/HttpService.js");
+/* harmony import */ var luxon__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! luxon */ "./node_modules/luxon/build/cjs-browser/luxon.js");
+/* harmony import */ var luxon__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(luxon__WEBPACK_IMPORTED_MODULE_4__);
 //
 //
 //
@@ -2349,6 +2351,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -2385,8 +2388,13 @@ __webpack_require__.r(__webpack_exports__);
       if (errors.length > 0) {
         console.log(errors);
       } else {
+        var modifiedDate = this.date.replace('at ', '');
+        var dateObject = luxon__WEBPACK_IMPORTED_MODULE_4__["DateTime"].fromFormat(modifiedDate, 'dd LLL, y hh:mm a');
+        formData.date = dateObject.toSQL();
         _vue_services_HttpService__WEBPACK_IMPORTED_MODULE_3__["default"].makeRequest('post', '/api/entries', formData).then(function () {
           _this.$root.$emit('refreshEntries');
+
+          _this.isAdded = false;
         })["catch"](function (error) {
           console.log(error);
         });
