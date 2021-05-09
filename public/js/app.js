@@ -2031,7 +2031,7 @@ __webpack_require__.r(__webpack_exports__);
       isEdited: false,
       label: this.entry.label,
       amount: this.entry.value,
-      date: this.dayWithTime(this.entry.date)
+      date: this.entry.date
     };
   },
   methods: {
@@ -2056,9 +2056,9 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var formData = {
-        label: label,
-        date: date,
-        amount: amount
+        label: this.label,
+        date: this.date,
+        amount: this.amount
       };
       var errors = _vue_services_FormValidatorService__WEBPACK_IMPORTED_MODULE_3__["default"].validateForm(formData);
 
@@ -2348,6 +2348,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -2375,9 +2376,9 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var formData = {
-        label: label,
-        date: date,
-        amount: amount
+        label: this.label,
+        date: this.date,
+        amount: this.amount
       };
       var errors = _vue_services_FormValidatorService__WEBPACK_IMPORTED_MODULE_2__["default"].validateForm(formData);
 
@@ -29414,9 +29415,9 @@ var render = function() {
         _c("entry-form", {
           attrs: {
             id: _vm.entry.id,
-            label: _vm.label,
-            amount: _vm.amount,
-            date: _vm.date
+            label: _vm.entry.label,
+            amount: _vm.entry.value,
+            date: _vm.dayWithTime(_vm.entry.date)
           },
           on: {
             "input-label": function($event) {
@@ -29512,7 +29513,7 @@ var render = function() {
           attrs: { id: "label-" + _vm.id, type: "text" },
           domProps: { value: _vm.label },
           on: {
-            input: function($event) {
+            change: function($event) {
               return _vm.$emit("input-label", $event.target.value)
             }
           }
@@ -29534,7 +29535,7 @@ var render = function() {
           attrs: { id: "date-" + _vm.id, type: "text" },
           domProps: { value: _vm.date },
           on: {
-            input: function($event) {
+            change: function($event) {
               return _vm.$emit("input-date", $event.target.value)
             }
           }
@@ -29562,8 +29563,8 @@ var render = function() {
               attrs: { id: "value-" + _vm.id, type: "text" },
               domProps: { value: _vm.entryValue },
               on: {
-                input: function($event) {
-                  return _vm.$emit("input-value", $event.target.value)
+                change: function($event) {
+                  return _vm.$emit("input-amount", $event.target.value)
                 }
               }
             })
@@ -29838,11 +29839,7 @@ var render = function() {
           ),
           _vm._v(" "),
           _c("entry-form", {
-            attrs: {
-              date: _vm.dayWithTime(_vm.date),
-              label: _vm.label,
-              amount: _vm.amount
-            },
+            attrs: { date: _vm.dayWithTime(), label: "", amount: 0 },
             on: {
               "input-label": function($event) {
                 _vm.label = $event
@@ -29880,7 +29877,12 @@ var render = function() {
                 {
                   staticClass:
                     "flex bg-blue-700 text-white rounded-md font-bold items-center uppercase mr-4 px-6 py-4",
-                  attrs: { href: "#" }
+                  attrs: { href: "#" },
+                  on: {
+                    click: function($event) {
+                      return _vm.saveEntry()
+                    }
+                  }
                 },
                 [_vm._v("Save Entry")]
               )
@@ -42912,6 +42914,7 @@ var FormValidatorService = /*#__PURE__*/function () {
           reason: 'empty'
         });
       } else if (formData.date.match(dateRegex) === null) {
+        console.log(formData.date);
         errors.push({
           field: 'date',
           reason: 'date_format'
@@ -42930,14 +42933,15 @@ var FormValidatorService = /*#__PURE__*/function () {
 
       var amountRegex = /^-?\d+(\.\d{2})?$/;
 
-      if (formData.amount.length === 0) {
+      if (formData.amount.length === 0 || formData.amount === 0) {
+        console.log(formData.amount);
         errors.push({
-          field: 'value',
+          field: 'amount',
           reason: 'empty'
         });
-      } else if (formData.date.match(amountRegex) === null) {
+      } else if (formData.amount.match(amountRegex) === null) {
         errors.push({
-          field: 'value',
+          field: 'amount',
           reason: 'money_format'
         });
       }

@@ -16,6 +16,7 @@ export default class FormValidatorService {
                 reason: 'empty'
             })
         } else if (formData.date.match(dateRegex) === null) {
+            console.log(formData.date)
             errors.push({
                 field: 'date',
                 reason: 'date_format'
@@ -31,14 +32,15 @@ export default class FormValidatorService {
             }
         }
         const amountRegex = /^-?\d+(\.\d{2})?$/
-        if (formData.amount.length === 0) {
+        if (formData.amount.length === 0 || formData.amount === 0) {
+            console.log(formData.amount)
             errors.push({
-                field: 'value',
+                field: 'amount',
                 reason: 'empty'
             })
-        } else if (formData.date.match(amountRegex) === null) {
+        } else if (formData.amount.match(amountRegex) === null) {
             errors.push({
-                field: 'value',
+                field: 'amount',
                 reason: 'money_format'
             })
         }

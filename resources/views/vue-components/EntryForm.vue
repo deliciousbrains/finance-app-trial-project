@@ -7,7 +7,7 @@
           type="text"
           :value="label"
           class="shadow appearance-none border rounded px-3 py-3 mb-3"
-          @input="$emit('input-label', $event.target.value)"
+          @change="$emit('input-label', $event.target.value)"
       />
     </div>
     <div class="flex flex-auto flex-col px-3 w-2/5">
@@ -17,7 +17,7 @@
           type="text"
           :value="date"
           class="shadow appearance-none border rounded px-3 py-3 mb-3"
-          @input="$emit('input-date', $event.target.value)"
+          @change="$emit('input-date', $event.target.value)"
       />
     </div>
     <div class="flex flex-auto flex-col px-3 w-1/5">
@@ -31,7 +31,7 @@
             type="text"
             :value="entryValue"
             class="appearance-none px-4 w-4/5"
-            @input="$emit('input-value', $event.target.value)"
+            @change="$emit('input-amount', $event.target.value)"
         />
       </div>
     </div>

@@ -34,9 +34,9 @@
     <div v-show="isEdited">
       <entry-form
           :id="entry.id"
-          :label="label"
-          :amount="amount"
-          :date="date"
+          :label="entry.label"
+          :amount="entry.value"
+          :date="dayWithTime(entry.date)"
           @input-label="label = $event"
           @input-amount="amount = $event"
           @input-date="date = $event"
@@ -82,7 +82,7 @@ export default {
       isEdited: false,
       label: this.entry.label,
       amount: this.entry.value,
-      date: this.dayWithTime(this.entry.date)
+      date: this.entry.date
     }
   },
   methods: {
@@ -105,9 +105,9 @@ export default {
     },
     updateEntry () {
       const formData = {
-        label: label,
-        date: date,
-        amount: amount
+        label: this.label,
+        date: this.date,
+        amount: this.amount
       }
       const errors = FormValidatorService.validateForm(formData)
       if (errors.length > 0) {

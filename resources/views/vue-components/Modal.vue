@@ -10,9 +10,9 @@
         Add Balance Entry
       </h1>
       <entry-form
-          :date="dayWithTime(date)"
-          :label="label"
-          :amount="amount"
+          :date="dayWithTime()"
+          label=""
+          :amount="0"
           @input-label="label = $event"
           @input-amount="amount = $event"
           @input-date="date = $event"
@@ -63,9 +63,9 @@ export default {
     },
     saveEntry () {
       const formData = {
-        label: label,
-        date: date,
-        amount: amount
+        label: this.label,
+        date: this.date,
+        amount: this.amount
       }
       const errors = FormValidatorService.validateForm(formData)
       if (errors.length > 0) {
