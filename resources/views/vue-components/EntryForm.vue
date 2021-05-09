@@ -68,10 +68,7 @@ export default {
   },
   methods: {
     dayWithTime (day) {
-      if (day) {
-        return DayTimeService.dayWithTime(day)
-      }
-      return ''
+      return DayTimeService.dayWithTime(day)
     }
   }
 }

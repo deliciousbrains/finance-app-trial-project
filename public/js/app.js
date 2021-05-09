@@ -2050,6 +2050,8 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _vue_services_DayTimeService__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../vue-services/DayTimeService */ "./resources/views/vue-services/DayTimeService.js");
+/* harmony import */ var luxon__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! luxon */ "./node_modules/luxon/build/cjs-browser/luxon.js");
+/* harmony import */ var luxon__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(luxon__WEBPACK_IMPORTED_MODULE_1__);
 //
 //
 //
@@ -2093,6 +2095,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -2119,11 +2122,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     dayWithTime: function dayWithTime(day) {
-      if (day) {
-        return _vue_services_DayTimeService__WEBPACK_IMPORTED_MODULE_0__["default"].dayWithTime(day);
-      }
-
-      return '';
+      return _vue_services_DayTimeService__WEBPACK_IMPORTED_MODULE_0__["default"].dayWithTime(day);
     }
   }
 });
@@ -42688,7 +42687,16 @@ var DayTimeService = /*#__PURE__*/function () {
   _createClass(DayTimeService, null, [{
     key: "dayWithTime",
     value: function dayWithTime(day) {
-      var dayObject = luxon__WEBPACK_IMPORTED_MODULE_0__["DateTime"].fromISO(day).setLocale('en');
+      var dayObject;
+      console.log(day);
+
+      if (day) {
+        dayObject = luxon__WEBPACK_IMPORTED_MODULE_0__["DateTime"].fromISO(day).setLocale('en');
+      } else {
+        dayObject = luxon__WEBPACK_IMPORTED_MODULE_0__["DateTime"].now().setLocale('en');
+      }
+
+      console.log(dayObject);
       var date = dayObject.toFormat('dd LLLL, y');
       var time = dayObject.toFormat('hh:mm a');
       return "".concat(date, " at ").concat(time);
