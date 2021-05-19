@@ -1,3 +1,15 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+.transaction-item-links {
+    flex:1;
+    visibility: hidden;
+}
+.items-center:hover .transaction-item-links {
+    visibility: visible;
+}
+.transaction-item-amt {
+    flex:1;
+    text-align:right;
+}
