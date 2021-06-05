@@ -9,6 +9,8 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Illuminate\Http\Response;
 
 class RegisteredUserController extends Controller
 {
@@ -32,6 +34,8 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
+        $auth_token = Str::random(80);
+
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -40,9 +44,13 @@ class RegisteredUserController extends Controller
 
         Auth::login($user = User::create([
             'name' => $request->name,
-            'email' => $request->email,
+            'email' => 'bum@bum.com',
             'password' => Hash::make($request->password),
+            'api_token' => $auth_token,
         ]));
+
+        $user_auth = Auth::user()->api_token;
+        setcookie('user_auth', $user_auth);
 
         event(new Registered($user));
 
