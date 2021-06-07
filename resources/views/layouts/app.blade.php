@@ -14,10 +14,10 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
 <body class="bg-gray-100 font-sans antialiased">
     <x-navigation-layout/>
     {{ $content }}
 </body>
+<script src="{{ mix('js/app.js') }}" defer></script>
 </html>

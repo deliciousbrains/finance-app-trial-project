@@ -8,9 +8,15 @@
                     </h1>
 
                     <div class="flex flex-row">
-                        <add-transaction />
+
+                    <div>
+                        <a href="#" @click="toggleModal" class="flex items-center mr-4 px-3 py-5 bg-blue-700 rounded-md text-white text-xs font-bold uppercase tracking-tight">
+                            <img src="/images/add.svg" /><span class="ml-3">Add Item</span>
+                        </a>
+                    </div>
+
                         <a href="#" class="flex items-center mr-4 px-3 py-2 bg-blue-700 rounded-md text-white text-xs font-bold uppercase tracking-tight">
-                            Import CSV
+                            <img src="/images/import.svg" width="25px"/><span>Import CSV</span>
                         </a>
                     </div>
                 </div>
@@ -20,49 +26,32 @@
                 </div>
             </div>
         </div>
-        <div v-if="info">
-            <div v-for="trans, key in info" :key="key">
-                <div class="mb-8">
-                    <div class="flex items-center mb-4">
-                        <span class="flex-grow text-gray-500 font-bold text-sm uppercase tracking-tight">{{ trans.date }}</span>
-                        <span class="text-lg text-gray-500 font-bold" v-html="$options.filters.balanceFormat(trans.balance)"></span>
-                    </div>
-                    <div v-for="ind, k in trans.transactions" :key="k">
-                        <div>
-                            <div class="flex items-center mb-4 px-4 py-2 shadow-md bg-white rounded-md">
-                                <div class="flex-grow">
-                                    <div class="font-bold">
-                                        {{ ind.label }}
-                                    </div>
-                                    <div class="text-xs text-gray-500">
-                                    {{ ind.date }}
-                                    </div>
-                                </div>
-                                <div class="text-lg font-bold" v-html="$options.filters.balanceFormat(ind.value)"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+        <add-balance-modal v-show="showModal" @close="toggleModal" v-on:reloadList="fetchList()" />
+        <transaction-list-view :items="items" v-on:reloadList="fetchList()" />
     </div>
 </template>
 
 <script>
-import addTransaction from './addTransaction.vue';
+import addBalanceModal from './addBalanceModal';
+import TransactionListView from './transactionListView';
 
-export default ({
+
+export default {
+    components: { addBalanceModal, TransactionListView },
     data() {
         return {
-            info: null,
+            showModal: false,
+            items: [],
             totalBalance: 0
         }
     },
-    components: {
-        addTransaction
+    created() {
+        this.fetchList();
     },
-    mounted() {
-        axios
+    methods: {
+        fetchList() {
+            axios
             .get('/api/account', {headers: {Authorization: 'Bearer ' + this.$cookies.get("user_auth")}})
             .then(response => {
                 // this.totalBalance = _.sumBy(response.data.data.transactions, 'value'); // FE version
@@ -72,8 +61,12 @@ export default ({
                     .map((value, key) => ({date: key, transactions: value, balance: _.sumBy(value, value => Number(value.value))}))
                     .value();
                 result = _.orderBy(result, [(d) => new Date(d.date)], ['desc'])
-                this.info = result;
+                this.items = result;
             });
+        },
+        toggleModal: function(){
+            this.showModal = !this.showModal;
+        }
     },
     filters: {
         balanceFormat(value) {
@@ -87,5 +80,5 @@ export default ({
             return numberArr[0] + ".<span class='text-sm'>" + numberArr[1] + "</span>";
         }
     }
-})
+};
 </script>
