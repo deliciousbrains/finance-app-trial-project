@@ -24,7 +24,7 @@
                 cancel
                 </a>
                 <a @click="save()" href="#" class="flex items-center mr-4 px-3 py-3 bg-blue-700 rounded-md text-white text-xs font-bold uppercase tracking-tight">
-                Save Entry
+                Update Entry
                 </a>
             </div>
             </form>
