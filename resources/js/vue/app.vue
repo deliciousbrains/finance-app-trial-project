@@ -27,7 +27,7 @@
             </div>
         </div>
 
-        <add-balance-modal v-show="showModal" @close="toggleModal" v-on:reloadList="fetchList()" />
+        <add-balance-modal :accountId="accountId" v-show="showModal" @close="toggleModal" v-on:reloadList="fetchList()" />
         <transaction-list-view :items="items" v-on:reloadList="fetchList()" />
     </div>
 </template>
@@ -41,6 +41,7 @@ export default {
     components: { addBalanceModal, TransactionListView },
     data() {
         return {
+            accountId: null,
             showModal: false,
             items: [],
             totalBalance: 0
@@ -54,7 +55,7 @@ export default {
             axios
             .get('/api/account', {headers: {Authorization: 'Bearer ' + this.$cookies.get("user_auth")}})
             .then(response => {
-                // this.totalBalance = _.sumBy(response.data.data.transactions, 'value'); // FE version
+                this.accountId = response.data.data.account_id;
                 this.totalBalance = response.data.data.balance;
                 let result = _(response.data.data.transactions)
                     .groupBy(i => DateTime.fromISO(i.date) .toFormat('DDD'))

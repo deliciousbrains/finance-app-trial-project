@@ -14,15 +14,15 @@
                 <div class="flex flex-wrap m-5">
                     <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                         <label for="label" class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" >label</label>
-                        <input type="text" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="Label" id="label">
+                        <input v-model="label" type="text" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="Label" id="label">
                     </div>
                     <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                        <label for="label" class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" >date</label>
-                        <input type="text" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="Date" id="date">
+                        <label for="date" class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" >date</label>
+                        <input v-model="date" type="text" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="Date" id="date">
                     </div>
                     <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                        <label for="label" class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" >amount</label>
-                        <input type="text" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="Amount" id="amount">
+                        <label for="amount" class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" >amount</label>
+                        <input v-model="value" type="text" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="Amount" id="amount">
                     </div>
                 </div>
             <div class="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
@@ -42,25 +42,33 @@
 </template>
 
 <script>
-  export default {
-    methods: {
-      close() {
-        this.$emit('close');
-      },
-      save() {
-          let params = {
-            "label" : "hey",
-            "value" : 23.46,
-            "date": "2021/06/02 00:00:00",
-            "account_id": 1
+    export default {
+        props: ['accountId'],
+        data() {
+            return {
+                label: "",
+                date: "",
+                value: 0.00
+            };
+        },
+        methods: {
+            close() {
+                this.$emit('close');
+        },
+        save() {
+        let params = {
+            "label" : this.label,
+            "value" : this.value,
+            "date": this.date,
+            "account_id": this.accountId
         };
-          axios
+        axios
             .post('/api/transactions', params, {headers: {Authorization: 'Bearer ' + this.$cookies.get("user_auth")}})
             .then(response => {
                 this.$emit('reloadList');
                 this.close();
             });
-      }
+        }
     },
   };
 </script>

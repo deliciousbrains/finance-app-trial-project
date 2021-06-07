@@ -3801,6 +3801,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['accountId'],
+  data: function data() {
+    return {
+      label: "",
+      date: "",
+      value: 0.00
+    };
+  },
   methods: {
     close: function close() {
       this.$emit('close');
@@ -3809,11 +3817,12 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var params = {
-        "label": "hey",
-        "value": 23.46,
-        "date": "2021/06/02 00:00:00",
-        "account_id": 1
+        "label": this.label,
+        "value": this.value,
+        "date": this.date,
+        "account_id": this.accountId
       };
+      console.log(params);
       axios.post('/api/transactions', params, {
         headers: {
           Authorization: 'Bearer ' + this.$cookies.get("user_auth")
@@ -3885,6 +3894,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      accountId: null,
       showModal: false,
       items: [],
       totalBalance: 0
@@ -3902,7 +3912,7 @@ __webpack_require__.r(__webpack_exports__);
           Authorization: 'Bearer ' + this.$cookies.get("user_auth")
         }
       }).then(function (response) {
-        // this.totalBalance = _.sumBy(response.data.data.transactions, 'value'); // FE version
+        _this.accountId = response.data.data.account_id;
         _this.totalBalance = response.data.data.balance;
 
         var result = _(response.data.data.transactions).groupBy(function (i) {
@@ -4163,14 +4173,10 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/alpine.js");
 
 window.DateTime = __webpack_require__(/*! luxon */ "./node_modules/luxon/build/cjs-browser/luxon.js").DateTime;
-window.VueCookies = __webpack_require__(/*! vue-cookies */ "./node_modules/vue-cookies/vue-cookies.js"); // window.Vue = require("vue").default;
-// Register Vue Components
-// Vue.component("dashboard-component", require("./components/DashboardComponent.vue").default);
+window.VueCookies = __webpack_require__(/*! vue-cookies */ "./node_modules/vue-cookies/vue-cookies.js");
 
 
-
-vue__WEBPACK_IMPORTED_MODULE_1__.default.use(VueCookies); // Initialize Vue
-
+vue__WEBPACK_IMPORTED_MODULE_1__.default.use(VueCookies);
 var app = new vue__WEBPACK_IMPORTED_MODULE_1__.default({
   el: "#app",
   components: {
@@ -30676,7 +30682,136 @@ var render = function() {
                 "form",
                 { staticClass: "text-black w-full", attrs: { action: "POST" } },
                 [
-                  _vm._m(1),
+                  _c("div", { staticClass: "flex flex-wrap m-5" }, [
+                    _c(
+                      "div",
+                      { staticClass: "w-full md:w-1/3 px-3 mb-6 md:mb-0" },
+                      [
+                        _c(
+                          "label",
+                          {
+                            staticClass:
+                              "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
+                            attrs: { for: "label" }
+                          },
+                          [_vm._v("label")]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.label,
+                              expression: "label"
+                            }
+                          ],
+                          staticClass:
+                            "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+                          attrs: {
+                            type: "text",
+                            placeholder: "Label",
+                            id: "label"
+                          },
+                          domProps: { value: _vm.label },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.label = $event.target.value
+                            }
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "w-full md:w-1/3 px-3 mb-6 md:mb-0" },
+                      [
+                        _c(
+                          "label",
+                          {
+                            staticClass:
+                              "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
+                            attrs: { for: "date" }
+                          },
+                          [_vm._v("date")]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.date,
+                              expression: "date"
+                            }
+                          ],
+                          staticClass:
+                            "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+                          attrs: {
+                            type: "text",
+                            placeholder: "Date",
+                            id: "date"
+                          },
+                          domProps: { value: _vm.date },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.date = $event.target.value
+                            }
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "w-full md:w-1/3 px-3 mb-6 md:mb-0" },
+                      [
+                        _c(
+                          "label",
+                          {
+                            staticClass:
+                              "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
+                            attrs: { for: "amount" }
+                          },
+                          [_vm._v("amount")]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.value,
+                              expression: "value"
+                            }
+                          ],
+                          staticClass:
+                            "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+                          attrs: {
+                            type: "text",
+                            placeholder: "Amount",
+                            id: "amount"
+                          },
+                          domProps: { value: _vm.value },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.value = $event.target.value
+                            }
+                          }
+                        })
+                      ]
+                    )
+                  ]),
                   _vm._v(" "),
                   _c(
                     "div",
@@ -30736,66 +30871,6 @@ var staticRenderFns = [
         ])
       ]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex flex-wrap m-5" }, [
-      _c("div", { staticClass: "w-full md:w-1/3 px-3 mb-6 md:mb-0" }, [
-        _c(
-          "label",
-          {
-            staticClass:
-              "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
-            attrs: { for: "label" }
-          },
-          [_vm._v("label")]
-        ),
-        _vm._v(" "),
-        _c("input", {
-          staticClass:
-            "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
-          attrs: { type: "text", placeholder: "Label", id: "label" }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "w-full md:w-1/3 px-3 mb-6 md:mb-0" }, [
-        _c(
-          "label",
-          {
-            staticClass:
-              "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
-            attrs: { for: "label" }
-          },
-          [_vm._v("date")]
-        ),
-        _vm._v(" "),
-        _c("input", {
-          staticClass:
-            "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
-          attrs: { type: "text", placeholder: "Date", id: "date" }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "w-full md:w-1/3 px-3 mb-6 md:mb-0" }, [
-        _c(
-          "label",
-          {
-            staticClass:
-              "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
-            attrs: { for: "label" }
-          },
-          [_vm._v("amount")]
-        ),
-        _vm._v(" "),
-        _c("input", {
-          staticClass:
-            "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
-          attrs: { type: "text", placeholder: "Amount", id: "amount" }
-        })
-      ])
-    ])
   }
 ]
 render._withStripped = true
@@ -30887,6 +30962,7 @@ var render = function() {
             expression: "showModal"
           }
         ],
+        attrs: { accountId: _vm.accountId },
         on: {
           close: _vm.toggleModal,
           reloadList: function($event) {
@@ -31122,7 +31198,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("\n              Save Entry\n              ")]
+                    [_vm._v("\n              Update Entry\n              ")]
                   )
                 ]
               )
