@@ -15,7 +15,7 @@
                         </a>
                     </div>
 
-                        <a href="#" class="flex items-center mr-4 px-3 py-2 bg-blue-700 rounded-md text-white text-xs font-bold uppercase tracking-tight">
+                        <a href="#" @click="toggleCsvModal" class="flex items-center mr-4 px-3 py-2 bg-blue-700 rounded-md text-white text-xs font-bold uppercase tracking-tight">
                             <img src="/images/import.svg" width="25px"/><span>Import CSV</span>
                         </a>
                     </div>
@@ -28,21 +28,24 @@
         </div>
 
         <add-balance-modal :accountId="accountId" v-show="showModal" @close="toggleModal" v-on:reloadList="fetchList()" />
+        <import-csv-modal v-show="showCsvModal" @close="toggleCsvModal"/>
         <transaction-list-view :items="items" v-on:reloadList="fetchList()" />
     </div>
 </template>
 
 <script>
 import addBalanceModal from './addBalanceModal';
+import ImportCsvModal from './importCsvModal.vue';
 import TransactionListView from './transactionListView';
 
 
 export default {
-    components: { addBalanceModal, TransactionListView },
+    components: { addBalanceModal, TransactionListView, ImportCsvModal },
     data() {
         return {
             accountId: null,
             showModal: false,
+            showCsvModal: false,
             items: [],
             totalBalance: 0
         }
@@ -67,6 +70,9 @@ export default {
         },
         toggleModal: function(){
             this.showModal = !this.showModal;
+        },
+        toggleCsvModal: function(){
+            this.showCsvModal = !this.showCsvModal;
         }
     },
     filters: {

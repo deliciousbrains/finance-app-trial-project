@@ -44,7 +44,7 @@ class RegisteredUserController extends Controller
 
         Auth::login($user = User::create([
             'name' => $request->name,
-            'email' => 'bum@bum.com',
+            'email' => $request->email,
             'password' => Hash::make($request->password),
             'api_token' => $auth_token,
         ]));
