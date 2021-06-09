@@ -35,6 +35,6 @@ class CsvImportFinishedListener implements ShouldQueue
     public function handle(CsvImportFinishedEvent $event)
     {
         $this->transactionService->updateAfterImport($event->jobParent);
-        $this->accountService->calculateBalance(1);
+        // $this->accountService->calculateBalance(1);
     }
 }

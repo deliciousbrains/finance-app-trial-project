@@ -14,12 +14,12 @@ class AccountService
         return new AccountResource(Account::where('id', $account_id)->first());
     }
 
-    public function calculateBalance($account_id)
-    {
-        $account = Account::findOrFail($account_id);
-        $runningBalance = $account->transactions()->processed()->sum('value');
+    // public function calculateBalance($account_id)
+    // {
+    //     $account = Account::findOrFail($account_id);
+    //     $runningBalance = $account->transactions()->processed()->sum('value');
 
-        $account->balance = $runningBalance;
-        $account->save();
-    }
+    //     $account->balance = $runningBalance;
+    //     $account->save();
+    // }
 }
