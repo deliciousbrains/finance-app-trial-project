@@ -26,6 +26,7 @@ class TransactionFactory extends Factory
             'date' => $this->faker->dateTimeThisMonth(),
             'value' => $this->faker->randomFloat(2, -9000, 9900),
             'account_id' => 1,
+            'processed' => 1,
         ];
     }
 }

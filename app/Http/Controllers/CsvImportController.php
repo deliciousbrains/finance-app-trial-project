@@ -11,8 +11,8 @@ class CsvImportController extends Controller
     {
         $validated = $request->validated();
 
-        $path = $importService->handleUpload($validated['file']);
+        $message = $importService->handleUpload($validated['file']);
 
-        return json_encode(['key' => $path]);
+        return json_encode($message);
     }
 }

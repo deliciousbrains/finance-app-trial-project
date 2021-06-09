@@ -14,10 +14,11 @@ class AccountResource extends JsonResource
      */
     public function toArray($request)
     {
+        $processedTransactions = $this->transactions()->simplePaginate(5);
         return [
             'account_id' => $this->id,
             'balance' => $this->balance,
-            'transactions' => $this->transactions,
+            'processedTransactions' => $processedTransactions,
         ];
     }
 }

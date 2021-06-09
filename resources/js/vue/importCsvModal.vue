@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
-      <div class="relative w-auto my-6 mx-auto max-w-6xl">
+      <div class="relative w-auto my-6 mx-auto max-w-3xl w-full">
         <!--content-->
-        <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+        <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none p-10">
           <!--header-->
           <div class="flex items-start justify-between p-5 text-black border-b border-solid border-blueGray-200 rounded-t">
             <h3 class="text-3xl font-semibold">

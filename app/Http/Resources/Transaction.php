@@ -15,11 +15,7 @@ class Transaction extends JsonResource
      */
     public function toArray($request)
     {
-
-        $balance = $this->account->balance;
-
         return [
-            'balance' => $balance,
             'id' => $this->id,
             'label' => $this->label,
             'value' => floatval($this->value),

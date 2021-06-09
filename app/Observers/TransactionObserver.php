@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Transaction;
+use Illuminate\Support\Facades\Log;
 
 class TransactionObserver
 {
@@ -18,8 +19,8 @@ class TransactionObserver
 
     private function updateBalance(Transaction $transaction)
     {
-        $account = $transaction->account()->find($transaction->account_id);
-        $runningBalance = $transaction->sum('value');
+        $account = $transaction->account()->first();
+        $runningBalance = $transaction->processed()->sum('value');
 
         $account->balance = $runningBalance;
         $account->save();

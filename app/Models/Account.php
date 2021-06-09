@@ -18,6 +18,11 @@ class Account extends Model
         return $this->hasMany(Transaction::class);
     }
 
+    public function processedTransactions()
+    {
+        return $this->transactions()->processed();
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

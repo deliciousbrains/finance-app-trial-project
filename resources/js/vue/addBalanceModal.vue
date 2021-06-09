@@ -60,7 +60,8 @@
             "label" : this.label,
             "value" : this.value,
             "date": this.date,
-            "account_id": this.accountId
+            "account_id": this.accountId,
+            "processed": 1
         };
         axios
             .post('/api/transactions', params, {headers: {Authorization: 'Bearer ' + this.$cookies.get("user_auth")}})

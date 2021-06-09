@@ -34,6 +34,7 @@ class StoreTransactionRequest extends FormRequest
             'value' => 'required|numeric',
             'account_id' => 'required|numeric',
             'date' => 'required',
+            'processed' => 'required',
         ];
     }
 }

@@ -2,30 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Transaction;
 use App\Http\Resources\Transaction as TransactionResource;
 use App\Http\Requests\StoreTransactionRequest;
-use App\Services\AccountService;
+use App\Services\TransactionService;
 
 class TransactionController extends Controller
 {
-    public function __construct(AccountService $accountService)
+    public function __construct(TransactionService $transactionService)
     {
-        $this->accountService = $accountService;
-    }
-
-    public function show($id)
-    {
-        return new TransactionResource(Transaction::findOrFail($id));
+        $this->transactionService = $transactionService;
     }
 
     public function store(StoreTransactionRequest $request)
     {
         $validated = $request->validated();
+        $saved = $this->transactionService->store($validated);
 
-        $trans = Transaction::create($validated);
-        return (new TransactionResource($trans))
+        return (new TransactionResource($saved))
             ->response()
             ->setStatusCode(201);
     }
@@ -33,23 +27,16 @@ class TransactionController extends Controller
     public function update(StoreTransactionRequest $request, $id)
     {
         $validated = $request->validated();
+        $saved = $this->transactionService->update($validated, $id);
 
-        $trans = Transaction::findOrFail($id);
-        $trans->label = $validated['label'];
-        $trans->value = $request['value'];
-        $trans->date = $request['date'];
-        $trans->save();
-
-        return (new TransactionResource($trans))
+        return (new TransactionResource($saved))
             ->response()
             ->setStatusCode(201);
     }
 
     public function destroy($id)
     {
-        $trans = Transaction::findOrFail($id);
-        $trans->delete();
-
+        $this->transactionService->delete($id);
         return response()->json(null, 204);
     }
 }

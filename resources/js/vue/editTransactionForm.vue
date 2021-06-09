@@ -52,7 +52,8 @@
                 'label': this.label,
                 'date': this.date,
                 'value': Number(this.value),
-                'account_id': this.trans[this.index].account_id
+                'account_id': this.trans[this.index].account_id,
+                'processed' : 1
             }
             axios
                 .put('/api/transactions/' + this.trans[this.index].id, params, {headers: {Authorization: 'Bearer ' + this.$cookies.get("user_auth")}})

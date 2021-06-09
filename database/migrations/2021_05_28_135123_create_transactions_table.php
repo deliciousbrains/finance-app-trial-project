@@ -19,6 +19,8 @@ class CreateTransactionsTable extends Migration
             $table->string('label');
             $table->decimal('value');
             $table->date('date');
+            $table->tinyInteger('processed')->default(0);
+            $table->string('jobid')->nullable()->default(null);
             $table->timestamps();
         });
     }

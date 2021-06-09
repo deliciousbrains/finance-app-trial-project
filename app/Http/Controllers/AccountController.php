@@ -15,13 +15,13 @@ class AccountController extends Controller
         $this->accountService = $accountService;
     }
 
-    public function index(): AccountResource
+    public function index()
     {
         try {
             $user = Auth::user();
             $account_id = $user->accounts()->first()->id;
 
-            return $this->accountService->getAllWithTransactions($account_id);
+            return $this->accountService->getAllWithProcessedTransactions($account_id);
         } catch (\Exception $e) {
             // handle exception
         }

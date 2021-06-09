@@ -27,8 +27,22 @@
             </div>
         </div>
 
+        <div v-show="showMessage" class="text-white bg-orange-400 px-10 py-5 w-full mb-10 text-2xl font-normal text-center rounded-md">
+            <img class="inline-block" src="/images/loading.svg" />
+            {{ message }}
+        </div>
+
         <add-balance-modal :accountId="accountId" v-show="showModal" @close="toggleModal" v-on:reloadList="fetchList()" />
         <import-csv-modal v-show="showCsvModal" @close="toggleCsvModal"/>
+
+        <div class="mb-2 flex flex-row">
+            <div>
+            <a href="#" @click="fetchList(currentPage -1); currentPage -= 1" class="flex items-center mr-4 px-3 py-2 bg-blue-700 rounded-md text-white text-xs font-bold uppercase tracking-tight">Prev</a>
+            </div>
+            <div>
+            <a href="#" @click="fetchList(currentPage +1); currentPage += 1" class="flex items-center mr-4 px-3 py-2 bg-blue-700 rounded-md text-white text-xs font-bold uppercase tracking-tight">Next</a>
+            </div>
+        </div>
         <transaction-list-view :items="items" v-on:reloadList="fetchList()" />
     </div>
 </template>
@@ -47,25 +61,46 @@ export default {
             showModal: false,
             showCsvModal: false,
             items: [],
-            totalBalance: 0
+            totalBalance: 0,
+            message: '',
+            showMessage: false,
+            currentPage: 1,
+            nextPage: 2
         }
     },
     created() {
         this.fetchList();
+        this.getBroadcast();
     },
     methods: {
-        fetchList() {
+        fetchList(page = 1) {
             axios
-            .get('/api/account', {headers: {Authorization: 'Bearer ' + this.$cookies.get("user_auth")}})
+            .get('/api/account?page=' + page, {headers: {Authorization: 'Bearer ' + this.$cookies.get("user_auth")}})
             .then(response => {
                 this.accountId = response.data.data.account_id;
                 this.totalBalance = response.data.data.balance;
-                let result = _(response.data.data.transactions)
+                let result = _(response.data.data.processedTransactions.data)
                     .groupBy(i => DateTime.fromISO(i.date) .toFormat('DDD'))
                     .map((value, key) => ({date: key, transactions: value, balance: _.sumBy(value, value => Number(value.value))}))
                     .value();
-                result = _.orderBy(result, [(d) => new Date(d.date)], ['desc'])
+                result = _.orderBy(result, [(d) => new Date(d.date)], ['desc']);
+
                 this.items = result;
+            });
+        },
+        getBroadcast: function() {
+            Echo.channel('messageChannel').listen(".messageStartEvent", (e) => {
+                this.message = e.message;
+                this.showMessage = true;
+            });
+            Echo.channel('messageChannel').listen(".messageFinishEvent", (e) => {
+                this.message = "CSV imported!";
+                this.fetchList();
+                
+                setTimeout(() => {
+                    this.showMessage = false;
+                }, 1000);
+                
             });
         },
         toggleModal: function(){
